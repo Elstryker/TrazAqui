@@ -22,9 +22,9 @@ public class Transportadora {
         this.localizacao = localizacao;
         this.raio = raio;
         this.precoKM = precoKM;
-        this.voluntarios = voluntarios;
-        this.encomendasEntregues = encomendasEntregues;
-        this.pedidosEncomenda = pedidosEncomenda;
+        this.setVoluntarios(voluntarios);
+        this.setEncomendasEntregues(encomendasEntregues);
+        this.setPedidosEncomenda(pedidosEncomenda);
     }
 
     public Transportadora(){
@@ -32,8 +32,8 @@ public class Transportadora {
         this.voluntarios= new ArrayList<>();
         this.pedidosEncomenda = new ArrayList<>();
         this.encomendasEntregues = new ArrayList<>();
-        this.nomeEmpresa= new String();
-        this.codEmpresa= new String();
+        this.nomeEmpresa= "";
+        this.codEmpresa= "";
         this.localizacao= new GPS();
         this.raio=0;
         this.precoKM=0;
@@ -41,9 +41,9 @@ public class Transportadora {
 
     public Transportadora(Transportadora a) {
         this.disponivel=a.disponivel;
-        this.voluntarios=a.voluntarios;
-        this.encomendasEntregues=a.encomendasEntregues;
-        this.pedidosEncomenda=a.pedidosEncomenda;
+        this.setVoluntarios(a.getVoluntarios());
+        this.setEncomendasEntregues(a.getEncomendasEntregues());
+        this.setPedidosEncomenda(a.getPedidosEncomenda());
         this.nomeEmpresa=a.nomeEmpresa;
         this.codEmpresa= a.codEmpresa;
         this.localizacao=a.localizacao;
@@ -104,7 +104,8 @@ public class Transportadora {
     }
 
     public void setVoluntarios(List<Voluntarios> voluntarios) {
-        this.voluntarios = voluntarios;
+        this.voluntarios = new ArrayList<>();
+        voluntarios.forEach(l -> this.voluntarios.add(l.clone()));
     }
 
     public List<Encomenda> getEncomendasEntregues() {
@@ -112,7 +113,8 @@ public class Transportadora {
     }
 
     public void setEncomendasEntregues(List<Encomenda> encomendasEntregues) {
-        this.encomendasEntregues = encomendasEntregues;
+        this.encomendasEntregues = new ArrayList<>();
+        encomendasEntregues.forEach(l -> this.encomendasEntregues.add(l.clone()));
     }
 
     public List<Encomenda> getPedidosEncomenda() {
@@ -120,7 +122,8 @@ public class Transportadora {
     }
 
     public void setPedidosEncomenda(List<Encomenda> pedidosEncomenda) {
-        this.pedidosEncomenda = pedidosEncomenda;
+        this.pedidosEncomenda = new ArrayList<>();
+        pedidosEncomenda.forEach(l-> this.pedidosEncomenda.add(l.clone()));
     }
 
     @Override
@@ -162,6 +165,17 @@ public class Transportadora {
 
     public Transportadora clone(){
         return new Transportadora(this);
+    }
+
+    // Métodos
+
+    public double precoEncomenda(double precoKM, double peso, double dist) {
+        double total = 0;
+
+        if (peso > 10) total = precoKM*dist;
+        else total = precoKM*dist+2.5;
+
+        return total;
     }
 
 

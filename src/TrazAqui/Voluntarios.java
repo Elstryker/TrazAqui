@@ -11,32 +11,36 @@ public class Voluntarios {
     private GPS localizacao;
     private int raio;
     private List<Encomenda> encomendasEntregues;
+    private List<Encomenda> pedidosEncomenda;
 
-    public Voluntarios(String codVoluntario, String nomeVoluntario, boolean disponivel, GPS localizacao, int raio, List<Encomenda> encomendasEntregues) {
+    public Voluntarios(String codVoluntario, String nomeVoluntario, boolean disponivel, GPS localizacao, int raio, List<Encomenda> encomendasEntregues, List<Encomenda> pedidosEncomenda) {
         this.codVoluntario = codVoluntario;
         this.nomeVoluntario = nomeVoluntario;
         this.disponivel = disponivel;
         this.localizacao = localizacao;
         this.raio = raio;
-        this.encomendasEntregues = encomendasEntregues;
+        this.setEncomendasEntregues(encomendasEntregues);
+        this.setPedidosEncomenda(pedidosEncomenda);
     }
 
     public Voluntarios(){
         this.disponivel = false;
         this.localizacao= new GPS();
-        this.encomendasEntregues= new ArrayList<>();
-        this.nomeVoluntario= new String();
-        this.codVoluntario=new String();
+        this.nomeVoluntario= "";
+        this.codVoluntario="";
         this.raio=0;
+        this.encomendasEntregues= new ArrayList<>();
+        this.pedidosEncomenda=new ArrayList<>();
     }
 
     public Voluntarios(Voluntarios a) {
         this.disponivel = a.disponivel;
         this.localizacao = a.localizacao;
-        this.encomendasEntregues= a.encomendasEntregues;
         this.nomeVoluntario= a.nomeVoluntario;
         this.codVoluntario=a.codVoluntario;
         this.raio=a.raio;
+        this.setEncomendasEntregues(a.getEncomendasEntregues());
+        this.setPedidosEncomenda(a.getPedidosEncomenda());
     }
 
     public String getCodVoluntario() {
@@ -84,7 +88,17 @@ public class Voluntarios {
     }
 
     public void setEncomendasEntregues(List<Encomenda> encomendasEntregues) {
-        this.encomendasEntregues = encomendasEntregues;
+        this.encomendasEntregues = new ArrayList<>();
+        encomendasEntregues.forEach(l -> this.encomendasEntregues.add(l.clone()));
+    }
+
+    public List<Encomenda> getPedidosEncomenda() {
+        return pedidosEncomenda;
+    }
+
+    public void setPedidosEncomenda(List<Encomenda> pedidosEncomenda) {
+        this.pedidosEncomenda = new ArrayList<>();
+        pedidosEncomenda.forEach(l-> this.pedidosEncomenda.add(l.clone()));
     }
 
     @Override
@@ -97,12 +111,13 @@ public class Voluntarios {
                 Objects.equals(codVoluntario, that.codVoluntario) &&
                 Objects.equals(nomeVoluntario, that.nomeVoluntario) &&
                 Objects.equals(localizacao, that.localizacao) &&
-                Objects.equals(encomendasEntregues, that.encomendasEntregues);
+                Objects.equals(encomendasEntregues, that.encomendasEntregues) &&
+                Objects.equals(pedidosEncomenda, that.pedidosEncomenda);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(codVoluntario, nomeVoluntario, disponivel, localizacao, raio, encomendasEntregues);
+        return Objects.hash(codVoluntario, nomeVoluntario, disponivel, localizacao, raio, encomendasEntregues, pedidosEncomenda);
     }
 
     @Override
@@ -114,11 +129,24 @@ public class Voluntarios {
         sb.append(", localizacao=").append(localizacao);
         sb.append(", raio=").append(raio);
         sb.append(", encomendasEntregues=").append(encomendasEntregues);
+        sb.append(", pedidosEncomenda=").append(pedidosEncomenda);
         sb.append('}');
         return sb.toString();
     }
 
     public Voluntarios clone(){
         return new Voluntarios(this);
+    }
+
+
+    // Métodos
+
+    public List aceitaEncomenda(List<Encomenda> pedidosEncomenda){
+        double dist;
+        for(Encomenda aux: pedidosEncomenda){
+            dist=aux.getOrigem().getLocalizacao().distancia(this.localizacao);
+            if (dist>raio) pedidosEncomenda.remove(aux);
+        }
+        return pedidosEncomenda;
     }
 }
