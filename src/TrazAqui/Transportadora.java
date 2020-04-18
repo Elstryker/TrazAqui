@@ -10,17 +10,19 @@ public class Transportadora {
     private String nomeEmpresa;
     private String codEmpresa;
     private GPS localizacao;
+    private String NIF;
     private int raio;
     private double precoKM;
     private List<Encomenda> encomendasEntregues;
     private List<Encomenda> pedidosEncomenda;
 
-    public Transportadora(boolean certificada, boolean disponivel, String nomeEmpresa, String codEmpresa, GPS localizacao, int raio, double precoKM, List<Encomenda> encomendasEntregues, List<Encomenda> pedidosEncomenda) {
+    public Transportadora(boolean certificada, boolean disponivel, String nomeEmpresa, String codEmpresa, GPS localizacao,String NIF, int raio, double precoKM, List<Encomenda> encomendasEntregues, List<Encomenda> pedidosEncomenda) {
         this.certificada=certificada;
         this.disponivel = disponivel;
         this.nomeEmpresa = nomeEmpresa;
         this.codEmpresa = codEmpresa;
         this.localizacao = localizacao;
+        this.NIF=NIF;
         this.raio = raio;
         this.precoKM = precoKM;
         this.setEncomendasEntregues(encomendasEntregues);
@@ -49,6 +51,15 @@ public class Transportadora {
         this.localizacao=a.localizacao;
         this.raio=a.raio;
         this.precoKM= a.precoKM;
+        this.NIF=a.NIF;
+    }
+
+    public String getNIF() {
+        return NIF;
+    }
+
+    public void setNIF(String NIF) {
+        this.NIF = NIF;
     }
 
     public boolean isCertificada() {
@@ -143,13 +154,14 @@ public class Transportadora {
                 Objects.equals(nomeEmpresa, that.nomeEmpresa) &&
                 Objects.equals(codEmpresa, that.codEmpresa) &&
                 Objects.equals(localizacao, that.localizacao) &&
+                Objects.equals(NIF, that.NIF) &&
                 Objects.equals(encomendasEntregues, that.encomendasEntregues) &&
                 Objects.equals(pedidosEncomenda, that.pedidosEncomenda);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(certificada, disponivel, nomeEmpresa, codEmpresa, localizacao, raio, precoKM, encomendasEntregues, pedidosEncomenda);
+        return Objects.hash(certificada, disponivel, nomeEmpresa, codEmpresa, localizacao, NIF, raio, precoKM, encomendasEntregues, pedidosEncomenda);
     }
 
     @Override
@@ -160,6 +172,7 @@ public class Transportadora {
         sb.append(", nomeEmpresa='").append(nomeEmpresa).append('\'');
         sb.append(", codEmpresa='").append(codEmpresa).append('\'');
         sb.append(", localizacao=").append(localizacao);
+        sb.append(", NIF='").append(NIF).append('\'');
         sb.append(", raio=").append(raio);
         sb.append(", precoKM=").append(precoKM);
         sb.append(", encomendasEntregues=").append(encomendasEntregues);
