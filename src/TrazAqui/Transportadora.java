@@ -12,11 +12,11 @@ public class Transportadora {
     private GPS localizacao;
     private int raio;
     private double precoKM;
-    private List<Voluntarios> voluntarios;
+    private List<Voluntario> voluntarios;
     private List<Encomenda> encomendasEntregues;
     private List<Encomenda> pedidosEncomenda;
 
-    public Transportadora(boolean certificada, boolean disponivel, String nomeEmpresa, String codEmpresa, GPS localizacao, int raio, double precoKM, List<Voluntarios> voluntarios, List<Encomenda> encomendasEntregues, List<Encomenda> pedidosEncomenda) {
+    public Transportadora(boolean certificada, boolean disponivel, String nomeEmpresa, String codEmpresa, GPS localizacao, int raio, double precoKM, List<Voluntario> voluntarios, List<Encomenda> encomendasEntregues, List<Encomenda> pedidosEncomenda) {
         this.certificada=certificada;
         this.disponivel = disponivel;
         this.nomeEmpresa = nomeEmpresa;
@@ -111,11 +111,11 @@ public class Transportadora {
         this.precoKM = precoKM;
     }
 
-    public List<Voluntarios> getVoluntarios() {
+    public List<Voluntario> getVoluntarios() {
         return voluntarios;
     }
 
-    public void setVoluntarios(List<Voluntarios> voluntarios) {
+    public void setVoluntarios(List<Voluntario> voluntarios) {
         this.voluntarios = new ArrayList<>();
         voluntarios.forEach(l -> this.voluntarios.add(l.clone()));
     }
@@ -207,7 +207,7 @@ public class Transportadora {
         }
     }
 
-    public void addVoluntarios(Voluntarios a){
+    public void addVoluntarios(Voluntario a){
         this.voluntarios.add(a.clone());
     }
 
