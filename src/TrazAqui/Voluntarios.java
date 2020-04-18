@@ -141,7 +141,7 @@ public class Voluntarios {
 
     // Métodos
 
-    public List aceitaEncomenda(List<Encomenda> pedidosEncomenda){
+    public List<Encomenda> aceitaEncomenda(List<Encomenda> pedidosEncomenda){
         double dist;
         for(Encomenda aux: pedidosEncomenda){
             dist=aux.getOrigem().getLocalizacao().distancia(this.localizacao);
@@ -149,4 +149,20 @@ public class Voluntarios {
         }
         return pedidosEncomenda;
     }
+
+    public void mudaDisponibilidade(){
+        if(!this.disponivel) this.disponivel= true;
+        else {
+            this.disponivel=false;
+        }
+    }
+
+    public void addEncomendaEntregue(Encomenda a){
+        this.encomendasEntregues.add(a.clone());
+    }
+
+    public void addPedidosEncomenda(Encomenda a){
+        this.pedidosEncomenda.add(a.clone());
+    }
+
 }
