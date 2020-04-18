@@ -62,29 +62,41 @@ public class Estado {
     }
 
     public HashSet<Utilizador> getUtilizadores() {
-        return utilizadores;
+        HashSet<Utilizador> res = new HashSet<>();
+        res.addAll(this.utilizadores);
+        return res;
     }
 
     public void setUtilizadores(HashSet<Utilizador> utilizadores) {
         this.utilizadores = new HashSet<>();
-        this.utilizadores.addAll(utilizadores);
+        for (Utilizador u : utilizadores) {
+            this.utilizadores.add(u.clone());
+        }
     }
 
     public HashSet<Transportadora> getTransportadoras() {
-        return transportadoras;
+        HashSet<Transportadora> res = new HashSet<>();
+        res.addAll(this.transportadoras);
+        return res;
     }
 
     public void setTransportadoras(HashSet<Transportadora> transportadoras) {
         this.transportadoras = new HashSet<>();
-        this.transportadoras.addAll(transportadoras);
+        for (Transportadora t : transportadoras) {
+            this.transportadoras.add(t.clone());
+        }
     }
 
     public HashSet<Loja> getLojas() {
-        return lojas;
+        HashSet<Loja> res = new HashSet<>();
+        res.addAll(this.lojas);
+        return res;
     }
 
     public void setLojas(HashSet<Loja> lojas) {
         this.lojas = new HashSet<>();
-        this.lojas.addAll(lojas);
+        for (Loja l : lojas) {
+            this.lojas.add(l.clone());
+        }
     }
 }
