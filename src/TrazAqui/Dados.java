@@ -62,10 +62,11 @@ public class Dados {
     }
 
     public ArrayList<String> getDados() {
-        return dados;
+        return new ArrayList<>(this.dados);
     }
 
     public void setDados(ArrayList<String> dados) {
-        this.dados = dados;
+        this.dados = new ArrayList<>();
+        this.dados.addAll(dados);
     }
 }
