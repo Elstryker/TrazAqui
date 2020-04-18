@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-public class Voluntarios {
+public class Voluntario {
     private String codVoluntario;
     private String nomeVoluntario;
     private boolean disponivel;
@@ -15,7 +15,7 @@ public class Voluntarios {
     private List<Encomenda> encomendasEntregues;
     private List<Encomenda> pedidosEncomenda;
 
-    public Voluntarios(String codVoluntario, String nomeVoluntario, boolean disponivel, GPS localizacao,int[] cla,int raio, List<Encomenda> encomendasEntregues, List<Encomenda> pedidosEncomenda) {
+    public Voluntario(String codVoluntario, String nomeVoluntario, boolean disponivel, GPS localizacao, int[] cla, int raio, List<Encomenda> encomendasEntregues, List<Encomenda> pedidosEncomenda) {
         this.codVoluntario = codVoluntario;
         this.nomeVoluntario = nomeVoluntario;
         this.disponivel = disponivel;
@@ -26,7 +26,7 @@ public class Voluntarios {
         this.setPedidosEncomenda(pedidosEncomenda);
     }
 
-    public Voluntarios(){
+    public Voluntario(){
         this.disponivel = false;
         this.localizacao= new GPS();
         this.nomeVoluntario= "";
@@ -37,7 +37,7 @@ public class Voluntarios {
         this.pedidosEncomenda=new ArrayList<>();
     }
 
-    public Voluntarios(Voluntarios a) {
+    public Voluntario(Voluntario a) {
         this.disponivel = a.disponivel;
         this.localizacao = a.localizacao;
         this.nomeVoluntario= a.nomeVoluntario;
@@ -97,7 +97,10 @@ public class Voluntarios {
     }
 
     public List<Encomenda> getEncomendasEntregues() {
-        return encomendasEntregues;
+        List<Encomenda> aux = new ArrayList<>();
+            for(Encomenda a : this.encomendasEntregues)
+                aux.add(a.clone());
+        return aux;
     }
 
     public void setEncomendasEntregues(List<Encomenda> encomendasEntregues) {
@@ -106,7 +109,10 @@ public class Voluntarios {
     }
 
     public List<Encomenda> getPedidosEncomenda() {
-        return pedidosEncomenda;
+        List<Encomenda> aux= new ArrayList<>();
+            for(Encomenda a : this.encomendasEntregues)
+                aux.add(a.clone());
+        return aux;
     }
 
     public void setPedidosEncomenda(List<Encomenda> pedidosEncomenda) {
@@ -118,7 +124,7 @@ public class Voluntarios {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Voluntarios that = (Voluntarios) o;
+        Voluntario that = (Voluntario) o;
         return disponivel == that.disponivel &&
                 raio == that.raio &&
                 Arrays.equals(classificacao, that.classificacao) &&
@@ -149,8 +155,8 @@ public class Voluntarios {
         return sb.toString();
     }
 
-    public Voluntarios clone(){
-        return new Voluntarios(this);
+    public Voluntario clone(){
+        return new Voluntario(this);
     }
 
 
