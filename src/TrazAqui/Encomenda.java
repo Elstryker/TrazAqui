@@ -148,4 +148,17 @@ public class Encomenda {
         this.produtos = new ArrayList<LinhaEncomenda>();
         this.produtos.addAll(produtos);
     }
+
+    public void addProduto(LinhaEncomenda l) {
+        this.produtos.add(l.clone());
+    }
+
+    public void removeProduto(LinhaEncomenda l) {
+        int i,size = this.produtos.size();
+        for (i=0; i<size; i++) {
+            if (this.produtos.get(i).equals(l)) {
+                this.produtos.remove(i);
+            }
+        }
+    }
 }
