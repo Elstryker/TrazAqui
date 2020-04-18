@@ -76,8 +76,4 @@ public class GPS {
         if(dist <= raio) ret = true;
         return ret;
     }
-
-    public GPS clone() {
-        return this;
-    }
 }

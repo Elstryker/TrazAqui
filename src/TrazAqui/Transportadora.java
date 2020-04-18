@@ -12,10 +12,10 @@ public class Transportadora {
     private int raio;
     private double precoKM;
     private List<Voluntarios> voluntarios;
-    private List<Encomendas> encomendasEntregues;
-    private List<Encomendas> pedidosEncomenda;
+    private List<Encomenda> encomendasEntregues;
+    private List<Encomenda> pedidosEncomenda;
 
-    public Transportadora(boolean disponivel, String nomeEmpresa, String codEmpresa, GPS localizacao, int raio, double precoKM, List<Voluntarios> voluntarios, List<Encomendas> encomendasEntregues, List<Encomendas> pedidosEncomenda) {
+    public Transportadora(boolean disponivel, String nomeEmpresa, String codEmpresa, GPS localizacao, int raio, double precoKM, List<Voluntarios> voluntarios, List<Encomenda> encomendasEntregues, List<Encomenda> pedidosEncomenda) {
         this.disponivel = disponivel;
         this.nomeEmpresa = nomeEmpresa;
         this.codEmpresa = codEmpresa;
@@ -44,7 +44,7 @@ public class Transportadora {
         this.voluntarios=a.voluntarios;
         this.encomendasEntregues=a.encomendasEntregues;
         this.pedidosEncomenda=a.pedidosEncomenda;
-        this.nomeEmpresa= a.nomeEmpresa;
+        this.nomeEmpresa=a.nomeEmpresa;
         this.codEmpresa= a.codEmpresa;
         this.localizacao=a.localizacao;
         this.raio=a.raio;
@@ -107,19 +107,19 @@ public class Transportadora {
         this.voluntarios = voluntarios;
     }
 
-    public List<Encomendas> getEncomendasEntregues() {
+    public List<Encomenda> getEncomendasEntregues() {
         return encomendasEntregues;
     }
 
-    public void setEncomendasEntregues(List<Encomendas> encomendasEntregues) {
+    public void setEncomendasEntregues(List<Encomenda> encomendasEntregues) {
         this.encomendasEntregues = encomendasEntregues;
     }
 
-    public List<Encomendas> getPedidosEncomenda() {
+    public List<Encomenda> getPedidosEncomenda() {
         return pedidosEncomenda;
     }
 
-    public void setPedidosEncomenda(List<Encomendas> pedidosEncomenda) {
+    public void setPedidosEncomenda(List<Encomenda> pedidosEncomenda) {
         this.pedidosEncomenda = pedidosEncomenda;
     }
 
@@ -163,4 +163,6 @@ public class Transportadora {
     public Transportadora clone(){
         return new Transportadora(this);
     }
+
+
 }

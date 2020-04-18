@@ -1,6 +1,5 @@
 package TrazAqui;
 
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -11,9 +10,9 @@ public class Voluntarios {
     private boolean disponivel;
     private GPS localizacao;
     private int raio;
-    private List<Encomendas> encomendasEntregues;
+    private List<Encomenda> encomendasEntregues;
 
-    public Voluntarios(String codVoluntario, String nomeVoluntario, boolean disponivel, GPS localizacao, int raio, List<Encomendas> encomendasEntregues) {
+    public Voluntarios(String codVoluntario, String nomeVoluntario, boolean disponivel, GPS localizacao, int raio, List<Encomenda> encomendasEntregues) {
         this.codVoluntario = codVoluntario;
         this.nomeVoluntario = nomeVoluntario;
         this.disponivel = disponivel;
@@ -80,11 +79,11 @@ public class Voluntarios {
         this.raio = raio;
     }
 
-    public List<Encomendas> getEncomendasEntregues() {
+    public List<Encomenda> getEncomendasEntregues() {
         return encomendasEntregues;
     }
 
-    public void setEncomendasEntregues(List<Encomendas> encomendasEntregues) {
+    public void setEncomendasEntregues(List<Encomenda> encomendasEntregues) {
         this.encomendasEntregues = encomendasEntregues;
     }
 
