@@ -8,21 +8,19 @@ public class Encomenda {
     //Variaveis de instancia
     private double peso;
     private String descricao;
-    private int codigo;
+    private String codigo;
     private LocalDateTime data;
-    private String dest;
-    private String origem;
-    private String transporte;
+    private Utilizador dest;
+    private Loja origem;
     private boolean medicamentos;
     private List<LinhaEncomenda> produtos;
 
-    public Encomenda(double peso, boolean med, String descricao, int codigo, String dest, String origem, String transporte, ArrayList<LinhaEncomenda> produtos, LocalDateTime l) {
+    public Encomenda(double peso, boolean med, String descricao, String codigo, Utilizador dest, Loja origem,ArrayList<LinhaEncomenda> produtos,LocalDateTime l) {
         this.peso = peso;
         this.descricao = descricao;
         this.codigo = codigo;
         this.dest = dest;
         this.origem = origem;
-        this.transporte = transporte;
         this.produtos = produtos;
         this.data = l;
         this.medicamentos = med;
@@ -31,12 +29,11 @@ public class Encomenda {
     public Encomenda() {
         this.peso = 0;
         this.descricao = "";
-        this.codigo = 0;
-        this.dest = "";
-        this.origem = "";
-        this.transporte = "";
+        this.codigo = "";
+        this.dest = new Utilizador();
+        this.origem = new Loja();
         this.medicamentos = false;
-        this.produtos = new ArrayList<LinhaEncomenda>();
+        this.produtos = new ArrayList<>();
         this.data = LocalDateTime.now();
     }
 
@@ -44,7 +41,6 @@ public class Encomenda {
         this.peso = e.getPeso();
         this.data = e.getData();
         this.produtos = e.getProdutos();
-        this.transporte = e.getTransporte();
         this.origem = e.getOrigem();
         this.dest = e.getDest();
         this.codigo = e.getCodigo();
@@ -62,9 +58,10 @@ public class Encomenda {
         sb.append("peso=").append(peso);
         sb.append(", descricao='").append(descricao).append('\'');
         sb.append(", codigo=").append(codigo);
-        sb.append(", dest='").append(dest).append('\'');
-        sb.append(", origem='").append(origem).append('\'');
-        sb.append(", transporte='").append(transporte).append('\'');
+        sb.append(", data=").append(data);
+        sb.append(", dest=").append(dest);
+        sb.append(", origem=").append(origem);
+        sb.append(", medicamentos=").append(medicamentos);
         sb.append(", produtos=").append(produtos);
         sb.append('}');
         return sb.toString();
@@ -77,11 +74,10 @@ public class Encomenda {
         Encomenda e = (Encomenda) o;
 
         return this.peso==e.getPeso() &&
-                this.codigo==e.getCodigo() &&
+                this.codigo.equals(e.getCodigo()) &&
                 this.descricao.equals(e.getCodigo()) &&
                 this.dest.equals(e.getDest()) &&
                 this.origem.equals(e.getOrigem()) &&
-                this.transporte.equals(e.getTransporte()) &&
                 this.produtos.equals(e.getProdutos()) &&
                 this.medicamentos==e.getMedicamentos() &&
                 this.data.equals(e.getData());
@@ -120,36 +116,28 @@ public class Encomenda {
         this.descricao = descricao;
     }
 
-    public int getCodigo() {
-        return this.codigo;
+    public String getCodigo() {
+        return codigo;
     }
 
-    public void setCodigo(int codigo) {
+    public void setCodigo(String codigo) {
         this.codigo = codigo;
     }
 
-    public String getDest() {
-        return this.dest;
+    public Utilizador getDest() {
+        return this.dest.clone();
     }
 
-    public void setDest(String dest) {
-        this.dest = dest;
+    public void setDest(Utilizador dest) {
+        this.dest = new Utilizador(dest);
     }
 
-    public String getOrigem() {
-        return this.origem;
+    public Loja getOrigem() {
+        return this.origem.clone();
     }
 
-    public void setOrigem(String origem) {
-        this.origem = origem;
-    }
-
-    public String getTransporte() {
-        return this.transporte;
-    }
-
-    public void setTransporte(String transporte) {
-        this.transporte = transporte;
+    public void setOrigem(Loja origem) {
+        this.origem = new Loja(origem);
     }
 
     public ArrayList<LinhaEncomenda> getProdutos() {
