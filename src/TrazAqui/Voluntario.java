@@ -142,7 +142,7 @@ public class Voluntario {
 
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder("Voluntarios{");
+        final StringBuilder sb = new StringBuilder("Voluntario{");
         sb.append("codVoluntario='").append(codVoluntario).append('\'');
         sb.append(", nomeVoluntario='").append(nomeVoluntario).append('\'');
         sb.append(", disponivel=").append(disponivel);
@@ -177,10 +177,7 @@ public class Voluntario {
     }
 
     public void mudaDisponibilidade(){
-        if(!this.disponivel) this.disponivel= true;
-        else {
-            this.disponivel=false;
-        }
+        this.disponivel= !this.disponivel;
     }
 
     public void addEncomendaEntregue(Encomenda a){
