@@ -9,6 +9,18 @@ public class Dados {
     public Dados() {
         this.dados = new ArrayList<>();
     }
+    public Dados(ArrayList<String> d) {
+        this.dados = new ArrayList<>(d);
+    }
+
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o==null || !this.getClass().equals(o.getClass())) return false;
+
+        Dados d = (Dados) o;
+
+        return this.dados.equals(d.getDados());
+    }
 
     public Dados(Dados d) {
         setDados(d.getDados());
