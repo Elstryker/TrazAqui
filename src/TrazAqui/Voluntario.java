@@ -97,7 +97,10 @@ public class Voluntario {
     }
 
     public List<Encomenda> getEncomendasEntregues() {
-        return encomendasEntregues;
+        List<Encomenda> aux = new ArrayList<>();
+            for(Encomenda a : this.encomendasEntregues)
+                aux.add(a.clone());
+        return aux;
     }
 
     public void setEncomendasEntregues(List<Encomenda> encomendasEntregues) {
@@ -106,7 +109,10 @@ public class Voluntario {
     }
 
     public List<Encomenda> getPedidosEncomenda() {
-        return pedidosEncomenda;
+        List<Encomenda> aux= new ArrayList<>();
+            for(Encomenda a : this.encomendasEntregues)
+                aux.add(a.clone());
+        return aux;
     }
 
     public void setPedidosEncomenda(List<Encomenda> pedidosEncomenda) {

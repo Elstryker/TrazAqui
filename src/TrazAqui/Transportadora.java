@@ -12,11 +12,10 @@ public class Transportadora {
     private GPS localizacao;
     private int raio;
     private double precoKM;
-    private List<Voluntario> voluntarios;
     private List<Encomenda> encomendasEntregues;
     private List<Encomenda> pedidosEncomenda;
 
-    public Transportadora(boolean certificada, boolean disponivel, String nomeEmpresa, String codEmpresa, GPS localizacao, int raio, double precoKM, List<Voluntario> voluntarios, List<Encomenda> encomendasEntregues, List<Encomenda> pedidosEncomenda) {
+    public Transportadora(boolean certificada, boolean disponivel, String nomeEmpresa, String codEmpresa, GPS localizacao, int raio, double precoKM, List<Encomenda> encomendasEntregues, List<Encomenda> pedidosEncomenda) {
         this.certificada=certificada;
         this.disponivel = disponivel;
         this.nomeEmpresa = nomeEmpresa;
@@ -24,7 +23,6 @@ public class Transportadora {
         this.localizacao = localizacao;
         this.raio = raio;
         this.precoKM = precoKM;
-        this.setVoluntarios(voluntarios);
         this.setEncomendasEntregues(encomendasEntregues);
         this.setPedidosEncomenda(pedidosEncomenda);
     }
@@ -32,7 +30,6 @@ public class Transportadora {
     public Transportadora(){
         this.certificada=true;
         this.disponivel=false;
-        this.voluntarios= new ArrayList<>();
         this.pedidosEncomenda = new ArrayList<>();
         this.encomendasEntregues = new ArrayList<>();
         this.nomeEmpresa= "";
@@ -45,7 +42,6 @@ public class Transportadora {
     public Transportadora(Transportadora a) {
         this.certificada=a.certificada;
         this.disponivel=a.disponivel;
-        this.setVoluntarios(a.getVoluntarios());
         this.setEncomendasEntregues(a.getEncomendasEntregues());
         this.setPedidosEncomenda(a.getPedidosEncomenda());
         this.nomeEmpresa=a.nomeEmpresa;
@@ -111,17 +107,11 @@ public class Transportadora {
         this.precoKM = precoKM;
     }
 
-    public List<Voluntario> getVoluntarios() {
-        return voluntarios;
-    }
-
-    public void setVoluntarios(List<Voluntario> voluntarios) {
-        this.voluntarios = new ArrayList<>();
-        voluntarios.forEach(l -> this.voluntarios.add(l.clone()));
-    }
-
     public List<Encomenda> getEncomendasEntregues() {
-        return encomendasEntregues;
+        List<Encomenda> aux= new ArrayList<>();
+            for(Encomenda a : this.encomendasEntregues)
+                aux.add(a.clone());
+        return aux;
     }
 
     public void setEncomendasEntregues(List<Encomenda> encomendasEntregues) {
@@ -130,7 +120,10 @@ public class Transportadora {
     }
 
     public List<Encomenda> getPedidosEncomenda() {
-        return pedidosEncomenda;
+        List<Encomenda> aux= new ArrayList<>();
+            for(Encomenda a: this.pedidosEncomenda)
+                aux.add(a.clone());
+        return aux;
     }
 
     public void setPedidosEncomenda(List<Encomenda> pedidosEncomenda) {
@@ -150,14 +143,13 @@ public class Transportadora {
                 Objects.equals(nomeEmpresa, that.nomeEmpresa) &&
                 Objects.equals(codEmpresa, that.codEmpresa) &&
                 Objects.equals(localizacao, that.localizacao) &&
-                Objects.equals(voluntarios, that.voluntarios) &&
                 Objects.equals(encomendasEntregues, that.encomendasEntregues) &&
                 Objects.equals(pedidosEncomenda, that.pedidosEncomenda);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(certificada, disponivel, nomeEmpresa, codEmpresa, localizacao, raio, precoKM, voluntarios, encomendasEntregues, pedidosEncomenda);
+        return Objects.hash(certificada, disponivel, nomeEmpresa, codEmpresa, localizacao, raio, precoKM, encomendasEntregues, pedidosEncomenda);
     }
 
     @Override
@@ -170,7 +162,6 @@ public class Transportadora {
         sb.append(", localizacao=").append(localizacao);
         sb.append(", raio=").append(raio);
         sb.append(", precoKM=").append(precoKM);
-        sb.append(", voluntarios=").append(voluntarios);
         sb.append(", encomendasEntregues=").append(encomendasEntregues);
         sb.append(", pedidosEncomenda=").append(pedidosEncomenda);
         sb.append('}');
@@ -205,10 +196,6 @@ public class Transportadora {
         else {
             this.disponivel=false;
         }
-    }
-
-    public void addVoluntarios(Voluntario a){
-        this.voluntarios.add(a.clone());
     }
 
     public void addEncomendaEntregue(Encomenda a){
