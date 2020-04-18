@@ -1,6 +1,7 @@
 package TrazAqui;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -10,15 +11,17 @@ public class Voluntarios {
     private boolean disponivel;
     private GPS localizacao;
     private int raio;
+    private int[] classificacao;
     private List<Encomenda> encomendasEntregues;
     private List<Encomenda> pedidosEncomenda;
 
-    public Voluntarios(String codVoluntario, String nomeVoluntario, boolean disponivel, GPS localizacao, int raio, List<Encomenda> encomendasEntregues, List<Encomenda> pedidosEncomenda) {
+    public Voluntarios(String codVoluntario, String nomeVoluntario, boolean disponivel, GPS localizacao,int[] cla,int raio, List<Encomenda> encomendasEntregues, List<Encomenda> pedidosEncomenda) {
         this.codVoluntario = codVoluntario;
         this.nomeVoluntario = nomeVoluntario;
         this.disponivel = disponivel;
         this.localizacao = localizacao;
         this.raio = raio;
+        this.classificacao = cla;
         this.setEncomendasEntregues(encomendasEntregues);
         this.setPedidosEncomenda(pedidosEncomenda);
     }
@@ -29,6 +32,7 @@ public class Voluntarios {
         this.nomeVoluntario= "";
         this.codVoluntario="";
         this.raio=0;
+        this.classificacao = new int[5];
         this.encomendasEntregues= new ArrayList<>();
         this.pedidosEncomenda=new ArrayList<>();
     }
@@ -39,6 +43,7 @@ public class Voluntarios {
         this.nomeVoluntario= a.nomeVoluntario;
         this.codVoluntario=a.codVoluntario;
         this.raio=a.raio;
+        this.classificacao = a.getClassificacao();
         this.setEncomendasEntregues(a.getEncomendasEntregues());
         this.setPedidosEncomenda(a.getPedidosEncomenda());
     }
@@ -83,6 +88,14 @@ public class Voluntarios {
         this.raio = raio;
     }
 
+    public int[] getClassificacao() {
+        return classificacao;
+    }
+
+    public void setClassificacao(int[] classificacao) {
+        this.classificacao = classificacao;
+    }
+
     public List<Encomenda> getEncomendasEntregues() {
         return encomendasEntregues;
     }
@@ -108,6 +121,7 @@ public class Voluntarios {
         Voluntarios that = (Voluntarios) o;
         return disponivel == that.disponivel &&
                 raio == that.raio &&
+                Arrays.equals(classificacao, that.classificacao) &&
                 Objects.equals(codVoluntario, that.codVoluntario) &&
                 Objects.equals(nomeVoluntario, that.nomeVoluntario) &&
                 Objects.equals(localizacao, that.localizacao) &&
@@ -128,6 +142,7 @@ public class Voluntarios {
         sb.append(", disponivel=").append(disponivel);
         sb.append(", localizacao=").append(localizacao);
         sb.append(", raio=").append(raio);
+        sb.append(", classificacao=").append(Arrays.toString(classificacao));
         sb.append(", encomendasEntregues=").append(encomendasEntregues);
         sb.append(", pedidosEncomenda=").append(pedidosEncomenda);
         sb.append('}');
@@ -140,6 +155,11 @@ public class Voluntarios {
 
 
     // Métodos
+    public void classifica(int x) {
+        if (x >=1 && x<=5) {
+            this.classificacao[x - 1]++;
+        } else System.out.println("Classificacao invalida");
+    }
 
     public List<Encomenda> aceitaEncomenda(List<Encomenda> pedidosEncomenda){
         double dist;
