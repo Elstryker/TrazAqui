@@ -30,9 +30,9 @@ public class FileIO {
                         Utilizador u = new Utilizador(tokens[1],tokens[0],gps);
                         e.addUtilizador(u);
                     case "Voluntario":
-                        gps = new GPS(Double.parseDouble(tokens[3]),Double.parseDouble(tokens[4]));
+                        gps = new GPS(Double.parseDouble(tokens[2]),Double.parseDouble(tokens[3]));
                         Voluntario v = new Voluntario();
-                        v.setRaio(Integer.parseInt(tokens[5]));
+                        v.setRaio(Integer.parseInt(tokens[4]));
                         v.setNomeVoluntario(tokens[1]);
                         v.setCodVoluntario(tokens[0]);
                     case "Transportadora":

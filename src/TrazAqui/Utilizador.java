@@ -1,5 +1,7 @@
 package TrazAqui;
 
+import java.util.List;
+
 public class Utilizador {
     //Variaveis de instancia
     private String nome;
