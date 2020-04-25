@@ -7,19 +7,19 @@ import java.util.Map;
 
 public class  Estado {
     //Variaveis de instancia
-    private HashSet<Utilizador> utilizadores;
-    private HashSet<Transportadora> transportadoras;
-    private HashSet<Voluntario> voluntarios;
+    private HashMap<String,Utilizador> utilizadores;
+    private HashMap<String,Transportadora> transportadoras;
+    private HashMap<String,Voluntario> voluntarios;
     private HashMap<String,Loja> lojas;
 
     public Estado() {
-        this.utilizadores = new HashSet<>();
+        this.utilizadores = new HashMap<>();
         this.lojas = new HashMap<>();
-        this.voluntarios = new HashSet<>();
-        this.transportadoras = new HashSet<>();
+        this.voluntarios = new HashMap<>();
+        this.transportadoras = new HashMap<>();
     }
 
-    public Estado(HashSet<Utilizador> u,HashSet<Transportadora> t,HashSet<Voluntario> v,HashMap<String,Loja> l) {
+    public Estado(HashMap<String,Utilizador> u,HashMap<String,Transportadora> t,HashMap<String,Voluntario> v,HashMap<String,Loja> l) {
         this.setLojas(l);
         this.setTransportadoras(t);
         this.setUtilizadores(u);
@@ -61,61 +61,65 @@ public class  Estado {
     }
 
     public void addVoluntario(Voluntario v) {
-        this.voluntarios.add(v.clone());
+        this.voluntarios.put(v.getCodVoluntario(),v.clone());
     }
 
     public void addUtilizador(Utilizador u) {
-        this.utilizadores.add(u.clone());
+        this.utilizadores.put(u.getCodigo(),u.clone());
     }
 
     public void addTransportadora(Transportadora t) {
-        this.transportadoras.add(t.clone());
+        this.transportadoras.put(t.getCodEmpresa(),t.clone());
     }
 
     public void addLoja(Loja l) {
-        this.lojas.putIfAbsent(l.getCodLoja(),l.clone());
+        this.lojas.put(l.getCodLoja(),l.clone());
     }
 
-    public HashSet<Utilizador> getUtilizadores() {
-        HashSet<Utilizador> res = new HashSet<>();
-        res.addAll(this.utilizadores);
+    public HashMap<String, Utilizador> getUtilizadores() {
+        HashMap<String,Utilizador> res = new HashMap<>();
+        for (Map.Entry<String,Utilizador> u : this.utilizadores.entrySet()) {
+            res.put(u.getKey(),u.getValue().clone());
+        }
         return res;
     }
 
-    public void setUtilizadores(HashSet<Utilizador> utilizadores) {
-        this.utilizadores = new HashSet<>();
-        for (Utilizador u : utilizadores) {
-            this.utilizadores.add(u.clone());
+    public void setUtilizadores(HashMap<String, Utilizador> utilizadores) {
+        this.utilizadores = new HashMap<>();
+        for (Map.Entry<String,Utilizador> u : utilizadores.entrySet()) {
+            this.utilizadores.put(u.getKey(),u.getValue().clone());
         }
     }
 
-    public HashSet<Voluntario> getVoluntarios() {
-        HashSet<Voluntario> v = new HashSet<>();
-        for(Voluntario vol: this.voluntarios)
-            v.add(vol.clone());
-        return v;
-    }
-
-    public void setVoluntarios(HashSet<Voluntario> a) {
-        HashSet<Voluntario> v = new HashSet<>();
-        for(Voluntario vol: a)
-            v.add(vol.clone());
-        this.voluntarios = v;
-    }
-
-    public HashSet<Transportadora> getTransportadoras() {
-        HashSet<Transportadora> res = new HashSet<>();
-        res.addAll(this.transportadoras);
+    public HashMap<String, Transportadora> getTransportadoras() {
+        HashMap<String,Transportadora> res = new HashMap<>();
+        for (Map.Entry<String,Transportadora> t : this.transportadoras.entrySet()) {
+            res.put(t.getKey(),t.getValue().clone());
+        }
         return res;
     }
 
-    public void setTransportadoras(HashSet<Transportadora> transportadoras) {
-        this.transportadoras = new HashSet<>();
-        for (Transportadora t : transportadoras) {
-            this.transportadoras.add(t.clone());
+    public void setTransportadoras(HashMap<String, Transportadora> transportadoras) {
+        this.transportadoras = new HashMap<>();
+        for (Map.Entry<String, Transportadora> t : transportadoras.entrySet()) {
+            this.transportadoras.put(t.getKey(), t.getValue().clone());
         }
     }
 
+    public HashMap<String, Voluntario> getVoluntarios() {
+        HashMap<String,Voluntario> res = new HashMap<>();
+        for (Map.Entry<String,Voluntario> v : this.voluntarios.entrySet()) {
+            res.put(v.getKey(),v.getValue().clone());
+        }
+        return res;
+    }
+
+    public void setVoluntarios(HashMap<String, Voluntario> voluntarios) {
+        this.voluntarios = new HashMap<>();
+        for (Map.Entry<String, Voluntario> v : voluntarios.entrySet()) {
+            this.voluntarios.put(v.getKey(), v.getValue().clone());
+        }
+    }
     public HashMap<String, Loja> getLojas() {
         HashMap<String,Loja> res = new HashMap<>();
         for (Map.Entry<String,Loja> l : this.lojas.entrySet()) {

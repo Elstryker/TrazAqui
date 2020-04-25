@@ -215,8 +215,4 @@ public class Transportadora {
     public void addPedidosEncomenda(Encomenda a){
         this.pedidosEncomenda.add(a.clone());
     }
-
-
-
-
 }
