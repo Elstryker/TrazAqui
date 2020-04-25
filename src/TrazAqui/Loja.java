@@ -2,10 +2,9 @@ package TrazAqui;
 
 import java.util.LinkedList;
 import java.util.Objects;
-import java.util.Queue;
 
 public class Loja {
-    private String codLoja;
+    private String cod;
     private String nome;
     private GPS localizacao;
     private double tempoProcessamento;
@@ -13,7 +12,7 @@ public class Loja {
     private LinkedList<Encomenda> filaEspera;
 
     public Loja () {
-        this.codLoja = "";
+        this.cod = "";
         this.nome = "";
         this.localizacao = new GPS();
         this.tempoProcessamento = 0;
@@ -21,8 +20,8 @@ public class Loja {
         this.filaEspera = new LinkedList<>();
     }
 
-    public Loja(String codLoja, String nome, double tempoProcessamento, GPS localizacao, boolean temFila, LinkedList<Encomenda> l) {
-        this.codLoja = codLoja;
+    public Loja(String cod, String nome, double tempoProcessamento, GPS localizacao, boolean temFila, LinkedList<Encomenda> l) {
+        this.cod = cod;
         this.nome = nome;
         this.localizacao = localizacao;
         this.tempoProcessamento = tempoProcessamento;
@@ -33,7 +32,7 @@ public class Loja {
     }
 
     public Loja(Loja a) {
-        this.codLoja = a.getCodLoja();
+        this.cod = a.getCod();
         this.nome = a.getNome();
         this.localizacao = a.getLocalizacao();
         this.tempoProcessamento = a.getTempoProcessamento();
@@ -71,12 +70,12 @@ public class Loja {
         this.tempoProcessamento = tempoProcessamento;
     }
 
-    public String getCodLoja() {
-        return codLoja;
+    public String getCod() {
+        return cod;
     }
 
-    public void setCodLoja(String codLoja) {
-        this.codLoja = codLoja;
+    public void setCod(String cod) {
+        this.cod = cod;
     }
 
     public String getNome() {
@@ -100,7 +99,7 @@ public class Loja {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Loja loja = (Loja) o;
-        return this.codLoja.equals(loja.getCodLoja()) &&
+        return this.cod.equals(loja.getCod()) &&
                 this.nome.equals(loja.getNome()) &&
                 this.tempoProcessamento == loja.getTempoProcessamento() &&
                 this.localizacao.equals(loja.getLocalizacao()) &&
@@ -109,13 +108,13 @@ public class Loja {
 
     @Override
     public int hashCode() {
-        return Objects.hash(codLoja, nome, localizacao);
+        return Objects.hash(cod, nome, localizacao);
     }
 
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("Loja {");
-        sb.append("codLoja = ").append(codLoja);
+        sb.append("cod = ").append(cod);
         sb.append(", nome = ").append(nome);
         sb.append(", localizacao = ").append(localizacao);
         sb.append('}');

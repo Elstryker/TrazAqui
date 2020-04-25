@@ -85,7 +85,7 @@ public class  Estado {
     }
 
     public void addLoja(Loja l) {
-        this.lojas.put(l.getCodLoja(),l.clone());
+        this.lojas.put(l.getCod(),l.clone());
     }
 
     public void addEncAceite(String s) {

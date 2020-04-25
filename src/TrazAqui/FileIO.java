@@ -5,32 +5,44 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class FileIO {
-    private String path;
+    private String readPath;
+    private String writePath;
 
     public FileIO() {
-        this.path = "";
+        this.readPath = "";
+        this.writePath = "";
     }
 
-    public FileIO(String p) {
-        this.path = p;
+    public FileIO(String p, String p2) {
+        this.readPath = p;
+        this.writePath = p2;
     }
 
     public FileIO(FileIO f) {
-        this.path = f.getPath();
+        this.readPath = f.getReadPath();
+        this.writePath = f.getWritePath();
     }
 
-    public String getPath() {
-        return this.path;
+    public String getReadPath() {
+        return readPath;
     }
 
-    public void setPath(String p) {
-        this.path = p;
+    public void setReadPath(String readPath) {
+        this.readPath = readPath;
     }
 
-    public void processLine(Estado e) throws IOException {
+    public String getWritePath() {
+        return writePath;
+    }
+
+    public void setWritePath(String writePath) {
+        this.writePath = writePath;
+    }
+
+    public void loadFromFile(Estado e) throws IOException {
         BufferedReader file;
         GPS gps;
-        file = new BufferedReader(new FileReader(this.path));
+        file = new BufferedReader(new FileReader(this.readPath));
         String line = file.readLine(), temp;
         String[] tokens;
         int start = 42;
@@ -69,7 +81,7 @@ public class FileIO {
                     case "Loja":
                         gps = new GPS(Double.parseDouble(tokens[2]),Double.parseDouble(tokens[3]));
                         Loja j = new Loja();
-                        j.setCodLoja(tokens[0]);
+                        j.setCod(tokens[0]);
                         j.setNome(tokens[1]);
                         j.setLocalizacao(gps);
                         e.addLoja(j);
@@ -77,7 +89,7 @@ public class FileIO {
                     case "Encomenda":
                         Encomenda s = new Encomenda();
                         s.setCodigo(tokens[0]);
-                        s.setDescricao(tokens[1]);
+                        s.setUtilizador(tokens[1]);
                         s.setLoja(tokens[2]);
                         s.setPeso(Double.parseDouble(tokens[3]));
                         LinhaEncomenda linha = new LinhaEncomenda();
@@ -100,6 +112,29 @@ public class FileIO {
             else i++;
             line = file.readLine();
         }
+        file.close();
+    }
+
+    public void saveToFile(Estado e) throws IOException {
+        BufferedWriter file = new BufferedWriter(new FileWriter(this.writePath));
+        StringBuilder sb = new StringBuilder();
+        for(Utilizador u: e.getUtilizadores().values())
+            file.write("Utilizador:"+u.getCodigo()+","+u.getNome()+","+u.getPosicao().getLatitude()+","+u.getPosicao().getLongitude()+"\n");
+        for(Voluntario u: e.getVoluntarios().values())
+            file.write("Voluntario:"+u.getCodVoluntario()+","+u.getNomeVoluntario()+","+u.getLocalizacao().getLatitude()+","+u.getLocalizacao().getLongitude()+","+u.getRaio()+"\n");
+        for(Transportadora u: e.getTransportadoras().values())
+            file.write("Transportadora:"+u.getCodEmpresa()+","+u.getNomeEmpresa()+","+u.getLocalizacao().getLatitude()+","+u.getLocalizacao().getLongitude()+","+u.getNIF()+","+u.getRaio()+","+u.getPrecoKM()+"\n");
+        for(Loja u: e.getLojas().values())
+            file.write("Loja:"+u.getCod()+","+u.getNome()+","+u.getLocalizacao().getLatitude()+","+u.getLocalizacao().getLongitude()+"\n");
+        for(Loja u: e.getLojas().values())
+            for(Encomenda enc: u.getFilaEspera()) {
+                file.write("Encomenda:"+enc.getCodigo()+","+enc.getUtilizador()+","+enc.getLoja()+","+enc.getPeso());
+                for(LinhaEncomenda linha: enc.getProdutos())
+                    file.write(","+linha.getCodigo()+","+linha.getDescricao()+","+linha.getQuantidade()+","+linha.getPreco());
+                file.newLine();
+            }
+        for(String u: e.getEncAceites())
+            file.write("Aceite:"+u+"\n");
         file.close();
     }
 }
