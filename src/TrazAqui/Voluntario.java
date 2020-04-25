@@ -1,9 +1,6 @@
 package TrazAqui;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class Voluntario {
     private String codVoluntario;
@@ -167,11 +164,12 @@ public class Voluntario {
         } else System.out.println("Classificacao invalida");
     }
 
-    public List<Encomenda> aceitaEncomenda(List<Encomenda> pedidosEncomenda){
+    public List<Encomenda> aceitaEncomenda(List<Encomenda> pedidosEncomenda, HashMap<String,Loja> lojas){
         double dist;
-        for(Encomenda aux: pedidosEncomenda){
-            dist=aux.getOrigem().getLocalizacao().distancia(this.localizacao);
-            if (dist>raio) pedidosEncomenda.remove(aux);
+        for(Encomenda e: pedidosEncomenda){
+            Loja l = lojas.get(e.getLoja()).clone();
+            dist = l.getLocalizacao().distancia(e.getDest().getPosicao());
+            if (dist>raio) pedidosEncomenda.remove(e);
         }
         return pedidosEncomenda;
     }
