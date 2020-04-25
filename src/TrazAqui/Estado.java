@@ -11,26 +11,30 @@ public class  Estado {
     private HashSet<Transportadora> transportadoras;
     private HashSet<Voluntario> voluntarios;
     private HashMap<String,Loja> lojas;
+    private HashSet<String> encAceites;
 
     public Estado() {
         this.utilizadores = new HashSet<>();
         this.lojas = new HashMap<>();
         this.voluntarios = new HashSet<>();
         this.transportadoras = new HashSet<>();
+        this.encAceites = new HashSet<>();
     }
 
-    public Estado(HashSet<Utilizador> u,HashSet<Transportadora> t,HashSet<Voluntario> v,HashMap<String,Loja> l) {
+    public Estado(HashSet<Utilizador> u,HashSet<Transportadora> t,HashSet<Voluntario> v,HashMap<String,Loja> l,HashSet<String> hs) {
         this.setLojas(l);
         this.setTransportadoras(t);
         this.setUtilizadores(u);
         this.setVoluntarios(v);
+        this.setEncAceites(hs);
     }
 
     public Estado(Estado e) {
-        this.lojas = e.getLojas();
-        this.transportadoras = e.getTransportadoras();
-        this.voluntarios = e.getVoluntarios();
-        this.utilizadores = e.getUtilizadores();
+        this.setLojas(e.getLojas());
+        this.setTransportadoras(e.getTransportadoras());
+        this.setVoluntarios(e.getVoluntarios());
+        this.setUtilizadores(e.getUtilizadores());
+        this.setEncAceites(e.getEncAceites());
     }
 
     public Estado clone() {
@@ -60,6 +64,14 @@ public class  Estado {
         return sb.toString();
     }
 
+    public HashSet<String> getEncAceites() {
+        return new HashSet<>(this.encAceites);
+    }
+
+    public void setEncAceites(HashSet<String> encAceites) {
+        this.encAceites = new HashSet<>(encAceites);
+    }
+
     public void addVoluntario(Voluntario v) {
         this.voluntarios.add(v.clone());
     }
@@ -76,9 +88,15 @@ public class  Estado {
         this.lojas.putIfAbsent(l.getCodLoja(),l.clone());
     }
 
+    public void addEncAceite(String s) {
+        this.encAceites.add(s);
+    }
+
     public HashSet<Utilizador> getUtilizadores() {
         HashSet<Utilizador> res = new HashSet<>();
-        res.addAll(this.utilizadores);
+        for (Utilizador u : this.utilizadores) {
+            res.add(u.clone());
+        }
         return res;
     }
 
@@ -105,7 +123,9 @@ public class  Estado {
 
     public HashSet<Transportadora> getTransportadoras() {
         HashSet<Transportadora> res = new HashSet<>();
-        res.addAll(this.transportadoras);
+        for (Transportadora u : this.transportadoras) {
+            res.add(u.clone());
+        }
         return res;
     }
 
@@ -142,6 +162,10 @@ public class  Estado {
             }
         }
         return total;
+    }
+
+    public void addEncomendaLoja(Encomenda e, String loja) {
+        this.lojas.get(loja).adicionaEncomenda(e);
     }
 
 
