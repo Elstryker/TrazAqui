@@ -133,7 +133,7 @@ public class Encomenda {
     }
 
     public String getLoja() {
-        return loja;
+        return this.loja;
     }
 
     public void setLoja(String loja) {

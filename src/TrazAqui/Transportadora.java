@@ -12,12 +12,12 @@ public class Transportadora {
     private String codEmpresa;
     private GPS localizacao;
     private String NIF;
-    private int raio;
+    private double raio;
     private double precoKM;
     private List<Encomenda> encomendasEntregues;
     private List<Encomenda> pedidosEncomenda;
 
-    public Transportadora(boolean certificada, boolean disponivel, String nomeEmpresa, String codEmpresa, GPS localizacao,String NIF, int raio, double precoKM, List<Encomenda> encomendasEntregues, List<Encomenda> pedidosEncomenda) {
+    public Transportadora(boolean certificada, boolean disponivel, String nomeEmpresa, String codEmpresa, GPS localizacao,String NIF, double raio, double precoKM, List<Encomenda> encomendasEntregues, List<Encomenda> pedidosEncomenda) {
         this.certificada=certificada;
         this.disponivel = disponivel;
         this.nomeEmpresa = nomeEmpresa;
@@ -103,11 +103,11 @@ public class Transportadora {
         this.localizacao = localizacao;
     }
 
-    public int getRaio() {
+    public double getRaio() {
         return raio;
     }
 
-    public void setRaio(int raio) {
+    public void setRaio(double raio) {
         this.raio = raio;
     }
 

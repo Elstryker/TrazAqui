@@ -5,10 +5,10 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-        //  FileIO o = new FileIO();
+        FileIO o = new FileIO("teste.txt");
         Scanner sc = new Scanner(System.in);
         Estado e = new Estado();
-        // o.processLine(e);
+        o.processLine(e);
         Validacao v = new Validacao();
         v.novoUtilizador("ola", "adeus");
         System.out.println("Insira email");

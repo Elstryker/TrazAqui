@@ -7,12 +7,12 @@ public class Voluntario {
     private String nomeVoluntario;
     private boolean disponivel;
     private GPS localizacao;
-    private int raio;
+    private double raio;
     private int[] classificacao;
     private List<Encomenda> encomendasEntregues;
     private List<Encomenda> pedidosEncomenda;
 
-    public Voluntario(String codVoluntario, String nomeVoluntario, boolean disponivel, GPS localizacao, int[] cla, int raio, List<Encomenda> encomendasEntregues, List<Encomenda> pedidosEncomenda) {
+    public Voluntario(String codVoluntario, String nomeVoluntario, boolean disponivel, GPS localizacao, int[] cla, double raio, List<Encomenda> encomendasEntregues, List<Encomenda> pedidosEncomenda) {
         this.codVoluntario = codVoluntario;
         this.nomeVoluntario = nomeVoluntario;
         this.disponivel = disponivel;
@@ -77,11 +77,11 @@ public class Voluntario {
         this.localizacao = localizacao;
     }
 
-    public int getRaio() {
+    public double getRaio() {
         return raio;
     }
 
-    public void setRaio(int raio) {
+    public void setRaio(double raio) {
         this.raio = raio;
     }
 

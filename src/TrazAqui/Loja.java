@@ -59,7 +59,7 @@ public class Loja {
 
     public void setFilaEspera(LinkedList<Encomenda> a) {
         LinkedList<Encomenda> s = new LinkedList<Encomenda>();
-        for (Encomenda encomenda : this.filaEspera) s.add(encomenda.clone());
+        for (Encomenda encomenda : a) s.add(encomenda.clone());
         this.filaEspera = s;
     }
 
