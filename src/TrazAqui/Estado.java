@@ -1,9 +1,7 @@
 package TrazAqui;
 
 import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
+import java.util.*;
 
 public class  Estado {
     //Variaveis de instancia
@@ -148,5 +146,75 @@ public class  Estado {
         return total;
     }
 
+    public List<String> getTop10 () {
+        ArrayList<String> res = new ArrayList<>();
+        int cont=0;
+
+        TreeMap<Integer,String> vezesT = analisaT();
+        TreeMap<Integer,String> vezesV = analisaV();
+
+        /*
+        for (Map.Entry<Integer,String> e : vezesT.entrySet()) {
+            for (Map.Entry<Integer,String> d: vezesV.entrySet()) {
+
+                if (cont>=10) break;
+
+                if (e.getKey()>d.getKey()) {
+                    res.add(e.getValue());
+                } else {
+                    res.add(d.getValue());
+                }
+                cont++;
+            }
+        }*/
+
+        return res;
+    }
+
+    private TreeMap<Integer,String> analisaT() {
+        Comparator<Integer> comp = Integer::compareTo;
+        TreeMap<Integer,String> vezes = new TreeMap<>(comp);
+        int cont;
+
+        for (Map.Entry<String,Utilizador> aux1 : this.utilizadores.entrySet()) {
+            Utilizador u = aux1.getValue();
+            cont=0;
+
+            for (Map.Entry<String,Transportadora> aux2 : this.transportadoras.entrySet()) {
+                Transportadora t = aux2.getValue();
+
+                for (Encomenda e : t.getEncomendasEntregues()) {
+                    if (e.getCodigo().equals(u.getCodigo())) {
+                        cont++;
+                    }
+                }
+            }
+            vezes.put(cont,u.getCodigo());
+        }
+        return vezes;
+    }
+
+    private TreeMap<Integer,String> analisaV() {
+        Comparator<Integer> comp = Integer::compareTo;
+        TreeMap<Integer,String> vezes = new TreeMap<>(comp);
+        int cont;
+
+        for (Map.Entry<String,Utilizador> aux1 : this.utilizadores.entrySet()) {
+            Utilizador u = aux1.getValue();
+            cont=0;
+
+            for (Map.Entry<String,Voluntario> aux2 : this.voluntarios.entrySet()) {
+                Voluntario v = aux2.getValue();
+
+                for (Encomenda e : v.getEncomendasEntregues()) {
+                    if (e.getCodigo().equals(u.getCodigo())) {
+                        cont++;
+                    }
+                }
+            }
+            vezes.put(cont,u.getCodigo());
+        }
+        return vezes;
+    }
 
 }
