@@ -1,5 +1,6 @@
 package TrazAqui;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -186,12 +187,11 @@ public class Transportadora {
     }
 
     // Métodos
-
-    public double precoEncomenda(double precoKM, double peso, double dist) {
+    public double precoEncomenda(double peso, double dist) {
         double total = 0;
 
-        if (peso > 10) total = precoKM*dist;
-        else total = precoKM*dist+2.5;
+        if (peso > 10) total = this.precoKM*dist;
+        else total = this.precoKM*dist+2.5;
 
         return total;
     }
@@ -205,10 +205,7 @@ public class Transportadora {
     }
 
     public void mudaDisponibilidade() {
-        if(!this.disponivel) this.disponivel= true;
-        else {
-            this.disponivel=false;
-        }
+        this.disponivel= !this.disponivel;
     }
 
     public void addEncomendaEntregue(Encomenda a){
@@ -218,5 +215,8 @@ public class Transportadora {
     public void addPedidosEncomenda(Encomenda a){
         this.pedidosEncomenda.add(a.clone());
     }
+
+
+
 
 }

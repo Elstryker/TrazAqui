@@ -1,22 +1,25 @@
 package TrazAqui;
 
+import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 
 public class  Estado {
     //Variaveis de instancia
     private HashSet<Utilizador> utilizadores;
     private HashSet<Transportadora> transportadoras;
     private HashSet<Voluntario> voluntarios;
-    private HashSet<Loja> lojas;
+    private HashMap<String,Loja> lojas;
 
     public Estado() {
         this.utilizadores = new HashSet<>();
-        this.lojas = new HashSet<>();
+        this.lojas = new HashMap<>();
         this.voluntarios = new HashSet<>();
         this.transportadoras = new HashSet<>();
     }
 
-    public Estado(HashSet<Utilizador> u,HashSet<Transportadora> t,HashSet<Voluntario> v,HashSet<Loja> l) {
+    public Estado(HashSet<Utilizador> u,HashSet<Transportadora> t,HashSet<Voluntario> v,HashMap<String,Loja> l) {
         this.setLojas(l);
         this.setTransportadoras(t);
         this.setUtilizadores(u);
@@ -70,7 +73,7 @@ public class  Estado {
     }
 
     public void addLoja(Loja l) {
-        this.lojas.add(l.clone());
+        this.lojas.putIfAbsent(l.getCodLoja(),l.clone());
     }
 
     public HashSet<Utilizador> getUtilizadores() {
@@ -113,16 +116,33 @@ public class  Estado {
         }
     }
 
-    public HashSet<Loja> getLojas() {
-        HashSet<Loja> res = new HashSet<>();
-        res.addAll(this.lojas);
+    public HashMap<String, Loja> getLojas() {
+        HashMap<String,Loja> res = new HashMap<>();
+        for (Map.Entry<String,Loja> l : this.lojas.entrySet()) {
+            res.put(l.getKey(),l.getValue().clone());
+        }
         return res;
     }
 
-    public void setLojas(HashSet<Loja> lojas) {
-        this.lojas = new HashSet<>();
-        for (Loja l : lojas) {
-            this.lojas.add(l.clone());
+    public void setLojas(HashMap<String, Loja> lojas) {
+        this.lojas = new HashMap<>();
+        for (Map.Entry<String,Loja> l : lojas.entrySet()) {
+            this.lojas.put(l.getKey(),l.getValue().clone());
         }
     }
+
+    public double totalFaturado(Transportadora t, LocalDateTime min, LocalDateTime max) {
+        double total=0;
+        for (Encomenda e : t.getEncomendasEntregues()) {
+            if (e.getData().isAfter(min) && e.getData().isBefore(max)) {
+                if (this.lojas.containsKey(e.getLoja())) {
+                    Loja l = this.lojas.get(e.getLoja()).clone();
+                    total += t.precoEncomenda(e.getPeso(),l.getLocalizacao().distancia(e.getDest().getPosicao()));
+                }
+            }
+        }
+        return total;
+    }
+
+
 }

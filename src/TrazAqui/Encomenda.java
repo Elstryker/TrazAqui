@@ -141,12 +141,18 @@ public class Encomenda {
     }
 
     public ArrayList<LinhaEncomenda> getProdutos() {
-        return new ArrayList<LinhaEncomenda>(this.produtos);
+        ArrayList<LinhaEncomenda> res = new ArrayList<>();
+        for (LinhaEncomenda l : this.produtos) {
+            res.add(l.clone());
+        }
+        return res;
     }
 
     public void setProdutos(ArrayList<LinhaEncomenda> produtos) {
-        this.produtos = new ArrayList<LinhaEncomenda>();
-        this.produtos.addAll(produtos);
+        this.produtos = new ArrayList<>();
+        for (LinhaEncomenda l : produtos) {
+            this.produtos.add(l.clone());
+        }
     }
 
     public void addProduto(LinhaEncomenda l) {
@@ -161,4 +167,5 @@ public class Encomenda {
             }
         }
     }
+
 }

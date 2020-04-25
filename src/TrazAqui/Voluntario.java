@@ -164,14 +164,15 @@ public class Voluntario {
         } else System.out.println("Classificacao invalida");
     }
 
- /*   public List<Encomenda> aceitaEncomenda(List<Encomenda> pedidosEncomenda, HashSet<Loja> lj){
+    public List<Encomenda> aceitaEncomenda(List<Encomenda> pedidosEncomenda, HashMap<String,Loja> lojas){
         double dist;
-        for(Encomenda aux: pedidosEncomenda){
-            dist=aux.getLoja().getLocalizacao().distancia(this.localizacao);
-            if (dist>raio) pedidosEncomenda.remove(aux);
+        for(Encomenda e: pedidosEncomenda){
+            Loja l = lojas.get(e.getLoja()).clone();
+            dist = l.getLocalizacao().distancia(e.getDest().getPosicao());
+            if (dist>raio) pedidosEncomenda.remove(e);
         }
         return pedidosEncomenda;
-    }*/
+    }
 
     public void mudaDisponibilidade(){
         this.disponivel= !this.disponivel;
