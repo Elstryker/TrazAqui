@@ -6,19 +6,10 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) throws IOException {
         FileIO o = new FileIO("teste.txt","output.txt");
-        Scanner sc = new Scanner(System.in);
         Estado e = new Estado();
         o.loadFromFile(e);
-        Validacao v = new Validacao();
-        v.novoUtilizador("ola", "adeus");
-        System.out.println("Insira email");
-        String email = sc.next();
-        if (v.validaEmail(email)) {
-            System.out.println("Insira password");
-            String pass = sc.next();
-            if(v.validaPass(email,pass)) System.out.println("Bem-Vindo "+email);
-            else System.out.println("Password incorreta");
-        }
-        else System.out.println("Utilizador nao existe");
+        o.adicionaUtilizador("ola","adeus","pedro");
+        o.adicionaUtilizador("as","d","f");
+        System.out.println(o.validaDados("as","d","f"));
     }
 }
