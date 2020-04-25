@@ -96,4 +96,38 @@ public class FileIO {
         }
         file.close();
     }
+
+    public void adicionaUtilizador(String email, String password,String nome) throws IOException {
+        File file = new File("Utilizadores.txt");
+        if(!file.exists()) {
+            file.createNewFile();
+        }
+        FileWriter fw = new FileWriter(file,true);
+        BufferedWriter writer = new BufferedWriter(fw);
+        writer.write(email + "," + password + "," + nome);
+        writer.write("\n");
+        writer.flush();
+        writer.close();
+    }
+
+    public boolean validaDados(String email,String pass) throws IOException {
+        boolean a = false;
+        FileReader file = new FileReader("Utilizadores.txt");
+        BufferedReader reader = new BufferedReader(file);
+        String data = null;
+        String[] tok;
+
+        while ((data = reader.readLine())!=null && !a) {
+           tok= data.split(",");
+           if(tok[0].equals(email) && tok[1].equals(pass)) a=true;
+        }
+        file.close();
+        reader.close();
+
+        return a;
+    }
+
+
+
+
 }

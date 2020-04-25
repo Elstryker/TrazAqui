@@ -62,11 +62,16 @@ public class GPS {
     }
 
     public double distancia(GPS a) {
-        double x,y,ret;
-        x = Math.pow(this.latitude - a.getLatitude(),2);
-        y = Math.pow(this.longitude - a.getLongitude(),2);
-        ret = Math.sqrt(x + y);
-        return ret;
+        double dist;
+        if((this.latitude == a.latitude) && (this.longitude == a.longitude)) dist=0;
+        else {
+            double theta;
+            theta = this.longitude - a.getLongitude();
+            dist = Math.sin(Math.toRadians(this.latitude)) * Math.sin(Math.toRadians(a.latitude)) + Math.cos(Math.toRadians(this.latitude)) * Math.cos(Math.toRadians(a.latitude)) * Math.cos(Math.toRadians(theta));
+            dist = Math.toDegrees(Math.acos(dist));
+            dist = dist * 60 * 1.1515 * 1.609344;
+        }
+        return dist;
     }
 
     public boolean pertenceAoRaio(GPS a, double raio) {
