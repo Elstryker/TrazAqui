@@ -11,16 +11,16 @@ public class Encomenda {
     private String codigo;
     private LocalDateTime data;
     private Utilizador dest;
-    private Loja origem;
+    private String loja;
     private boolean medicamentos;
     private List<LinhaEncomenda> produtos;
 
-    public Encomenda(double peso, boolean med, String descricao, String codigo, Utilizador dest, Loja origem,ArrayList<LinhaEncomenda> produtos,LocalDateTime l) {
+    public Encomenda(double peso, boolean med, String descricao, String codigo, Utilizador dest, String loja,ArrayList<LinhaEncomenda> produtos,LocalDateTime l) {
         this.peso = peso;
         this.descricao = descricao;
         this.codigo = codigo;
         this.dest = dest;
-        this.origem = origem;
+        this.loja = loja;
         this.produtos = produtos;
         this.data = l;
         this.medicamentos = med;
@@ -31,7 +31,7 @@ public class Encomenda {
         this.descricao = "";
         this.codigo = "";
         this.dest = new Utilizador();
-        this.origem = new Loja();
+        this.loja = "";
         this.medicamentos = false;
         this.produtos = new ArrayList<>();
         this.data = LocalDateTime.now();
@@ -41,7 +41,7 @@ public class Encomenda {
         this.peso = e.getPeso();
         this.data = e.getData();
         this.produtos = e.getProdutos();
-        this.origem = e.getOrigem();
+        this.loja = e.getLoja();
         this.dest = e.getDest();
         this.codigo = e.getCodigo();
         this.medicamentos = e.getMedicamentos();
@@ -60,7 +60,7 @@ public class Encomenda {
         sb.append(", codigo=").append(codigo);
         sb.append(", data=").append(data);
         sb.append(", dest=").append(dest);
-        sb.append(", origem=").append(origem);
+        sb.append(", origem=").append(loja);
         sb.append(", medicamentos=").append(medicamentos);
         sb.append(", produtos=").append(produtos);
         sb.append('}');
@@ -77,7 +77,7 @@ public class Encomenda {
                 this.codigo.equals(e.getCodigo()) &&
                 this.descricao.equals(e.getCodigo()) &&
                 this.dest.equals(e.getDest()) &&
-                this.origem.equals(e.getOrigem()) &&
+                this.loja.equals(e.getLoja()) &&
                 this.produtos.equals(e.getProdutos()) &&
                 this.medicamentos==e.getMedicamentos() &&
                 this.data.equals(e.getData());
@@ -132,12 +132,12 @@ public class Encomenda {
         this.dest = new Utilizador(dest);
     }
 
-    public Loja getOrigem() {
-        return this.origem.clone();
+    public String getLoja() {
+        return this.loja;
     }
 
-    public void setOrigem(Loja origem) {
-        this.origem = new Loja(origem);
+    public void setLoja(String loja) {
+        this.loja = loja;
     }
 
     public ArrayList<LinhaEncomenda> getProdutos() {

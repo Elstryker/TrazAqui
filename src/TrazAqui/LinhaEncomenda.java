@@ -4,9 +4,9 @@ public class LinhaEncomenda {
     //Variaveis de instancia
     private String descricao;
     private double preco;
-    private int quantidade;
+    private double quantidade;
     private boolean fragil;
-    private String nome;
+    private String codigo;
 
     //Construtores
     public LinhaEncomenda() {
@@ -14,15 +14,15 @@ public class LinhaEncomenda {
         this.preco = 0;
         this.quantidade = 0;
         this.fragil = false;
-        this.nome = "";
+        this.codigo = "";
     }
 
-    public LinhaEncomenda(String descricao, double preco,int quantidade,boolean fragil, String nome) {
+    public LinhaEncomenda(String descricao, double preco,double quantidade,boolean fragil, String codigo) {
         this.descricao = descricao;
         this.preco = preco;
         this.quantidade = quantidade;
         this.fragil = fragil;
-        this.nome = nome;
+        this.codigo = codigo;
     }
 
     public LinhaEncomenda(LinhaEncomenda linha) {
@@ -30,7 +30,7 @@ public class LinhaEncomenda {
         this.preco = linha.getPreco();
         this.quantidade = linha.getQuantidade();
         this.fragil = linha.getFragil();
-        this.nome = linha.getNome();
+        this.codigo = linha.getCodigo();
     }
 
     //Metodos de acesso
@@ -50,11 +50,11 @@ public class LinhaEncomenda {
         this.preco = preco;
     }
 
-    public int getQuantidade() {
+    public double getQuantidade() {
         return quantidade;
     }
 
-    public void setQuantidade(int quantidade) {
+    public void setQuantidade(double quantidade) {
         this.quantidade = quantidade;
     }
 
@@ -66,12 +66,12 @@ public class LinhaEncomenda {
         this.fragil = fragil;
     }
 
-    public String getNome() {
-        return nome;
+    public String getCodigo() {
+        return codigo;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
     }
 
     public LinhaEncomenda clone() {
@@ -84,7 +84,7 @@ public class LinhaEncomenda {
         LinhaEncomenda le = (LinhaEncomenda) obj;
         return  le.getDescricao().equals(this.descricao) &&
                 le.getPreco() == this.preco &&
-                le.getNome().equals(this.nome) &&
+                le.getCodigo().equals(this.codigo) &&
                 le.getFragil()==this.fragil &&
                 le.getQuantidade()==this.quantidade;
     }
@@ -96,7 +96,7 @@ public class LinhaEncomenda {
         sb.append(", preco=").append(preco);
         sb.append(", quantidade=").append(quantidade);
         sb.append(", fragil=").append(fragil);
-        sb.append(", nome='").append(nome).append('\'');
+        sb.append(", codigo='").append(codigo).append('\'');
         sb.append('}');
         return sb.toString();
     }

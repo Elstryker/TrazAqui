@@ -1,21 +1,18 @@
 package TrazAqui;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class Voluntario {
     private String codVoluntario;
     private String nomeVoluntario;
     private boolean disponivel;
     private GPS localizacao;
-    private int raio;
+    private double raio;
     private int[] classificacao;
     private List<Encomenda> encomendasEntregues;
     private List<Encomenda> pedidosEncomenda;
 
-    public Voluntario(String codVoluntario, String nomeVoluntario, boolean disponivel, GPS localizacao, int[] cla, int raio, List<Encomenda> encomendasEntregues, List<Encomenda> pedidosEncomenda) {
+    public Voluntario(String codVoluntario, String nomeVoluntario, boolean disponivel, GPS localizacao, int[] cla, double raio, List<Encomenda> encomendasEntregues, List<Encomenda> pedidosEncomenda) {
         this.codVoluntario = codVoluntario;
         this.nomeVoluntario = nomeVoluntario;
         this.disponivel = disponivel;
@@ -80,11 +77,11 @@ public class Voluntario {
         this.localizacao = localizacao;
     }
 
-    public int getRaio() {
+    public double getRaio() {
         return raio;
     }
 
-    public void setRaio(int raio) {
+    public void setRaio(double raio) {
         this.raio = raio;
     }
 
@@ -167,14 +164,14 @@ public class Voluntario {
         } else System.out.println("Classificacao invalida");
     }
 
-    public List<Encomenda> aceitaEncomenda(List<Encomenda> pedidosEncomenda){
+ /*   public List<Encomenda> aceitaEncomenda(List<Encomenda> pedidosEncomenda, HashSet<Loja> lj){
         double dist;
         for(Encomenda aux: pedidosEncomenda){
-            dist=aux.getOrigem().getLocalizacao().distancia(this.localizacao);
+            dist=aux.getLoja().getLocalizacao().distancia(this.localizacao);
             if (dist>raio) pedidosEncomenda.remove(aux);
         }
         return pedidosEncomenda;
-    }
+    }*/
 
     public void mudaDisponibilidade(){
         this.disponivel= !this.disponivel;
