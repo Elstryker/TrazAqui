@@ -2,6 +2,7 @@ package TrazAqui;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class FileIO {
     private String path;
@@ -52,6 +53,7 @@ public class FileIO {
                         v.setRaio(Double.parseDouble(tokens[4]));
                         v.setNomeVoluntario(tokens[1]);
                         v.setCodVoluntario(tokens[0]);
+                        v.setLocalizacao(gps);
                         e.addVoluntario(v);
                         break;
                     case "Transportadora":
@@ -86,6 +88,10 @@ public class FileIO {
                             linha.setPreco(Double.parseDouble(tokens[3+ind]));
                             s.addProduto(linha);
                         }
+                        e.addEncomendaLoja(s,s.getLoja());
+                        break;
+                    case "Aceite":
+                        e.addEncAceite(tokens[0]);
                         break;
                     default:
                         break;
@@ -96,4 +102,38 @@ public class FileIO {
         }
         file.close();
     }
+
+    public void adicionaUtilizador(String email, String password,String nome) throws IOException {
+        File file = new File("Utilizadores.txt");
+        if(!file.exists()) {
+            file.createNewFile();
+        }
+        FileWriter fw = new FileWriter(file,true);
+        BufferedWriter writer = new BufferedWriter(fw);
+        writer.write(email + "," + password + "," + nome);
+        writer.write("\n");
+        writer.flush();
+        writer.close();
+    }
+
+    public boolean validaDados(String email,String pass,String nome) throws IOException {
+        boolean a = false;
+        FileReader file = new FileReader("Utilizadores.txt");
+        BufferedReader reader = new BufferedReader(file);
+        String data = null;
+        String[] tok;
+
+        while ((data = reader.readLine())!=null && !a) {
+           tok= data.split(",");
+           if(tok[0].equals(email) && tok[1].equals(pass) && tok[2].equals(nome)) a=true;
+        }
+        file.close();
+        reader.close();
+
+        return a;
+    }
+
+
+
+
 }
