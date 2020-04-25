@@ -116,7 +116,7 @@ public class FileIO {
         writer.close();
     }
 
-    public boolean validaDados(String email,String pass) throws IOException {
+    public boolean validaDados(String email,String pass,String nome) throws IOException {
         boolean a = false;
         FileReader file = new FileReader("Utilizadores.txt");
         BufferedReader reader = new BufferedReader(file);
@@ -125,7 +125,7 @@ public class FileIO {
 
         while ((data = reader.readLine())!=null && !a) {
            tok= data.split(",");
-           if(tok[0].equals(email) && tok[1].equals(pass)) a=true;
+           if(tok[0].equals(email) && tok[1].equals(pass) && tok[2].equals(nome)) a=true;
         }
         file.close();
         reader.close();

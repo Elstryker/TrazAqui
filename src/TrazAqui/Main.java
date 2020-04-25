@@ -8,8 +8,9 @@ public class Main {
         FileIO o = new FileIO("teste.txt");
         Scanner sc = new Scanner(System.in);
         Estado e = new Estado();
-        o.processLine(e);
+      //  o.processLine(e);
         o.adicionaUtilizador("ola","adeus","pedro");
         o.adicionaUtilizador("as","d","f");
+        System.out.println(o.validaDados("as","d","f"));
     }
 }
