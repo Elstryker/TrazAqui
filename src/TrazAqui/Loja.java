@@ -127,7 +127,7 @@ public class Loja {
     }
 
     public void adicionaEncomenda(Encomenda a) {
-        this.filaEspera.add(a);
+        this.filaEspera.add(a.clone());
     }
 
     public void removeEncomenda() {

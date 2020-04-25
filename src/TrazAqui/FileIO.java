@@ -2,6 +2,7 @@ package TrazAqui;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class FileIO {
     private String path;
@@ -52,6 +53,7 @@ public class FileIO {
                         v.setRaio(Double.parseDouble(tokens[4]));
                         v.setNomeVoluntario(tokens[1]);
                         v.setCodVoluntario(tokens[0]);
+                        v.setLocalizacao(gps);
                         e.addVoluntario(v);
                         break;
                     case "Transportadora":
@@ -86,6 +88,10 @@ public class FileIO {
                             linha.setPreco(Double.parseDouble(tokens[3+ind]));
                             s.addProduto(linha);
                         }
+                        e.addEncomendaLoja(s,s.getLoja());
+                        break;
+                    case "Aceite":
+                        e.addEncAceite(tokens[0]);
                         break;
                     default:
                         break;
