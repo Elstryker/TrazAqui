@@ -168,7 +168,7 @@ public class Voluntario {
         double dist;
         for(Encomenda e: pedidosEncomenda){
             Loja l = lojas.get(e.getLoja()).clone();
-            dist = l.getLocalizacao().distancia(e.getDest().getPosicao());
+            dist = l.getLocalizacao().distancia(e.getUtilizador().getPosicao());
             if (dist>raio) pedidosEncomenda.remove(e);
         }
         return pedidosEncomenda;
