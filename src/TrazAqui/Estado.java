@@ -1,5 +1,6 @@
 package TrazAqui;
 
+import java.awt.image.AreaAveragingScaleFilter;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -171,28 +172,15 @@ public class  Estado {
         }
         return total;
     }
+/*
+    public List<String> getTop10Utilizadores() {
+        List<String> res = new ArrayList<>();
 
-    /*
-    public List<String> getTop10() {
         TreeMap<Integer,String> vezesT = analisaT();
         TreeMap<Integer,String> vezesV = analisaV();
-        HashMap<String,Integer> res = new HashMap<>();
-
-        for  (Map.Entry<Integer,String> t : vezesT.entrySet()) {
-            res.put(t.getValue(),t.getKey());
-        }
-
-        for (Map.Entry<Integer,String> t : vezesV.entrySet()) {
-            if (res.containsKey(t.getValue())) {
-
-            } else res.put(t.getValue(),t.getKey());
-        }
 
 
 
-
-
-        return res;
     }
 
     private TreeMap<Integer,String> analisaT() {
@@ -240,6 +228,23 @@ public class  Estado {
         }
         return vezes;
     }*/
+
+    public List<Transportadora> getTop10Trans() {
+        Comparator<Double> comp = Double::compareTo;
+        TreeMap<Double,Transportadora> vezes = new TreeMap<>(comp);
+        List<Transportadora> res = new ArrayList<>();
+        int cont=0;
+
+        for (Map.Entry<String,Transportadora> aux : this.transportadoras.entrySet()) {
+            vezes.put(aux.getValue().getNumKms(),aux.getValue().clone());
+        }
+
+        for (Map.Entry<Double,Transportadora> aux : vezes.entrySet()) {
+            if (cont++==10) break;
+            res.add(aux.getValue());
+        }
+        return res;
+    }
 
 
 

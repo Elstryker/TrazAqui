@@ -9,6 +9,7 @@ public class Transportadora {
     private boolean certificada;
     private boolean disponivel;
     private String nomeEmpresa;
+    private double numKms;
     private String codEmpresa;
     private GPS localizacao;
     private String NIF;
@@ -53,6 +54,14 @@ public class Transportadora {
         this.raio=a.raio;
         this.precoKM= a.precoKM;
         this.NIF=a.NIF;
+    }
+
+    public double getNumKms() {
+        return numKms;
+    }
+
+    public void setNumKms(double numKms) {
+        this.numKms = numKms;
     }
 
     public String getNIF() {
