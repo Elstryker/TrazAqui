@@ -1,6 +1,7 @@
 package TrazAqui;
 
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Utilizador implements Entrada {
     //Variaveis de instancia
@@ -8,6 +9,7 @@ public class Utilizador implements Entrada {
     private String cod;
     private GPS localizacao;
     private int numPedidos;
+    private Map<String,Encomenda> encomendasConcluidas;
 
 
     public Utilizador() {
@@ -15,13 +17,15 @@ public class Utilizador implements Entrada {
         this.cod = "";
         this.localizacao = new GPS();
         this.numPedidos=0;
+        this.encomendasConcluidas = new HashMap<>();
     }
 
-    public Utilizador(String n, String c, GPS pos) {
+    public Utilizador(String n, String c, GPS pos, int i, Map<String,Encomenda> l) {
         this.nome = n;
         this.localizacao = pos;
         this.cod = c;
-        this.numPedidos=0;
+        this.numPedidos = i;
+        this.setEncomendasConcluidas(l);
     }
 
     public Utilizador(Utilizador u) {
@@ -29,7 +33,7 @@ public class Utilizador implements Entrada {
         this.cod = u.getCod();
         this.localizacao = u.getLocalizacao();
         this.numPedidos=u.getNumPedidos();
-
+        this.encomendasConcluidas = u.getEncomendasConcluidas();
     }
 
     public Utilizador clone() {
@@ -56,6 +60,19 @@ public class Utilizador implements Entrada {
                 this.cod.equals(u.getCod()) &&
                 this.nome.equals(u.getNome()) &&
                 this.numPedidos==u.getNumPedidos();
+    }
+
+    public Map<String, Encomenda> getEncomendasConcluidas() {
+        Map<String,Encomenda> ret = new HashMap<>();
+        for(Map.Entry<String,Encomenda> a:this.encomendasConcluidas.entrySet())
+            ret.put(a.getKey(),a.getValue().clone());
+        return ret;
+    }
+
+    public void setEncomendasConcluidas(Map<String, Encomenda> encomendasConcluidas) {
+        this.encomendasConcluidas = new HashMap<>();
+        for(Map.Entry<String,Encomenda> e: encomendasConcluidas.entrySet())
+            this.encomendasConcluidas.put(e.getKey(),e.getValue().clone());
     }
 
     public int getNumPedidos() {
@@ -88,5 +105,9 @@ public class Utilizador implements Entrada {
 
     public void setLocalizacao(GPS localizacao) {
         this.localizacao = localizacao;
+    }
+
+    public void addEncomenda(Encomenda e) {
+        this.encomendasConcluidas.put(e.getCod(),e.clone());
     }
 }
