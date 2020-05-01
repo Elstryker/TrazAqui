@@ -164,11 +164,11 @@ public class Voluntario {
         } else System.out.println("Classificacao invalida");
     }
 
-    public List<Encomenda> aceitaEncomenda(List<Encomenda> pedidosEncomenda, HashMap<String,Loja> lojas){
+    public List<Encomenda> aceitaEncomenda(List<Encomenda> pedidosEncomenda, HashMap<String,Loja> lojas,Estado estado){
         double dist;
         for(Encomenda e: pedidosEncomenda){
             Loja l = lojas.get(e.getLoja()).clone();
-            dist = l.getLocalizacao().distancia(e.getUtilizador().getPosicao());
+            dist = l.getLocalizacao().distancia(estado.getUserPos(e.getUtilizador()));
             if (dist>raio) pedidosEncomenda.remove(e);
         }
         return pedidosEncomenda;

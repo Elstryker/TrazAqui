@@ -30,7 +30,7 @@ public class Encomenda {
         this.peso = 0;
         this.descricao = "";
         this.codigo = "";
-        this.utilizador = new String();
+        this.utilizador = "";
         this.loja = "";
         this.medicamentos = false;
         this.produtos = new ArrayList<>();
