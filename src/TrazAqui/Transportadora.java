@@ -1,6 +1,7 @@
 package TrazAqui;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -18,7 +19,7 @@ public class Transportadora implements Entrada {
     private List<Encomenda> pedidosEncomenda;
     private int[] classificacao;
 
-    public Transportadora(boolean certificada, boolean disponivel, String nome, String cod, GPS localizacao,String NIF, double raio, double precoKM, List<Encomenda> encomendasEntregues, List<Encomenda> pedidosEncomenda, int[] classificacao) {
+    public Transportadora(boolean certificada, boolean disponivel,double numKms, String nome, String cod, GPS localizacao,String NIF, double raio, double precoKM, List<Encomenda> encomendasEntregues, List<Encomenda> pedidosEncomenda, int[] classificacao) {
         this.certificada=certificada;
         this.disponivel = disponivel;
         this.nome = nome;
@@ -26,6 +27,7 @@ public class Transportadora implements Entrada {
         this.localizacao = localizacao;
         this.NIF=NIF;
         this.raio = raio;
+        this.numKms = numKms;
         this.precoKM = precoKM;
         this.setEncomendasEntregues(encomendasEntregues);
         this.setPedidosEncomenda(pedidosEncomenda);
@@ -40,6 +42,7 @@ public class Transportadora implements Entrada {
         this.nome= "";
         this.cod= "";
         this.localizacao= new GPS();
+        this.numKms=0;
         this.raio=0;
         this.precoKM=0;
         this.classificacao= new int[5];
@@ -55,6 +58,7 @@ public class Transportadora implements Entrada {
         this.localizacao=a.localizacao;
         this.raio=a.raio;
         this.precoKM= a.precoKM;
+        this.numKms=a.getNumKms();
         this.NIF=a.NIF;
         this.classificacao=a.getClassificacao();
     }
@@ -176,7 +180,8 @@ public class Transportadora implements Entrada {
                 Objects.equals(localizacao, that.localizacao) &&
                 Objects.equals(NIF, that.NIF) &&
                 Objects.equals(encomendasEntregues, that.encomendasEntregues) &&
-                Objects.equals(pedidosEncomenda, that.pedidosEncomenda);
+                Objects.equals(pedidosEncomenda, that.pedidosEncomenda) &&
+                that.numKms==numKms;
     }
 
     @Override
@@ -189,6 +194,7 @@ public class Transportadora implements Entrada {
         final StringBuilder sb = new StringBuilder("Transportadora{");
         sb.append("certificada=").append(certificada);
         sb.append(", disponivel=").append(disponivel);
+        sb.append(", numKms=").append(numKms);
         sb.append(", nome='").append(nome).append('\'');
         sb.append(", cod='").append(cod).append('\'');
         sb.append(", localizacao=").append(localizacao);
@@ -197,6 +203,7 @@ public class Transportadora implements Entrada {
         sb.append(", precoKM=").append(precoKM);
         sb.append(", encomendasEntregues=").append(encomendasEntregues);
         sb.append(", pedidosEncomenda=").append(pedidosEncomenda);
+        sb.append(", classificacao=").append(Arrays.toString(classificacao));
         sb.append('}');
         return sb.toString();
     }
