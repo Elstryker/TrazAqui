@@ -1,5 +1,6 @@
 package TrazAqui;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -149,40 +150,43 @@ public class  Estado {
         }
     }
 
+    public GPS getUserPos(String user) {
+        return this.utilizadores.get(user).getLocalizacao();
+    }
+
     public double totalFaturado(Transportadora t, LocalDateTime min, LocalDateTime max) {
         double total=0;
         for (Encomenda e : t.getEncomendasEntregues()) {
             if (e.getData().isAfter(min) && e.getData().isBefore(max)) {
                 if (this.lojas.containsKey(e.getLoja())) {
                     Loja l = this.lojas.get(e.getLoja()).clone();
-                    total += t.precoEncomenda(e.getPeso(),l.getLocalizacao().distancia(e.getDest().getPosicao()));
+                    Utilizador u = this.utilizadores.get(e.getUtilizador());
+                    total += t.precoEncomenda(e.getPeso(),l.getLocalizacao().distancia(u.getLocalizacao()));
                 }
             }
         }
         return total;
     }
 
-    public List<String> getTop10 () {
-        ArrayList<String> res = new ArrayList<>();
-        int cont=0;
-
+    /*
+    public List<String> getTop10() {
         TreeMap<Integer,String> vezesT = analisaT();
         TreeMap<Integer,String> vezesV = analisaV();
+        HashMap<String,Integer> res = new HashMap<>();
 
-        /*
-        for (Map.Entry<Integer,String> e : vezesT.entrySet()) {
-            for (Map.Entry<Integer,String> d: vezesV.entrySet()) {
+        for  (Map.Entry<Integer,String> t : vezesT.entrySet()) {
+            res.put(t.getValue(),t.getKey());
+        }
 
-                if (cont>=10) break;
+        for (Map.Entry<Integer,String> t : vezesV.entrySet()) {
+            if (res.containsKey(t.getValue())) {
 
-                if (e.getKey()>d.getKey()) {
-                    res.add(e.getValue());
-                } else {
-                    res.add(d.getValue());
-                }
-                cont++;
-            }
-        }*/
+            } else res.put(t.getValue(),t.getKey());
+        }
+
+
+
+
 
         return res;
     }
@@ -231,6 +235,12 @@ public class  Estado {
             vezes.put(cont, u.getCod());
         }
         return vezes;
+    }*/
+
+    public Utilizador getConta(String email, String pass) throws IOException {
+        FileIO io = new FileIO();
+
+        return this.utilizadores.get(io.validaDados(email,pass));
     }
 
 }

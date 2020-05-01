@@ -15,8 +15,9 @@ public class Transportadora implements Entrada {
     private double precoKM;
     private List<Encomenda> encomendasEntregues;
     private List<Encomenda> pedidosEncomenda;
+    private int[] classificacao;
 
-    public Transportadora(boolean certificada, boolean disponivel, String nome, String cod, GPS localizacao,String NIF, double raio, double precoKM, List<Encomenda> encomendasEntregues, List<Encomenda> pedidosEncomenda) {
+    public Transportadora(boolean certificada, boolean disponivel, String nome, String cod, GPS localizacao,String NIF, double raio, double precoKM, List<Encomenda> encomendasEntregues, List<Encomenda> pedidosEncomenda, int[] classificacao) {
         this.certificada=certificada;
         this.disponivel = disponivel;
         this.nome = nome;
@@ -27,6 +28,7 @@ public class Transportadora implements Entrada {
         this.precoKM = precoKM;
         this.setEncomendasEntregues(encomendasEntregues);
         this.setPedidosEncomenda(pedidosEncomenda);
+        this.classificacao = classificacao;
     }
 
     public Transportadora(){
@@ -39,6 +41,7 @@ public class Transportadora implements Entrada {
         this.localizacao= new GPS();
         this.raio=0;
         this.precoKM=0;
+        this.classificacao= new int[5];
     }
 
     public Transportadora(Transportadora a) {
@@ -52,6 +55,7 @@ public class Transportadora implements Entrada {
         this.raio=a.raio;
         this.precoKM= a.precoKM;
         this.NIF=a.NIF;
+        this.classificacao=a.getClassificacao();
     }
 
     public String getNIF() {
@@ -141,6 +145,13 @@ public class Transportadora implements Entrada {
         this.pedidosEncomenda = new ArrayList<>();
         pedidosEncomenda.forEach(l-> this.pedidosEncomenda.add(l.clone()));
     }
+    public int[] getClassificacao() {
+        return classificacao;
+    }
+
+    public void setClassificacao(int[] classificacao) {
+        this.classificacao = classificacao;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -213,5 +224,16 @@ public class Transportadora implements Entrada {
 
     public void addPedidosEncomenda(Encomenda a){
         this.pedidosEncomenda.add(a.clone());
+    }
+
+    public void classificao(int x) {
+        if (x >=1 && x<=5) {
+            this.classificacao[x - 1]++;
+            System.out.println(this.classificacao[0] + " utilizadores classificaram com 1 estrela");
+            System.out.println(this.classificacao[1] + " utilizadores classificaram com 2 estrelas");
+            System.out.println(this.classificacao[2] + " utilizadores classificaram com 3 estrelas");
+            System.out.println(this.classificacao[3] + " utilizadores classificaram com 4 estrelas");
+            System.out.println(this.classificacao[4] + " utilizadores classificaram com 5 estrelas");
+        } else System.out.println("Classificacao invalida");
     }
 }

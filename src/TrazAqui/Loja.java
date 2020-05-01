@@ -79,5 +79,4 @@ public class Loja implements Entrada {
         return new Loja(this);
     }
 
-
 }

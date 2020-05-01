@@ -158,17 +158,22 @@ public class Voluntario implements Entrada {
 
 
     // Métodos
-    public void classifica(int x) {
+    public void classificao(int x) {
         if (x >=1 && x<=5) {
             this.classificacao[x - 1]++;
+            System.out.println(this.classificacao[0] + " utilizadores classificaram com 1 estrela");
+            System.out.println(this.classificacao[1] + " utilizadores classificaram com 2 estrelas");
+            System.out.println(this.classificacao[2] + " utilizadores classificaram com 3 estrelas");
+            System.out.println(this.classificacao[3] + " utilizadores classificaram com 4 estrelas");
+            System.out.println(this.classificacao[4] + " utilizadores classificaram com 5 estrelas");
         } else System.out.println("Classificacao invalida");
     }
 
-    public List<Encomenda> aceitaEncomenda(List<Encomenda> pedidosEncomenda, HashMap<String,Loja> lojas){
+    public List<Encomenda> aceitaEncomenda(List<Encomenda> pedidosEncomenda, HashMap<String,Loja> lojas,Estado estado){
         double dist;
         for(Encomenda e: pedidosEncomenda){
             Loja l = lojas.get(e.getLoja()).clone();
-            dist = l.getLocalizacao().distancia(e.getUtilizador().getLocalizacao());
+            dist = l.getLocalizacao().distancia(estado.getUserPos(e.getUtilizador()));
             if (dist>raio) pedidosEncomenda.remove(e);
         }
         return pedidosEncomenda;

@@ -61,16 +61,16 @@ public class FileIO {
                         gps = new GPS(Double.parseDouble(tokens[2]),Double.parseDouble(tokens[3]));
                         Voluntario v = new Voluntario();
                         v.setRaio(Double.parseDouble(tokens[4]));
-                        v.setNomeVoluntario(tokens[1]);
-                        v.setCodVoluntario(tokens[0]);
+                        v.setNome(tokens[1]);
+                        v.setCod(tokens[0]);
                         v.setLocalizacao(gps);
                         e.addVoluntario(v);
                         break;
                     case "Transportadora":
                         gps = new GPS(Double.parseDouble(tokens[2]),Double.parseDouble(tokens[3]));
                         Transportadora t = new Transportadora();
-                        t.setCodEmpresa(tokens[0]);
-                        t.setNomeEmpresa(tokens[1]);
+                        t.setCod(tokens[0]);
+                        t.setNome(tokens[1]);
                         t.setLocalizacao(gps);
                         t.setRaio(Double.parseDouble(tokens[5]));
                         t.setPrecoKM(Double.parseDouble(tokens[6]));
@@ -85,7 +85,7 @@ public class FileIO {
                         e.addLoja(j);
                         break;
                     case "Encomenda":
-                        Encomenda s = new Encomenda();
+                        /*Encomenda s = new Encomenda();
                         s.setCodigo(tokens[0]);
                         s.setUtilizador(tokens[1]);
                         s.setLoja(tokens[2]);
@@ -98,7 +98,7 @@ public class FileIO {
                             linha.setPreco(Double.parseDouble(tokens[3+ind]));
                             s.addProduto(linha);
                         }
-                        e.addEncomendaLoja(s,s.getLoja());
+                        e.addEncomendaLoja(s,s.getLoja());*/
                         break;
                     case "Aceite":
                         e.addEncAceite(tokens[0]);
@@ -117,18 +117,18 @@ public class FileIO {
         BufferedWriter file = new BufferedWriter(new FileWriter(this.writePath));
         StringBuilder sb = new StringBuilder();
         for(Utilizador u: e.getUtilizadores().values())
-            file.write("Utilizador:"+u.getCodigo()+","+u.getNome()+","+u.getPosicao().getLatitude()+","+u.getPosicao().getLongitude()+"\n");
+            file.write("Utilizador:"+u.getCod()+","+u.getNome()+","+u.getLocalizacao().getLatitude()+","+u.getLocalizacao().getLongitude()+"\n");
         for(Voluntario u: e.getVoluntarios().values())
-            file.write("Voluntario:"+u.getCodVoluntario()+","+u.getNomeVoluntario()+","+u.getLocalizacao().getLatitude()+","+u.getLocalizacao().getLongitude()+","+u.getRaio()+"\n");
+            file.write("Voluntario:"+u.getCod()+","+u.getNome()+","+u.getLocalizacao().getLatitude()+","+u.getLocalizacao().getLongitude()+","+u.getRaio()+"\n");
         for(Transportadora u: e.getTransportadoras().values())
-            file.write("Transportadora:"+u.getCodEmpresa()+","+u.getNomeEmpresa()+","+u.getLocalizacao().getLatitude()+","+u.getLocalizacao().getLongitude()+","+u.getNIF()+","+u.getRaio()+","+u.getPrecoKM()+"\n");
+            file.write("Transportadora:"+u.getCod()+","+u.getNome()+","+u.getLocalizacao().getLatitude()+","+u.getLocalizacao().getLongitude()+","+u.getNIF()+","+u.getRaio()+","+u.getPrecoKM()+"\n");
         for(Loja u: e.getLojas().values())
             file.write("Loja:"+u.getCod()+","+u.getNome()+","+u.getLocalizacao().getLatitude()+","+u.getLocalizacao().getLongitude()+"\n");
         for(Loja u: e.getLojas().values())
             for(Encomenda enc: u.getFilaEspera()) {
-                file.write("Encomenda:"+enc.getCodigo()+","+enc.getUtilizador()+","+enc.getLoja()+","+enc.getPeso());
+                file.write("Encomenda:"+enc.getCod()+","+enc.getUtilizador()+","+enc.getLoja()+","+enc.getPeso());
                 for(LinhaEncomenda linha: enc.getProdutos())
-                    file.write(","+linha.getCodigo()+","+linha.getDescricao()+","+linha.getQuantidade()+","+linha.getPreco());
+                    file.write(","+linha.getCod()+","+linha.getDescricao()+","+linha.getQuantidade()+","+linha.getPreco());
                 file.newLine();
             }
         for(String u: e.getEncAceites())
@@ -149,8 +149,9 @@ public class FileIO {
         writer.close();
     }
 
-    public boolean validaDados(String email,String pass,String nome) throws IOException {
+    public String validaDados(String email,String pass) throws IOException {
         boolean a = false;
+        String cod = "";
         FileReader file = new FileReader("Utilizadores.txt");
         BufferedReader reader = new BufferedReader(file);
         String data = null;
@@ -158,12 +159,17 @@ public class FileIO {
 
         while ((data = reader.readLine())!=null && !a) {
            tok= data.split(",");
-           if(tok[0].equals(email) && tok[1].equals(pass) && tok[2].equals(nome)) a=true;
+           if(tok[0].equals(email) && tok[1].equals(pass)) {
+               a=true;
+               cod=tok[2];
+           }
         }
         file.close();
         reader.close();
 
-        return a;
+        return cod;
     }
+
+
 
 }
