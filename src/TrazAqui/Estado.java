@@ -168,74 +168,40 @@ public class  Estado {
         return total;
     }
 
-    /*
-    public List<String> getTop10() {
-        TreeMap<Integer,String> vezesT = analisaT();
-        TreeMap<Integer,String> vezesV = analisaV();
-        HashMap<String,Integer> res = new HashMap<>();
+    public List<Utilizador> getTop10Util() {
+        Comparator<Integer> comp = Integer::compareTo;
+        TreeMap<Integer,Utilizador> vezes = new TreeMap<>(comp);
+        List<Utilizador> res = new ArrayList<>();
+        int cont=0;
 
-        for  (Map.Entry<Integer,String> t : vezesT.entrySet()) {
-            res.put(t.getValue(),t.getKey());
+        for (Map.Entry<String,Utilizador> aux : this.utilizadores.entrySet()) {
+            vezes.put(aux.getValue().getNumPedidos(),aux.getValue().clone());
         }
 
-        for (Map.Entry<Integer,String> t : vezesV.entrySet()) {
-            if (res.containsKey(t.getValue())) {
-
-            } else res.put(t.getValue(),t.getKey());
+        for (Map.Entry<Integer,Utilizador> aux : vezes.entrySet()) {
+            if (cont++==10) break;
+            res.add(aux.getValue());
         }
-
-
-
-
 
         return res;
     }
 
-    private TreeMap<Integer,String> analisaT() {
-        Comparator<Integer> comp = Integer::compareTo;
-        TreeMap<Integer,String> vezes = new TreeMap<>(comp);
-        int cont;
+    public List<Transportadora> getTop10Trans() {
+        Comparator<Double> comp = Double::compareTo;
+        TreeMap<Double,Transportadora> vezes = new TreeMap<>(comp);
+        List<Transportadora> res = new ArrayList<>();
+        int cont=0;
 
-        for (Map.Entry<String,Utilizador> aux1 : this.utilizadores.entrySet()) {
-            Utilizador u = aux1.getValue();
-            cont=0;
-
-            for (Map.Entry<String,Transportadora> aux2 : this.transportadoras.entrySet()) {
-                Transportadora t = aux2.getValue();
-
-                for (Encomenda e : t.getEncomendasEntregues()) {
-                    if (e.getCodigo().equals(u.getCod())) {
-                        cont++;
-                    }
-                }
-            }
-            vezes.put(cont,u.getCod());
+        for (Map.Entry<String,Transportadora> aux : this.transportadoras.entrySet()) {
+            vezes.put(aux.getValue().getNumKms(),aux.getValue().clone());
         }
-        return vezes;
+
+        for (Map.Entry<Double,Transportadora> aux : vezes.entrySet()) {
+            if (cont++==10) break;
+            res.add(aux.getValue());
+        }
+        return res;
     }
-
-    private TreeMap<Integer,String> analisaV() {
-        Comparator<Integer> comp = Integer::compareTo;
-        TreeMap<Integer, String> vezes = new TreeMap<>(comp);
-        int cont;
-
-        for (Map.Entry<String, Utilizador> aux1 : this.utilizadores.entrySet()) {
-            Utilizador u = aux1.getValue();
-            cont = 0;
-
-            for (Map.Entry<String, Voluntario> aux2 : this.voluntarios.entrySet()) {
-                Voluntario v = aux2.getValue();
-
-                for (Encomenda e : v.getEncomendasEntregues()) {
-                    if (e.getCodigo().equals(u.getCod())) {
-                        cont++;
-                    }
-                }
-            }
-            vezes.put(cont, u.getCod());
-        }
-        return vezes;
-    }*/
 
     public Utilizador getConta(String email, String pass) throws IOException {
         FileIO io = new FileIO();
