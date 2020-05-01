@@ -71,15 +71,15 @@ public class  Estado {
     }
 
     public void addVoluntario(Voluntario v) {
-        this.voluntarios.put(v.getCodVoluntario(),v.clone());
+        this.voluntarios.put(v.getCod(),v.clone());
     }
 
     public void addUtilizador(Utilizador u) {
-        this.utilizadores.put(u.getCodigo(),u.clone());
+        this.utilizadores.put(u.getCod(),u.clone());
     }
 
     public void addTransportadora(Transportadora t) {
-        this.transportadoras.put(t.getCodEmpresa(),t.clone());
+        this.transportadoras.put(t.getCod(),t.clone());
     }
 
     public void addLoja(Loja l) {
@@ -200,42 +200,37 @@ public class  Estado {
                 Transportadora t = aux2.getValue();
 
                 for (Encomenda e : t.getEncomendasEntregues()) {
-                    if (e.getCodigo().equals(u.getCodigo())) {
+                    if (e.getCodigo().equals(u.getCod())) {
                         cont++;
                     }
                 }
             }
-            vezes.put(cont,u.getCodigo());
+            vezes.put(cont,u.getCod());
         }
         return vezes;
     }
 
     private TreeMap<Integer,String> analisaV() {
         Comparator<Integer> comp = Integer::compareTo;
-        TreeMap<Integer,String> vezes = new TreeMap<>(comp);
+        TreeMap<Integer, String> vezes = new TreeMap<>(comp);
         int cont;
 
-        for (Map.Entry<String,Utilizador> aux1 : this.utilizadores.entrySet()) {
+        for (Map.Entry<String, Utilizador> aux1 : this.utilizadores.entrySet()) {
             Utilizador u = aux1.getValue();
-            cont=0;
+            cont = 0;
 
-            for (Map.Entry<String,Voluntario> aux2 : this.voluntarios.entrySet()) {
+            for (Map.Entry<String, Voluntario> aux2 : this.voluntarios.entrySet()) {
                 Voluntario v = aux2.getValue();
 
                 for (Encomenda e : v.getEncomendasEntregues()) {
-                    if (e.getCodigo().equals(u.getCodigo())) {
+                    if (e.getCodigo().equals(u.getCod())) {
                         cont++;
                     }
                 }
             }
-            vezes.put(cont,u.getCodigo());
+            vezes.put(cont, u.getCod());
         }
         return vezes;
     }
-
-    public void addEncomendaLoja(Encomenda e, String loja) {
-        this.lojas.get(loja).adicionaEncomenda(e);
-    }
-
 
 }

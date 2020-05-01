@@ -2,9 +2,9 @@ package TrazAqui;
 
 import java.util.*;
 
-public class Voluntario {
-    private String codVoluntario;
-    private String nomeVoluntario;
+public class Voluntario implements Entrada {
+    private String cod;
+    private String nome;
     private boolean disponivel;
     private GPS localizacao;
     private double raio;
@@ -12,9 +12,9 @@ public class Voluntario {
     private List<Encomenda> encomendasEntregues;
     private List<Encomenda> pedidosEncomenda;
 
-    public Voluntario(String codVoluntario, String nomeVoluntario, boolean disponivel, GPS localizacao, int[] cla, double raio, List<Encomenda> encomendasEntregues, List<Encomenda> pedidosEncomenda) {
-        this.codVoluntario = codVoluntario;
-        this.nomeVoluntario = nomeVoluntario;
+    public Voluntario(String cod, String nome, boolean disponivel, GPS localizacao, int[] cla, double raio, List<Encomenda> encomendasEntregues, List<Encomenda> pedidosEncomenda) {
+        this.cod = cod;
+        this.nome = nome;
         this.disponivel = disponivel;
         this.localizacao = localizacao;
         this.raio = raio;
@@ -26,8 +26,8 @@ public class Voluntario {
     public Voluntario(){
         this.disponivel = false;
         this.localizacao= new GPS();
-        this.nomeVoluntario= "";
-        this.codVoluntario="";
+        this.nome= "";
+        this.cod="";
         this.raio=0;
         this.classificacao = new int[5];
         this.encomendasEntregues= new ArrayList<>();
@@ -37,28 +37,28 @@ public class Voluntario {
     public Voluntario(Voluntario a) {
         this.disponivel = a.disponivel;
         this.localizacao = a.localizacao;
-        this.nomeVoluntario= a.nomeVoluntario;
-        this.codVoluntario=a.codVoluntario;
+        this.nome= a.nome;
+        this.cod=a.cod;
         this.raio=a.raio;
         this.classificacao = a.getClassificacao();
         this.setEncomendasEntregues(a.getEncomendasEntregues());
         this.setPedidosEncomenda(a.getPedidosEncomenda());
     }
 
-    public String getCodVoluntario() {
-        return codVoluntario;
+    public String getCod() {
+        return cod;
     }
 
-    public void setCodVoluntario(String codVoluntario) {
-        this.codVoluntario = codVoluntario;
+    public void setCod(String cod) {
+        this.cod = cod;
     }
 
-    public String getNomeVoluntario() {
-        return nomeVoluntario;
+    public String getNome() {
+        return nome;
     }
 
-    public void setNomeVoluntario(String nomeVoluntario) {
-        this.nomeVoluntario = nomeVoluntario;
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
     public boolean isDisponivel() {
@@ -125,8 +125,8 @@ public class Voluntario {
         return disponivel == that.disponivel &&
                 raio == that.raio &&
                 Arrays.equals(classificacao, that.classificacao) &&
-                Objects.equals(codVoluntario, that.codVoluntario) &&
-                Objects.equals(nomeVoluntario, that.nomeVoluntario) &&
+                Objects.equals(cod, that.cod) &&
+                Objects.equals(nome, that.nome) &&
                 Objects.equals(localizacao, that.localizacao) &&
                 Objects.equals(encomendasEntregues, that.encomendasEntregues) &&
                 Objects.equals(pedidosEncomenda, that.pedidosEncomenda);
@@ -134,14 +134,14 @@ public class Voluntario {
 
     @Override
     public int hashCode() {
-        return Objects.hash(codVoluntario, nomeVoluntario, disponivel, localizacao, raio, encomendasEntregues, pedidosEncomenda);
+        return Objects.hash(cod, nome, disponivel, localizacao, raio, encomendasEntregues, pedidosEncomenda);
     }
 
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("Voluntario{");
-        sb.append("codVoluntario='").append(codVoluntario).append('\'');
-        sb.append(", nomeVoluntario='").append(nomeVoluntario).append('\'');
+        sb.append("cod='").append(cod).append('\'');
+        sb.append(", nome='").append(nome).append('\'');
         sb.append(", disponivel=").append(disponivel);
         sb.append(", localizacao=").append(localizacao);
         sb.append(", raio=").append(raio);
@@ -168,7 +168,7 @@ public class Voluntario {
         double dist;
         for(Encomenda e: pedidosEncomenda){
             Loja l = lojas.get(e.getLoja()).clone();
-            dist = l.getLocalizacao().distancia(e.getUtilizador().getPosicao());
+            dist = l.getLocalizacao().distancia(e.getUtilizador().getLocalizacao());
             if (dist>raio) pedidosEncomenda.remove(e);
         }
         return pedidosEncomenda;
