@@ -141,7 +141,7 @@ public class Loja {
     public boolean haveEncomenda(String userID) {
         boolean ret = false;
         for(Encomenda e: this.filaEspera)
-            if(e.getDest().getCodigo().equals(userID)) ret = true;
+            if(e.getUtilizador().equals(userID)) ret = true;
         return ret;
     }
 

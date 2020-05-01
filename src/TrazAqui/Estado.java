@@ -1,5 +1,6 @@
 package TrazAqui;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -237,5 +238,11 @@ public class  Estado {
         this.lojas.get(loja).adicionaEncomenda(e);
     }
 
+
+    public Utilizador getConta(String email, String pass) throws IOException {
+        FileIO io = new FileIO();
+
+        return this.utilizadores.get(io.validaDados(email,pass));
+    }
 
 }
