@@ -8,17 +8,17 @@ public class Encomenda {
     //Variaveis de instancia
     private double peso;
     private String descricao;
-    private String codigo;
+    private String cod;
     private LocalDateTime data;
     private String utilizador;
     private String loja;
     private boolean medicamentos;
     private List<LinhaEncomenda> produtos;
 
-    public Encomenda(double peso, boolean med, String descricao, String codigo, String utilizador, String loja,ArrayList<LinhaEncomenda> produtos,LocalDateTime l) {
+    public Encomenda(double peso, boolean med, String descricao, String cod, String utilizador, String loja,ArrayList<LinhaEncomenda> produtos,LocalDateTime l) {
         this.peso = peso;
         this.descricao = descricao;
-        this.codigo = codigo;
+        this.cod = cod;
         this.utilizador = utilizador;
         this.loja = loja;
         this.produtos = produtos;
@@ -29,7 +29,7 @@ public class Encomenda {
     public Encomenda() {
         this.peso = 0;
         this.descricao = "";
-        this.codigo = "";
+        this.cod = "";
         this.utilizador = "";
         this.loja = "";
         this.medicamentos = false;
@@ -43,7 +43,7 @@ public class Encomenda {
         this.produtos = e.getProdutos();
         this.loja = e.getLoja();
         this.utilizador = e.getUtilizador();
-        this.codigo = e.getCodigo();
+        this.cod = e.getCod();
         this.medicamentos = e.getMedicamentos();
         this.descricao = e.getDescricao();
     }
@@ -57,7 +57,7 @@ public class Encomenda {
         final StringBuilder sb = new StringBuilder("Encomenda{");
         sb.append("peso=").append(peso);
         sb.append(", descricao='").append(descricao).append('\'');
-        sb.append(", codigo=").append(codigo);
+        sb.append(", cod=").append(cod);
         sb.append(", data=").append(data);
         sb.append(", utilizador=").append(utilizador);
         sb.append(", origem=").append(loja);
@@ -74,8 +74,8 @@ public class Encomenda {
         Encomenda e = (Encomenda) o;
 
         return this.peso==e.getPeso() &&
-                this.codigo.equals(e.getCodigo()) &&
-                this.descricao.equals(e.getCodigo()) &&
+                this.cod.equals(e.getCod()) &&
+                this.descricao.equals(e.getCod()) &&
                 this.utilizador.equals(e.getUtilizador()) &&
                 this.loja.equals(e.getLoja()) &&
                 this.produtos.equals(e.getProdutos()) &&
@@ -116,12 +116,12 @@ public class Encomenda {
         this.descricao = descricao;
     }
 
-    public String getCodigo() {
-        return codigo;
+    public String getCod() {
+        return cod;
     }
 
-    public void setCodigo(String codigo) {
-        this.codigo = codigo;
+    public void setCod(String cod) {
+        this.cod = cod;
     }
 
     public String getUtilizador() {

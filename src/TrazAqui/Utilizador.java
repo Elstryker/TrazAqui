@@ -8,6 +8,7 @@ public class Utilizador implements Entrada {
     private String cod;
     private GPS localizacao;
 
+
     public Utilizador() {
         this.nome = "";
         this.cod = "";
