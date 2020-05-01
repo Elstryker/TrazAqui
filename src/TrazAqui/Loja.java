@@ -1,29 +1,34 @@
 package TrazAqui;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class Loja implements Entrada {
     private String cod;
     private String nome;
     private GPS localizacao;
+    private List<Encomenda> pedidos;
 
     public Loja () {
         this.cod = "";
         this.nome = "";
         this.localizacao = new GPS();
+        this.pedidos = new ArrayList<>();
     }
 
-    public Loja(String cod, String nome, double tempoProcessamento, GPS localizacao, LinkedList<Encomenda> l) {
+    public Loja(String cod, String nome, GPS localizacao, List<Encomenda> p) {
         this.cod = cod;
         this.nome = nome;
         this.localizacao = localizacao;
+        this.setPedidos(p);
     }
 
     public Loja(Loja a) {
         this.cod = a.getCod();
         this.nome = a.getNome();
         this.localizacao = a.getLocalizacao();
+        this.pedidos = a.getPedidos();
     }
 
     public String getCod() {
@@ -48,6 +53,27 @@ public class Loja implements Entrada {
 
     public void setLocalizacao(GPS localizacao) {
         this.localizacao = localizacao;
+    }
+
+    public List<Encomenda> getPedidos() {
+        List<Encomenda> ret = new ArrayList<>();
+        for(Encomenda e: this.pedidos)
+            ret.add(e.clone());
+        return ret;
+    }
+
+    public void setPedidos(List<Encomenda> pedidos) {
+        this.pedidos = new ArrayList<>();
+        for(Encomenda e: pedidos)
+            this.pedidos.add(e.clone());
+    }
+
+    public void addPedido(Encomenda a) {
+        this.pedidos.add(a.clone());
+    }
+
+    public void removePedido(String cod) {
+        this.pedidos.removeIf(e -> e.getCod().equals(cod));
     }
 
     @Override

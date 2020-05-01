@@ -167,62 +167,24 @@ public class  Estado {
         }
         return total;
     }
-/*
-    public List<String> getTop10Utilizadores() {
-        List<String> res = new ArrayList<>();
 
-        TreeMap<Integer,String> vezesT = analisaT();
-        TreeMap<Integer,String> vezesV = analisaV();
-
-
-
-    }
-
-    private TreeMap<Integer,String> analisaT() {
+    public List<Utilizador> getTop10Util() {
         Comparator<Integer> comp = Integer::compareTo;
-        TreeMap<Integer,String> vezes = new TreeMap<>(comp);
-        int cont;
+        TreeMap<Integer,Utilizador> vezes = new TreeMap<>(comp);
+        List<Utilizador> res = new ArrayList<>();
+        int cont=0;
 
-        for (Map.Entry<String,Utilizador> aux1 : this.utilizadores.entrySet()) {
-            Utilizador u = aux1.getValue();
-            cont=0;
-
-            for (Map.Entry<String,Transportadora> aux2 : this.transportadoras.entrySet()) {
-                Transportadora t = aux2.getValue();
-
-                for (Encomenda e : t.getEncomendasEntregues()) {
-                    if (e.getCodigo().equals(u.getCod())) {
-                        cont++;
-                    }
-                }
-            }
-            vezes.put(cont,u.getCod());
+        for (Map.Entry<String,Utilizador> aux : this.utilizadores.entrySet()) {
+            vezes.put(aux.getValue().getNumPedidos(),aux.getValue().clone());
         }
-        return vezes;
+
+        for (Map.Entry<Integer,Utilizador> aux : vezes.entrySet()) {
+            if (cont++==10) break;
+            res.add(aux.getValue());
+        }
+
+        return res;
     }
-
-    private TreeMap<Integer,String> analisaV() {
-        Comparator<Integer> comp = Integer::compareTo;
-        TreeMap<Integer, String> vezes = new TreeMap<>(comp);
-        int cont;
-
-        for (Map.Entry<String, Utilizador> aux1 : this.utilizadores.entrySet()) {
-            Utilizador u = aux1.getValue();
-            cont = 0;
-
-            for (Map.Entry<String, Voluntario> aux2 : this.voluntarios.entrySet()) {
-                Voluntario v = aux2.getValue();
-
-                for (Encomenda e : v.getEncomendasEntregues()) {
-                    if (e.getCodigo().equals(u.getCod())) {
-                        cont++;
-                    }
-                }
-            }
-            vezes.put(cont, u.getCod());
-        }
-        return vezes;
-    }*/
 
     public List<Transportadora> getTop10Trans() {
         Comparator<Double> comp = Double::compareTo;

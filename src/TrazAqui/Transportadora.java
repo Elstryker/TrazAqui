@@ -1,6 +1,7 @@
 package TrazAqui;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -31,6 +32,7 @@ public class Transportadora extends Estafeta {
         this.numKms = numKms;
         this.NIF = NIF;
         this.precoKM = precoKM;
+
     }
 
     public double getNumKms() {
@@ -65,7 +67,6 @@ public class Transportadora extends Estafeta {
     public void setPrecoKM(double precoKM) {
         this.precoKM = precoKM;
     }
-
 
     // Métodos
     public double precoEncomenda(double peso, double dist) {
