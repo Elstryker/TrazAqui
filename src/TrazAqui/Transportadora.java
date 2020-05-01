@@ -26,12 +26,12 @@ public class Transportadora extends Estafeta {
         this.precoKM = precoKM;
     }
 
-    public Transportadora(Estafeta a, boolean certificada, double numKms, String NIF, double precoKM) {
+    public Transportadora(Transportadora a) {
         super(a);
-        this.certificada = certificada;
-        this.numKms = numKms;
-        this.NIF = NIF;
-        this.precoKM = precoKM;
+        this.certificada = a.isCertificada();
+        this.numKms = a.getNumKms();
+        this.NIF = a.getNIF();
+        this.precoKM = a.getPrecoKM();
 
     }
 
@@ -84,6 +84,10 @@ public class Transportadora extends Estafeta {
 
     public boolean aceitoTransportesMedicamentos(){
         return this.certificada;
+    }
+
+    public Transportadora clone() {
+        return new Transportadora(this);
     }
 
 }

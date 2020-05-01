@@ -16,4 +16,8 @@ public class Voluntario extends Estafeta {
         super(a);
     }
 
+    public Voluntario clone() {
+        return new Voluntario(this);
+    }
+
 }
