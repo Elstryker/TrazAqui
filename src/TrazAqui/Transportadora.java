@@ -1,34 +1,35 @@
 package TrazAqui;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class Transportadora {
+public class Transportadora implements Entrada {
     private boolean certificada;
     private boolean disponivel;
-    private String nomeEmpresa;
     private double numKms;
-    private String codEmpresa;
+    private String nome;
+    private String cod;
     private GPS localizacao;
     private String NIF;
     private double raio;
     private double precoKM;
     private List<Encomenda> encomendasEntregues;
     private List<Encomenda> pedidosEncomenda;
+    private int[] classificacao;
 
-    public Transportadora(boolean certificada, boolean disponivel, String nomeEmpresa, String codEmpresa, GPS localizacao,String NIF, double raio, double precoKM, List<Encomenda> encomendasEntregues, List<Encomenda> pedidosEncomenda) {
+    public Transportadora(boolean certificada, boolean disponivel, String nome, String cod, GPS localizacao,String NIF, double raio, double precoKM, List<Encomenda> encomendasEntregues, List<Encomenda> pedidosEncomenda, int[] classificacao) {
         this.certificada=certificada;
         this.disponivel = disponivel;
-        this.nomeEmpresa = nomeEmpresa;
-        this.codEmpresa = codEmpresa;
+        this.nome = nome;
+        this.cod = cod;
         this.localizacao = localizacao;
         this.NIF=NIF;
         this.raio = raio;
         this.precoKM = precoKM;
         this.setEncomendasEntregues(encomendasEntregues);
         this.setPedidosEncomenda(pedidosEncomenda);
+        this.classificacao = classificacao;
     }
 
     public Transportadora(){
@@ -36,11 +37,12 @@ public class Transportadora {
         this.disponivel=false;
         this.pedidosEncomenda = new ArrayList<>();
         this.encomendasEntregues = new ArrayList<>();
-        this.nomeEmpresa= "";
-        this.codEmpresa= "";
+        this.nome= "";
+        this.cod= "";
         this.localizacao= new GPS();
         this.raio=0;
         this.precoKM=0;
+        this.classificacao= new int[5];
     }
 
     public Transportadora(Transportadora a) {
@@ -48,12 +50,13 @@ public class Transportadora {
         this.disponivel=a.disponivel;
         this.setEncomendasEntregues(a.getEncomendasEntregues());
         this.setPedidosEncomenda(a.getPedidosEncomenda());
-        this.nomeEmpresa=a.nomeEmpresa;
-        this.codEmpresa= a.codEmpresa;
+        this.nome=a.nome;
+        this.cod= a.cod;
         this.localizacao=a.localizacao;
         this.raio=a.raio;
         this.precoKM= a.precoKM;
         this.NIF=a.NIF;
+        this.classificacao=a.getClassificacao();
     }
 
     public double getNumKms() {
@@ -88,20 +91,20 @@ public class Transportadora {
         this.disponivel = disponivel;
     }
 
-    public String getNomeEmpresa() {
-        return nomeEmpresa;
+    public String getNome() {
+        return nome;
     }
 
-    public void setNomeEmpresa(String nomeEmpresa) {
-        this.nomeEmpresa = nomeEmpresa;
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
-    public String getCodEmpresa() {
-        return codEmpresa;
+    public String getCod() {
+        return cod;
     }
 
-    public void setCodEmpresa(String codEmpresa) {
-        this.codEmpresa = codEmpresa;
+    public void setCod(String cod) {
+        this.cod = cod;
     }
 
     public GPS getLocalizacao() {
@@ -151,6 +154,13 @@ public class Transportadora {
         this.pedidosEncomenda = new ArrayList<>();
         pedidosEncomenda.forEach(l-> this.pedidosEncomenda.add(l.clone()));
     }
+    public int[] getClassificacao() {
+        return classificacao;
+    }
+
+    public void setClassificacao(int[] classificacao) {
+        this.classificacao = classificacao;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -161,8 +171,8 @@ public class Transportadora {
                 disponivel == that.disponivel &&
                 raio == that.raio &&
                 Double.compare(that.precoKM, precoKM) == 0 &&
-                Objects.equals(nomeEmpresa, that.nomeEmpresa) &&
-                Objects.equals(codEmpresa, that.codEmpresa) &&
+                Objects.equals(nome, that.nome) &&
+                Objects.equals(cod, that.cod) &&
                 Objects.equals(localizacao, that.localizacao) &&
                 Objects.equals(NIF, that.NIF) &&
                 Objects.equals(encomendasEntregues, that.encomendasEntregues) &&
@@ -171,7 +181,7 @@ public class Transportadora {
 
     @Override
     public int hashCode() {
-        return Objects.hash(certificada, disponivel, nomeEmpresa, codEmpresa, localizacao, NIF, raio, precoKM, encomendasEntregues, pedidosEncomenda);
+        return Objects.hash(certificada, disponivel, nome, cod, localizacao, NIF, raio, precoKM, encomendasEntregues, pedidosEncomenda);
     }
 
     @Override
@@ -179,8 +189,8 @@ public class Transportadora {
         final StringBuilder sb = new StringBuilder("Transportadora{");
         sb.append("certificada=").append(certificada);
         sb.append(", disponivel=").append(disponivel);
-        sb.append(", nomeEmpresa='").append(nomeEmpresa).append('\'');
-        sb.append(", codEmpresa='").append(codEmpresa).append('\'');
+        sb.append(", nome='").append(nome).append('\'');
+        sb.append(", cod='").append(cod).append('\'');
         sb.append(", localizacao=").append(localizacao);
         sb.append(", NIF='").append(NIF).append('\'');
         sb.append(", raio=").append(raio);
@@ -223,5 +233,16 @@ public class Transportadora {
 
     public void addPedidosEncomenda(Encomenda a){
         this.pedidosEncomenda.add(a.clone());
+    }
+
+    public void classificao(int x) {
+        if (x >=1 && x<=5) {
+            this.classificacao[x - 1]++;
+            System.out.println(this.classificacao[0] + " utilizadores classificaram com 1 estrela");
+            System.out.println(this.classificacao[1] + " utilizadores classificaram com 2 estrelas");
+            System.out.println(this.classificacao[2] + " utilizadores classificaram com 3 estrelas");
+            System.out.println(this.classificacao[3] + " utilizadores classificaram com 4 estrelas");
+            System.out.println(this.classificacao[4] + " utilizadores classificaram com 5 estrelas");
+        } else System.out.println("Classificacao invalida");
     }
 }

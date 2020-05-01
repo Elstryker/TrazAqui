@@ -10,6 +10,6 @@ public class Main {
         o.loadFromFile(e);
         o.adicionaUtilizador("ola","adeus","pedro");
         o.adicionaUtilizador("as","d","f");
-        System.out.println(o.validaDados("as","d","f"));
+        //System.out.println(o.validaDados("as","d","f"));
     }
 }

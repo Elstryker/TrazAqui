@@ -1,6 +1,6 @@
 package TrazAqui;
 
-import java.awt.image.AreaAveragingScaleFilter;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -72,15 +72,15 @@ public class  Estado {
     }
 
     public void addVoluntario(Voluntario v) {
-        this.voluntarios.put(v.getCodVoluntario(),v.clone());
+        this.voluntarios.put(v.getCod(),v.clone());
     }
 
     public void addUtilizador(Utilizador u) {
-        this.utilizadores.put(u.getCodigo(),u.clone());
+        this.utilizadores.put(u.getCod(),u.clone());
     }
 
     public void addTransportadora(Transportadora t) {
-        this.transportadoras.put(t.getCodEmpresa(),t.clone());
+        this.transportadoras.put(t.getCod(),t.clone());
     }
 
     public void addLoja(Loja l) {
@@ -151,13 +151,8 @@ public class  Estado {
     }
 
     public GPS getUserPos(String user) {
-        return this.utilizadores.get(user).getPosicao();
+        return this.utilizadores.get(user).getLocalizacao();
     }
-
-    public void addEncomendaLoja(Encomenda e, String loja) {
-        this.lojas.get(loja).adicionaEncomenda(e);
-    }
-
 
     public double totalFaturado(Transportadora t, LocalDateTime min, LocalDateTime max) {
         double total=0;
@@ -166,7 +161,7 @@ public class  Estado {
                 if (this.lojas.containsKey(e.getLoja())) {
                     Loja l = this.lojas.get(e.getLoja()).clone();
                     Utilizador u = this.utilizadores.get(e.getUtilizador());
-                    total += t.precoEncomenda(e.getPeso(),l.getLocalizacao().distancia(u.getPosicao()));
+                    total += t.precoEncomenda(e.getPeso(),l.getLocalizacao().distancia(u.getLocalizacao()));
                 }
             }
         }
@@ -196,35 +191,35 @@ public class  Estado {
                 Transportadora t = aux2.getValue();
 
                 for (Encomenda e : t.getEncomendasEntregues()) {
-                    if (e.getCodigo().equals(u.getCodigo())) {
+                    if (e.getCodigo().equals(u.getCod())) {
                         cont++;
                     }
                 }
             }
-            vezes.put(cont,u.getCodigo());
+            vezes.put(cont,u.getCod());
         }
         return vezes;
     }
 
     private TreeMap<Integer,String> analisaV() {
         Comparator<Integer> comp = Integer::compareTo;
-        TreeMap<Integer,String> vezes = new TreeMap<>(comp);
+        TreeMap<Integer, String> vezes = new TreeMap<>(comp);
         int cont;
 
-        for (Map.Entry<String,Utilizador> aux1 : this.utilizadores.entrySet()) {
+        for (Map.Entry<String, Utilizador> aux1 : this.utilizadores.entrySet()) {
             Utilizador u = aux1.getValue();
-            cont=0;
+            cont = 0;
 
-            for (Map.Entry<String,Voluntario> aux2 : this.voluntarios.entrySet()) {
+            for (Map.Entry<String, Voluntario> aux2 : this.voluntarios.entrySet()) {
                 Voluntario v = aux2.getValue();
 
                 for (Encomenda e : v.getEncomendasEntregues()) {
-                    if (e.getCodigo().equals(u.getCodigo())) {
+                    if (e.getCodigo().equals(u.getCod())) {
                         cont++;
                     }
                 }
             }
-            vezes.put(cont,u.getCodigo());
+            vezes.put(cont, u.getCod());
         }
         return vezes;
     }*/
@@ -246,7 +241,10 @@ public class  Estado {
         return res;
     }
 
+    public Utilizador getConta(String email, String pass) throws IOException {
+        FileIO io = new FileIO();
 
-
+        return this.utilizadores.get(io.validaDados(email,pass));
+    }
 
 }
