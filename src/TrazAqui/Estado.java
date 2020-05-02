@@ -203,10 +203,27 @@ public class  Estado {
         return res;
     }
 
-    public Utilizador getConta(String email, String pass) throws IOException {
+    public Utilizador getContaUtil(String email, String pass) throws IOException {
         FileIO io = new FileIO();
 
         return this.utilizadores.get(io.validaDados(email,pass));
     }
 
+    public Loja getContaLoja(String email, String pass) throws IOException {
+        FileIO io = new FileIO();
+
+        return this.lojas.get(io.validaDados(email,pass));
+    }
+
+    public Transportadora getContaTrans(String email, String pass) throws IOException {
+        FileIO io = new FileIO();
+
+        return this.transportadoras.get(io.validaDados(email,pass));
+    }
+
+    public Voluntario getContaVol(String email, String pass) throws IOException {
+        FileIO io = new FileIO();
+
+        return this.voluntarios.get(io.validaDados(email,pass));
+    }
 }

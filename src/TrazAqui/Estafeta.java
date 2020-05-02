@@ -128,15 +128,17 @@ public class Estafeta implements Entrada{
     }
 
     public double getClassMedia(){
-        int totclas =0;
-        int somaclas =0;
+        int aval = 1;
+        int somaclas = 0;
+        int clastotal = 0;
         double avg =0;
         for(int x : this.classificacao){
-            somaclas += x;
-            totclas++;
+            somaclas += x*aval;
+            aval++;
+            clastotal += x;
         }
 
-        avg = (double) somaclas/totclas;
+        avg = (double) somaclas/clastotal;
         return avg;
     }
 
@@ -191,4 +193,5 @@ public class Estafeta implements Entrada{
         sb.append('}');
         return sb.toString();
     }
+
 }

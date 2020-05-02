@@ -1,9 +1,6 @@
 package TrazAqui;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 
 public class Transportadora extends Estafeta {
     private boolean certificada;
@@ -89,5 +86,7 @@ public class Transportadora extends Estafeta {
     public Transportadora clone() {
         return new Transportadora(this);
     }
+
+
 
 }
