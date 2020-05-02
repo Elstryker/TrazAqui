@@ -141,8 +141,9 @@ public class  Estado {
         }
 
         for (Map.Entry<Integer,Utilizador> aux : vezes.entrySet()) {
-            if (cont++==10) break;
+            if (cont==10) break;
             res.add(aux.getValue());
+            cont++;
         }
 
         return res;
@@ -162,8 +163,9 @@ public class  Estado {
         }
 
         for (Map.Entry<Double,Estafeta> aux : vezes.entrySet()) {
-            if (cont++==10) break;
+            if (cont==10) break;
             res.add(aux.getValue());
+            cont++;
         }
         return res;
     }
@@ -174,7 +176,12 @@ public class  Estado {
         return this.utilizadores.get(io.validaDados(email,pass));
     }
 
+    public void addEncomendaUtilizador(String cod,Encomenda e) {
+        this.utilizadores.get(cod).addEncomenda(e);
+    }
 
-
+    public void addEncomendaLoja(String cod,Encomenda e) {
+        this.lojas.get(cod).addPedido(e);
+    }
 
 }

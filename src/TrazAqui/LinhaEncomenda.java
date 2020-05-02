@@ -30,7 +30,7 @@ public class LinhaEncomenda {
         this.preco = linha.getPreco();
         this.quantidade = linha.getQuantidade();
         this.fragil = linha.getFragil();
-        this.codigo = linha.getCodigo();
+        this.codigo = linha.getCod();
     }
 
     //Metodos de acesso
@@ -66,11 +66,11 @@ public class LinhaEncomenda {
         this.fragil = fragil;
     }
 
-    public String getCodigo() {
+    public String getCod() {
         return codigo;
     }
 
-    public void setCodigo(String codigo) {
+    public void setCod(String codigo) {
         this.codigo = codigo;
     }
 
@@ -84,7 +84,7 @@ public class LinhaEncomenda {
         LinhaEncomenda le = (LinhaEncomenda) obj;
         return  le.getDescricao().equals(this.descricao) &&
                 le.getPreco() == this.preco &&
-                le.getCodigo().equals(this.codigo) &&
+                le.getCod().equals(this.codigo) &&
                 le.getFragil()==this.fragil &&
                 le.getQuantidade()==this.quantidade;
     }

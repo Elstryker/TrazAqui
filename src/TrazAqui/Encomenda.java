@@ -57,10 +57,10 @@ public class Encomenda {
         final StringBuilder sb = new StringBuilder("Encomenda{");
         sb.append("peso=").append(peso);
         sb.append(", descricao='").append(descricao).append('\'');
-        sb.append(", cod=").append(cod);
+        sb.append(", cod='").append(cod).append('\'');
         sb.append(", data=").append(data);
-        sb.append(", utilizador=").append(utilizador);
-        sb.append(", origem=").append(loja);
+        sb.append(", utilizador='").append(utilizador).append('\'');
+        sb.append(", loja='").append(loja).append('\'');
         sb.append(", medicamentos=").append(medicamentos);
         sb.append(", produtos=").append(produtos);
         sb.append('}');
@@ -84,6 +84,13 @@ public class Encomenda {
     }
 
     //Metodos de acesso
+    public void setProdutos(List<LinhaEncomenda> produtos) {
+        this.produtos = new ArrayList<>();
+        for (LinhaEncomenda e : produtos) {
+            this.produtos.add(e.clone());
+        }
+    }
+
     public boolean getMedicamentos() {
         return medicamentos;
     }
