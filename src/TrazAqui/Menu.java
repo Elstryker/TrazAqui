@@ -7,6 +7,7 @@ public class Menu {
     private Opcoes opcao;
     private boolean exec;
 
+
     public enum Opcoes{
         Menu,
         Login,
@@ -21,6 +22,10 @@ public class Menu {
     public Menu(){
         this.opcao = Opcoes.Menu;
         this.exec = true;
+    }
+
+    public boolean stopExec(){
+        return !exec;
     }
 
     public Opcoes getOpcao(){
@@ -49,7 +54,7 @@ public class Menu {
         return estado.getContaLoja(email,password);
     }
 
-    public Transportadora loginTrans() throws IOException {
+    public Estafeta loginTrab() throws IOException {
         Estado estado = new Estado();
         FileIO io = new FileIO();
         Scanner sc = new Scanner(System.in);
@@ -57,18 +62,16 @@ public class Menu {
         String email = sc.nextLine();
         System.out.println("Password: ");
         String password = sc.nextLine();
-        return estado.getContaTrans(email,password);
+        return estado.getContaTrab(email,password);
     }
 
-    public Voluntario loginVol() throws IOException {
-        Estado estado = new Estado();
-        FileIO io = new FileIO();
+    public void novoRegisto(){
         Scanner sc = new Scanner(System.in);
+
         System.out.println("Email: ");
         String email = sc.nextLine();
         System.out.println("Password: ");
         String password = sc.nextLine();
-        return estado.getContaVol(email,password);
-    }
 
+    }
 }

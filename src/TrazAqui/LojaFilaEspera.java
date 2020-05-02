@@ -76,4 +76,8 @@ public class LojaFilaEspera extends Loja implements Entrada {
     public int getTamanhoListaEspera() {
         return this.listaEspera.size();
     }
+
+    public String toStringNome() {
+        return "LojaFilaEspera";
+    }
 }

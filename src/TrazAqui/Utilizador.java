@@ -11,7 +11,6 @@ public class Utilizador implements Entrada {
     private int numPedidos;
     private Map<String,Encomenda> encomendasConcluidas;
 
-
     public Utilizador() {
         this.nome = "";
         this.cod = "";
@@ -109,5 +108,10 @@ public class Utilizador implements Entrada {
 
     public void addEncomenda(Encomenda e) {
         this.encomendasConcluidas.put(e.getCod(),e.clone());
+        this.numPedidos++;
+    }
+
+    public String toStringNome() {
+        return "Utilizador";
     }
 }

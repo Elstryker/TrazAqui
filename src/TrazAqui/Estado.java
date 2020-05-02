@@ -7,33 +7,29 @@ import java.util.*;
 public class  Estado {
     //Variaveis de instancia
     private HashMap<String,Utilizador> utilizadores;
-    private HashMap<String,Transportadora> transportadoras;
-    private HashMap<String,Voluntario> voluntarios;
+    private HashMap<String,Estafeta> trabalhadores;
     private HashMap<String,Loja> lojas;
-    private HashSet<String> encAceites;
+    private Entrada login;
 
     public Estado() {
         this.utilizadores = new HashMap<>();
         this.lojas = new HashMap<>();
-        this.voluntarios = new HashMap<>();
-        this.transportadoras = new HashMap<>();
-        this.encAceites = new HashSet<>();
+        this.trabalhadores = new HashMap<>();
+        this.login = new Utilizador();
     }
 
-    public Estado(HashMap<String,Utilizador> u,HashMap<String,Transportadora> t,HashMap<String,Voluntario> v,HashMap<String,Loja> l, HashSet<String> hs) {
+    public Estado(HashMap<String,Utilizador> u,HashMap<String,Estafeta> t,HashMap<String,Loja> l, Entrada a) {
         this.setLojas(l);
-        this.setTransportadoras(t);
+        this.setTrabalhadores(t);
         this.setUtilizadores(u);
-        this.setVoluntarios(v);
-        this.setEncAceites(hs);
+        this.login = a.clone();
     }
 
     public Estado(Estado e) {
         this.setLojas(e.getLojas());
-        this.setTransportadoras(e.getTransportadoras());
-        this.setVoluntarios(e.getVoluntarios());
         this.setUtilizadores(e.getUtilizadores());
-        this.setEncAceites(e.getEncAceites());
+        this.login = e.getLogin();
+        this.setTrabalhadores(e.getTrabalhadores());
     }
 
     public Estado clone() {
@@ -47,48 +43,55 @@ public class  Estado {
         Estado e = (Estado) o;
 
         return this.lojas.equals(e.getLojas()) &&
-                this.transportadoras.equals(e.getTransportadoras()) &&
-                this.utilizadores.equals(e.getUtilizadores()) &&
-                this.voluntarios.equals(e.getVoluntarios());
+                this.trabalhadores.equals(e.getTrabalhadores()) &&
+                this.utilizadores.equals(e.getUtilizadores());
     }
 
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("Estado{");
         sb.append("utilizadores=").append(utilizadores);
-        sb.append(", transportadoras=").append(transportadoras);
-        sb.append(", voluntarios=").append(voluntarios);
+        sb.append(", trabalhadores=").append(trabalhadores);
         sb.append(", lojas=").append(lojas);
         sb.append('}');
         return sb.toString();
     }
 
-    public HashSet<String> getEncAceites() {
-        return new HashSet<>(this.encAceites);
+    public Entrada getLogin() {
+        return this.login.clone();
     }
 
-    public void setEncAceites(HashSet<String> encAceites) {
-        this.encAceites = new HashSet<>(encAceites);
+    public void setLogin(Entrada login) {
+        this.login = login.clone();
     }
 
-    public void addVoluntario(Voluntario v) {
-        this.voluntarios.put(v.getCod(),v.clone());
+    public HashMap<String, Estafeta> getTrabalhadores() {
+        HashMap<String,Estafeta> res = new HashMap<>();
+
+        for(Map.Entry<String,Estafeta> aux : this.trabalhadores.entrySet()) {
+            res.put(aux.getKey(),aux.getValue());
+        }
+        return res;
+    }
+
+    public void setTrabalhadores(HashMap<String, Estafeta> trabalhadores) {
+        this.trabalhadores = new HashMap<>();
+
+        for (Map.Entry<String,Estafeta> aux : trabalhadores.entrySet()) {
+            this.trabalhadores.put(aux.getKey(),aux.getValue());
+        }
+    }
+
+    public void addTrabalhador(Estafeta e) {
+        this.trabalhadores.put(e.getCod(),e.clone());
     }
 
     public void addUtilizador(Utilizador u) {
         this.utilizadores.put(u.getCod(),u.clone());
     }
 
-    public void addTransportadora(Transportadora t) {
-        this.transportadoras.put(t.getCod(),t.clone());
-    }
-
     public void addLoja(Loja l) {
         this.lojas.put(l.getCod(),l.clone());
-    }
-
-    public void addEncAceite(String s) {
-        this.encAceites.add(s);
     }
 
     public HashMap<String, Utilizador> getUtilizadores() {
@@ -106,35 +109,6 @@ public class  Estado {
         }
     }
 
-    public HashMap<String, Transportadora> getTransportadoras() {
-        HashMap<String,Transportadora> res = new HashMap<>();
-        for (Map.Entry<String,Transportadora> t : this.transportadoras.entrySet()) {
-            res.put(t.getKey(),t.getValue().clone());
-        }
-        return res;
-    }
-
-    public void setTransportadoras(HashMap<String,Transportadora> transportadoras) {
-        this.transportadoras = new HashMap<>();
-        for (Map.Entry<String, Transportadora> t : transportadoras.entrySet()) {
-            this.transportadoras.put(t.getKey(), t.getValue().clone());
-        }
-    }
-
-    public HashMap<String, Voluntario> getVoluntarios() {
-        HashMap<String,Voluntario> res = new HashMap<>();
-        for (Map.Entry<String,Voluntario> v : this.voluntarios.entrySet()) {
-            res.put(v.getKey(),v.getValue().clone());
-        }
-        return res;
-    }
-
-    public void setVoluntarios(HashMap<String, Voluntario> voluntarios) {
-        this.voluntarios = new HashMap<>();
-        for (Map.Entry<String, Voluntario> v : voluntarios.entrySet()) {
-            this.voluntarios.put(v.getKey(), v.getValue().clone());
-        }
-    }
     public HashMap<String, Loja> getLojas() {
         HashMap<String,Loja> res = new HashMap<>();
         for (Map.Entry<String,Loja> l : this.lojas.entrySet()) {
@@ -179,51 +153,63 @@ public class  Estado {
         }
 
         for (Map.Entry<Integer,Utilizador> aux : vezes.entrySet()) {
-            if (cont++==10) break;
+            if (cont==10) break;
             res.add(aux.getValue());
+            cont++;
         }
 
         return res;
     }
 
-    public List<Transportadora> getTop10Trans() {
+    public List<Estafeta> getTop10Trans() {
         Comparator<Double> comp = Double::compareTo;
-        TreeMap<Double,Transportadora> vezes = new TreeMap<>(comp);
-        List<Transportadora> res = new ArrayList<>();
+        TreeMap<Double,Estafeta> vezes = new TreeMap<>(comp);
+        List<Estafeta> res = new ArrayList<>();
         int cont=0;
 
-        for (Map.Entry<String,Transportadora> aux : this.transportadoras.entrySet()) {
-            vezes.put(aux.getValue().getNumKms(),aux.getValue().clone());
+        for (Map.Entry<String,Estafeta> aux : this.trabalhadores.entrySet()) {
+            if (aux.getValue() instanceof Transportadora) {
+                Transportadora t = (Transportadora) aux.getValue();
+                vezes.put(t.getNumKms(),aux.getValue().clone());
+            }
         }
 
-        for (Map.Entry<Double,Transportadora> aux : vezes.entrySet()) {
-            if (cont++==10) break;
+        for (Map.Entry<Double,Estafeta> aux : vezes.entrySet()) {
+            if (cont==10) break;
             res.add(aux.getValue());
+            cont++;
         }
         return res;
+    }
+
+    public void add(Entrada a) {
+        if(a instanceof Utilizador) addUtilizador((Utilizador) a);
+    }
+
+    public void addEncomendaUtilizador(String cod,Encomenda e) {
+        this.utilizadores.get(cod).addEncomenda(e);
+    }
+
+    public void addEncomendaLoja(String cod,Encomenda e) {
+        this.lojas.get(cod).addPedido(e);
     }
 
     public Utilizador getContaUtil(String email, String pass) throws IOException {
         FileIO io = new FileIO();
 
-        return this.utilizadores.get(io.validaDados(email,pass));
+        return this.utilizadores.get(io.validaLogin(email,pass,this));
     }
 
     public Loja getContaLoja(String email, String pass) throws IOException {
         FileIO io = new FileIO();
 
-        return this.lojas.get(io.validaDados(email,pass));
+        return this.lojas.get(io.validaLogin(email,pass,this));
     }
 
-    public Transportadora getContaTrans(String email, String pass) throws IOException {
+    public Estafeta getContaTrab(String email, String pass) throws IOException {
         FileIO io = new FileIO();
 
-        return this.transportadoras.get(io.validaDados(email,pass));
+        return this.trabalhadores.get(io.validaLogin(email,pass,this));
     }
 
-    public Voluntario getContaVol(String email, String pass) throws IOException {
-        FileIO io = new FileIO();
-
-        return this.voluntarios.get(io.validaDados(email,pass));
-    }
 }

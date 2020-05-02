@@ -87,6 +87,8 @@ public class Transportadora extends Estafeta {
         return new Transportadora(this);
     }
 
-
+    public String toStringNome() {
+        return "Transportadora";
+    }
 
 }

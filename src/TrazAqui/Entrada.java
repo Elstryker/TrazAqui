@@ -1,15 +1,14 @@
 package TrazAqui;
 
 public interface Entrada {
-    String getCod();
-    void setCod(String  n);
-    String getNome();
-    void setNome(String n);
-    GPS getLocalizacao();
-    void setLocalizacao(GPS a);
-    Entrada clone();
-    String toString();
-    boolean equals(Object o);
-    void menu();
-
+    public String getCod();
+    public void setCod(String  n);
+    public String getNome();
+    public void setNome(String n);
+    public GPS getLocalizacao();
+    public void setLocalizacao(GPS a);
+    public Entrada clone();
+    public String toString();
+    public boolean equals(Object o);
+    public String toStringNome();
 }

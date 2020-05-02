@@ -105,4 +105,8 @@ public class Loja implements Entrada {
         return new Loja(this);
     }
 
+    public String toStringNome() {
+        return "Loja";
+    }
+
 }
