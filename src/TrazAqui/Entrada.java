@@ -11,4 +11,24 @@ public interface Entrada {
     public String toString();
     public boolean equals(Object o);
     public String toStringNome();
+    public default Entrada newEntrada(String tipo) {
+        Entrada a = null;
+        switch (tipo) {
+            case "Utilizador":
+                a = new Utilizador();
+                break;
+            case "Transportadora":
+                a = new Transportadora();
+                break;
+            case "Voluntario":
+                a = new Voluntario();
+                break;
+            case "Loja":
+                a = new Loja();
+                break;
+            default:
+                break;
+        }
+        return a;
+    }
 }

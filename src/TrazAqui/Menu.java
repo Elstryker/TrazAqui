@@ -32,7 +32,7 @@ public class Menu {
         return this.opcao;
     }
 
-    public Utilizador loginUtilizador() throws IOException {
+    public void loginUtilizador() throws IOException {
         Estado estado = new Estado();
         FileIO io = new FileIO();
         Scanner sc = new Scanner(System.in);
@@ -40,38 +40,28 @@ public class Menu {
         String email = sc.nextLine();
         System.out.println("Password: ");
         String password = sc.nextLine();
-        return estado.getContaUtil(email,password);
+        estado.getConta(email,password,io);
     }
 
-    public Loja loginLoja() throws IOException {
-        Estado estado = new Estado();
+    public void novoRegisto() throws IOException {
+        Scanner sc = new Scanner(System.in);
         FileIO io = new FileIO();
-        Scanner sc = new Scanner(System.in);
+        Estado est = new Estado();
         System.out.println("Email: ");
         String email = sc.nextLine();
         System.out.println("Password: ");
         String password = sc.nextLine();
-        return estado.getContaLoja(email,password);
-    }
+        System.out.println("Codigo: ");
+        String cod = sc.nextLine();
+        System.out.println("Nome: ");
+        String nome = sc.nextLine();
+        System.out.println("Latitude: ");
+        double lat = sc.nextDouble();
+        System.out.println("Longitude: ");
+        double longi = sc.nextDouble();
+        System.out.println("Tipo de conta");
+        String tipo = sc.nextLine();
 
-    public Estafeta loginTrab() throws IOException {
-        Estado estado = new Estado();
-        FileIO io = new FileIO();
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Email: ");
-        String email = sc.nextLine();
-        System.out.println("Password: ");
-        String password = sc.nextLine();
-        return estado.getContaTrab(email,password);
-    }
-
-    public void novoRegisto(){
-        Scanner sc = new Scanner(System.in);
-
-        System.out.println("Email: ");
-        String email = sc.nextLine();
-        System.out.println("Password: ");
-        String password = sc.nextLine();
-
+        est.registaConta(email,password,cod,nome,new GPS(lat,longi),io,tipo);
     }
 }
