@@ -20,4 +20,8 @@ public class Voluntario extends Estafeta {
         return new Voluntario(this);
     }
 
+    public String toStringNome() {
+        return "Voluntario";
+    }
+
 }

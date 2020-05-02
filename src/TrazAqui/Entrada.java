@@ -10,4 +10,5 @@ public interface Entrada {
     public Entrada clone();
     public String toString();
     public boolean equals(Object o);
+    public String toStringNome();
 }

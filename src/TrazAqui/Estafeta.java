@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
-public class Estafeta implements Entrada{
+public abstract class Estafeta implements Entrada{
     private String cod;
     private String nome;
     private GPS localizacao;
@@ -14,7 +14,6 @@ public class Estafeta implements Entrada{
     private List<Encomenda> pedidosEncomenda;
     private int[] classificacao;
     private boolean disponivel;
-
 
     public Estafeta (){
         this.cod = "";
@@ -134,7 +133,6 @@ public class Estafeta implements Entrada{
             somaclas += x;
             totclas++;
         }
-
         avg = (double) somaclas/totclas;
         return avg;
     }
@@ -162,9 +160,7 @@ public class Estafeta implements Entrada{
     }
 
     @Override
-    public Estafeta clone(){
-        return new Estafeta(this);
-    }
+    public abstract Estafeta clone();
 
     @Override
     public int hashCode() {
@@ -190,4 +186,6 @@ public class Estafeta implements Entrada{
         sb.append('}');
         return sb.toString();
     }
+
+    public abstract String toStringNome();
 }

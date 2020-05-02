@@ -9,22 +9,26 @@ public class  Estado {
     private HashMap<String,Utilizador> utilizadores;
     private HashMap<String,Estafeta> trabalhadores;
     private HashMap<String,Loja> lojas;
+    private Entrada login;
 
     public Estado() {
         this.utilizadores = new HashMap<>();
         this.lojas = new HashMap<>();
         this.trabalhadores = new HashMap<>();
+        this.login = new Utilizador();
     }
 
-    public Estado(HashMap<String,Utilizador> u,HashMap<String,Estafeta> t,HashMap<String,Loja> l) {
+    public Estado(HashMap<String,Utilizador> u,HashMap<String,Estafeta> t,HashMap<String,Loja> l, Entrada a) {
         this.setLojas(l);
         this.setTrabalhadores(t);
         this.setUtilizadores(u);
+        this.login = a.clone();
     }
 
     public Estado(Estado e) {
         this.setLojas(e.getLojas());
         this.setUtilizadores(e.getUtilizadores());
+        this.login = e.getLogin();
         this.setTrabalhadores(e.getTrabalhadores());
     }
 
@@ -51,6 +55,14 @@ public class  Estado {
         sb.append(", lojas=").append(lojas);
         sb.append('}');
         return sb.toString();
+    }
+
+    public Entrada getLogin() {
+        return this.login.clone();
+    }
+
+    public void setLogin(Entrada login) {
+        this.login = login.clone();
     }
 
     public HashMap<String, Estafeta> getTrabalhadores() {
@@ -173,7 +185,11 @@ public class  Estado {
     public Utilizador getConta(String email, String pass) throws IOException {
         FileIO io = new FileIO();
 
-        return this.utilizadores.get(io.validaDados(email,pass));
+        return this.utilizadores.get(io.validaLogin(email,pass));
+    }
+
+    public void add(Entrada a) {
+        if(a instanceof Utilizador) addUtilizador((Utilizador) a);
     }
 
     public void addEncomendaUtilizador(String cod,Encomenda e) {
