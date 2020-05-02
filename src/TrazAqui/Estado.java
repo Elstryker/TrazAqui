@@ -11,6 +11,7 @@ public class  Estado {
     private HashMap<String,Voluntario> voluntarios;
     private HashMap<String,Loja> lojas;
     private HashSet<String> encAceites;
+    private Entrada login;
 
     public Estado() {
         this.utilizadores = new HashMap<>();
@@ -18,14 +19,16 @@ public class  Estado {
         this.voluntarios = new HashMap<>();
         this.transportadoras = new HashMap<>();
         this.encAceites = new HashSet<>();
+        this.login = new Utilizador();
     }
 
-    public Estado(HashMap<String,Utilizador> u,HashMap<String,Transportadora> t,HashMap<String,Voluntario> v,HashMap<String,Loja> l, HashSet<String> hs) {
+    public Estado(HashMap<String,Utilizador> u,HashMap<String,Transportadora> t,HashMap<String,Voluntario> v,HashMap<String,Loja> l, HashSet<String> hs, Entrada ent) {
         this.setLojas(l);
         this.setTransportadoras(t);
         this.setUtilizadores(u);
         this.setVoluntarios(v);
         this.setEncAceites(hs);
+        this.login = ent;
     }
 
     public Estado(Estado e) {
@@ -34,6 +37,7 @@ public class  Estado {
         this.setVoluntarios(e.getVoluntarios());
         this.setUtilizadores(e.getUtilizadores());
         this.setEncAceites(e.getEncAceites());
+        this.login = e.getLogin();
     }
 
     public Estado clone() {
@@ -61,6 +65,14 @@ public class  Estado {
         sb.append(", lojas=").append(lojas);
         sb.append('}');
         return sb.toString();
+    }
+
+    public Entrada getLogin() {
+        return this.login.clone();
+    }
+
+    public void setLogin(Entrada login) {
+        this.login = login.clone();
     }
 
     public HashSet<String> getEncAceites() {
@@ -209,4 +221,7 @@ public class  Estado {
         return this.utilizadores.get(io.validaDados(email,pass));
     }
 
+    public void add(Entrada a) {
+        if(a instanceof Utilizador) addUtilizador((Utilizador) a);
+    }
 }
