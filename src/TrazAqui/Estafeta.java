@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Objects;
 
 public abstract class Estafeta implements Entrada{
-
     private String cod;
     private String nome;
     private GPS localizacao;

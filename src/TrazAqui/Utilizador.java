@@ -108,6 +108,7 @@ public class Utilizador implements Entrada {
 
     public void addEncomenda(Encomenda e) {
         this.encomendasConcluidas.put(e.getCod(),e.clone());
+        this.numPedidos++;
     }
 
     public String toStringNome() {
