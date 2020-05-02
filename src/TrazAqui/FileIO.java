@@ -53,7 +53,6 @@ public class FileIO {
                 tokens = line.split(":");
                 temp = tokens[0];
                 tokens = tokens[1].split(",");
-                //for(String s : tokens) System.out.println(s);
                 switch(temp) {
                     case "Utilizador":
                         gps = new GPS(Double.parseDouble(tokens[2]),Double.parseDouble(tokens[3]));
