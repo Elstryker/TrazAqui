@@ -1,5 +1,6 @@
 package TrazAqui;
 
+import java.io.File;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -15,7 +16,7 @@ public class  Estado {
         this.utilizadores = new HashMap<>();
         this.lojas = new HashMap<>();
         this.trabalhadores = new HashMap<>();
-        this.login = new Utilizador();
+        this.login = null;
     }
 
     public Estado(HashMap<String,Utilizador> u,HashMap<String,Estafeta> t,HashMap<String,Loja> l, Entrada a) {
@@ -182,14 +183,24 @@ public class  Estado {
         return res;
     }
 
-    public Utilizador getConta(String email, String pass) throws IOException {
-        FileIO io = new FileIO();
+    public void registaConta(String email, String pass, String cod, String nome, GPS loc, FileIO f, String tipo) throws IOException {
+        Entrada a = new Utilizador();
+        a = a.newEntrada(tipo);
+        a.setCod(cod);
+        a.setNome(nome);
+        a.setLocalizacao(loc);
+        f.registaUtilizador(email,pass,a,this);
+    }
 
-        return this.utilizadores.get(io.validaLogin(email,pass));
+    public void getConta(String email, String pass, FileIO f) throws IOException {
+        f.validaLogin(email,pass, this);
     }
 
     public void add(Entrada a) {
         if(a instanceof Utilizador) addUtilizador((Utilizador) a);
+        if(a instanceof Transportadora) addTrabalhador((Transportadora) a);
+        if(a instanceof Voluntario) addTrabalhador((Voluntario) a);
+        if(a instanceof Loja) addLoja((Loja) a);
     }
 
     public void addEncomendaUtilizador(String cod,Encomenda e) {
@@ -198,6 +209,18 @@ public class  Estado {
 
     public void addEncomendaLoja(String cod,Encomenda e) {
         this.lojas.get(cod).addPedido(e);
+    }
+
+    public Utilizador getUtilizador(String cod) {
+        return this.utilizadores.get(cod).clone();
+    }
+
+    public Loja getLoja(String cod) {
+        return this.lojas.get(cod).clone();
+    }
+
+    public Estafeta getEstafeta(String cod) {
+        return this.trabalhadores.get(cod).clone();
     }
 
 }

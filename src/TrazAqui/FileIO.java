@@ -214,13 +214,29 @@ public class FileIO {
         FileReader file = new FileReader(this.accPath);
         BufferedReader reader = new BufferedReader(file);
         String data = null;
-        String[] tok;
+        String[] tok = new String[0];
         while ((data = reader.readLine())!=null && !found) {
            tok = data.split(",");
            if(tok[0].equals(email) && tok[1].equals(pass)) {
                found = true;
                cod=tok[2];
            }
+        }
+        if(found) {
+            switch(tok[3]) {
+                case "Utilizador":
+                    e.setLogin(e.getUtilizador(cod));
+                    break;
+                case "Loja":
+                    e.setLogin(e.getLoja(cod));
+                    break;
+                case "Voluntario":
+                case "Transportadora":
+                    e.setLogin(e.getEstafeta(cod));
+                    break;
+                default:
+                    break;
+            }
         }
         file.close();
         reader.close();
