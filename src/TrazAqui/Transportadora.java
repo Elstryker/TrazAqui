@@ -29,7 +29,6 @@ public class Transportadora extends Estafeta {
         this.numKms = a.getNumKms();
         this.NIF = a.getNIF();
         this.precoKM = a.getPrecoKM();
-
     }
 
     public double getNumKms() {
@@ -56,7 +55,6 @@ public class Transportadora extends Estafeta {
         this.certificada = certificada;
     }
 
-
     public double getPrecoKM() {
         return precoKM;
     }
@@ -67,7 +65,7 @@ public class Transportadora extends Estafeta {
 
     // Métodos
     public double precoEncomenda(double peso, double dist) {
-        double total = 0;
+        double total;
 
         if (peso > 10) total = this.precoKM*dist;
         else total = this.precoKM*dist+2.5;
