@@ -197,13 +197,12 @@ public class  Estado {
         a.setCod(cod);
         a.setNome(nome);
         a.setLocalizacao(loc);
-        f.registaUtilizador(email,pass,a,this);
+        f.registaConta(email,pass,a,this);
     }
 
     public void getConta(String email, String pass, FileIO f) throws IOException {
         f.validaLogin(email,pass, this);
     }
-
     public void add(Entrada a) {
         if(a instanceof Utilizador) addUtilizador((Utilizador) a);
         if(a instanceof Transportadora) addTrabalhador((Transportadora) a);
