@@ -183,7 +183,7 @@ public class  Estado {
         return res;
     }
 
-    public void registaConta(String email, String pass, String cod, String nome, GPS loc, FileIO f, String tipo) throws IOException {
+    public void registar(String email, String pass, String cod, String nome, GPS loc, FileIO f, String tipo) throws IOException {
         Entrada a = new Utilizador();
         a = a.newEntrada(tipo);
         a.setCod(cod);
@@ -192,8 +192,12 @@ public class  Estado {
         f.registaUtilizador(email,pass,a,this);
     }
 
-    public void getConta(String email, String pass, FileIO f) throws IOException {
+    public void login(String email, String pass, FileIO f) throws IOException {
         f.validaLogin(email,pass, this);
+    }
+
+    public void logoff() {
+        this.login = null;
     }
 
     public void add(Entrada a) {
