@@ -1,6 +1,5 @@
 package TrazAqui;
 
-import java.io.File;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -132,12 +131,15 @@ public class  Estado {
     public double totalFaturado(Transportadora t, LocalDateTime min, LocalDateTime max) {
         double total=0;
         for (Encomenda e : t.getEncomendasEntregues()) {
+            System.out.println("ola");
             if (e.getData().isAfter(min) && e.getData().isBefore(max)) {
-                if (this.lojas.containsKey(e.getLoja())) {
-                    Loja l = this.lojas.get(e.getLoja()).clone();
+                if (this.lojas.containsKey(e.getLoja()) && this.utilizadores.containsKey(e.getUtilizador())) {
+                    Loja l = this.lojas.get(e.getLoja());
                     Utilizador u = this.utilizadores.get(e.getUtilizador());
-                    total += t.precoEncomenda(e.getPeso(),l.getLocalizacao().distancia(u.getLocalizacao()));
-                }
+                    double dist = l.getLocalizacao().distancia(u.getLocalizacao());
+                    System.out.println(dist);
+                    total += t.precoEncomenda(e.getPeso(),dist);
+                } else System.out.println("Dados invalidos!");
             }
         }
         return total;
@@ -145,18 +147,22 @@ public class  Estado {
 
     public List<Utilizador> getTop10Util() {
         Comparator<Integer> comp = Integer::compareTo;
-        TreeMap<Integer,Utilizador> vezes = new TreeMap<>(comp);
+        TreeMap<Integer,Set<Utilizador>> vezes = new TreeMap<>(comp);
         List<Utilizador> res = new ArrayList<>();
         int cont=0;
 
         for (Map.Entry<String,Utilizador> aux : this.utilizadores.entrySet()) {
-            vezes.put(aux.getValue().getNumPedidos(),aux.getValue().clone());
+            int numPedidos = aux.getValue().getNumPedidos();
+            vezes.putIfAbsent(numPedidos,new HashSet<>());
+            vezes.get(numPedidos).add(aux.getValue());
         }
 
-        for (Map.Entry<Integer,Utilizador> aux : vezes.entrySet()) {
+        for (Map.Entry<Integer,Set<Utilizador>> aux : vezes.entrySet()) {
             if (cont==10) break;
-            res.add(aux.getValue());
-            cont++;
+            for (Utilizador u : aux.getValue()) {
+                res.add(u);
+                cont++;
+            }
         }
 
         return res;
@@ -164,20 +170,25 @@ public class  Estado {
 
     public List<Estafeta> getTop10Trans() {
         Comparator<Double> comp = Double::compareTo;
-        TreeMap<Double,Estafeta> vezes = new TreeMap<>(comp);
+        TreeMap<Double,Set<Estafeta>> vezes = new TreeMap<>(comp);
         List<Estafeta> res = new ArrayList<>();
         int cont=0;
 
         for (Map.Entry<String,Estafeta> aux : this.trabalhadores.entrySet()) {
             if (aux.getValue() instanceof Transportadora) {
                 Transportadora t = (Transportadora) aux.getValue();
-                vezes.put(t.getNumKms(),aux.getValue().clone());
+                double numKms = t.getNumKms();
+                vezes.putIfAbsent(numKms,new HashSet<>());
+                vezes.get(numKms).add(t);
             }
         }
 
-        for (Map.Entry<Double,Estafeta> aux : vezes.entrySet()) {
+        for (Map.Entry<Double,Set<Estafeta>> aux : vezes.entrySet()) {
             if (cont==10) break;
-            res.add(aux.getValue());
+            for (Estafeta e : aux.getValue()) {
+                res.add(e);
+                cont++;
+            }
             cont++;
         }
         return res;
@@ -189,7 +200,7 @@ public class  Estado {
         a.setCod(cod);
         a.setNome(nome);
         a.setLocalizacao(loc);
-        f.registaUtilizador(email,pass,a,this);
+        f.registaConta(email,pass,a,this);
     }
 
     public void login(String email, String pass, FileIO f) throws IOException {

@@ -65,7 +65,6 @@ public class FileIO {
                 tokens = line.split(":");
                 temp = tokens[0];
                 tokens = tokens[1].split(",");
-                //for(String s : tokens) System.out.println(s);
                 switch(temp) {
                     case "Utilizador":
                         gps = new GPS(Double.parseDouble(tokens[2]),Double.parseDouble(tokens[3]));
@@ -196,7 +195,7 @@ public class FileIO {
         file.close();
     }
 
-    public void registaUtilizador(String email, String password, Entrada ent, Estado e) throws IOException {
+    public void registaConta(String email, String password, Entrada ent, Estado e) throws IOException {
         FileWriter fw = new FileWriter(this.accPath,true);
         BufferedWriter writer = new BufferedWriter(fw);
         writer.write(email + "," + password + "," + ent.getCod() + "," + ent.toStringNome() + "\n");
