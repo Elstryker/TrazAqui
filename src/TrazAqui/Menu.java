@@ -57,19 +57,17 @@ public class Menu {
     }
 
     public void loginUtilizador() throws IOException {
-        Estado estado = new Estado();
         FileIO io = new FileIO();
         Scanner sc = new Scanner(System.in);
         System.out.println("Email: ");
         String email = sc.nextLine();
         System.out.println("Password: ");
         String password = sc.nextLine();
-        estado.login(email,password,io);
+        this.e.login(email,password,io);
     }
 
     public void novoRegisto() throws IOException {
         Scanner sc = new Scanner(System.in);
-        Estado est = new Estado();
         System.out.print("Email: ");
         String email = sc.nextLine();
         System.out.print("Password: ");
@@ -85,6 +83,6 @@ public class Menu {
         System.out.print("Regista-se como Utilizador, Loja, Transportadora ou Voluntario?: ");
         String tipo = sc.nextLine();
 
-        est.registar(email,password,cod,nome,new GPS(lat,longi),this.f,tipo);
+        this.e.registar(email,password,cod,nome,new GPS(lat,longi),this.f,tipo);
     }
 }
