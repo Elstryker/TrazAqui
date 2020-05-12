@@ -29,7 +29,7 @@ public class Menu {
                     break;
                 case 1:
                     try {
-                        this.novoRegisto();
+                        this.loginUtilizador();
                     }
                     catch (Exception e) {
                         e.printStackTrace();
@@ -37,7 +37,7 @@ public class Menu {
                     break;
                 case 2:
                     try {
-                        this.loginUtilizador();
+                        this.novoRegisto();
                     }
                     catch (Exception e) {
                         e.printStackTrace();
@@ -64,12 +64,14 @@ public class Menu {
         String email = sc.nextLine();
         System.out.println("Password: ");
         String password = sc.nextLine();
-        estado.login(email,password,io);
+        estado.login(email,password,this.f);
     }
 
     public void novoRegisto() throws IOException {
         Scanner sc = new Scanner(System.in);
         Estado est = new Estado();
+        System.out.print("Regista-se como Utilizador, Loja, Transportadora ou Voluntario?: ");
+        String tipo = sc.nextLine();
         System.out.print("Email: ");
         String email = sc.nextLine();
         System.out.print("Password: ");
@@ -82,8 +84,7 @@ public class Menu {
         double lat = sc.nextDouble();
         System.out.print("Longitude: ");
         double longi = sc.nextDouble();
-        System.out.print("Regista-se como Utilizador, Loja, Transportadora ou Voluntario?: ");
-        String tipo = sc.nextLine();
+
 
         est.registar(email,password,cod,nome,new GPS(lat,longi),this.f,tipo);
     }

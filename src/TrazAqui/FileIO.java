@@ -12,7 +12,7 @@ public class FileIO {
     public FileIO() {
         this.readLogPath = "";
         this.writeLogPath = "";
-        this.accPath = "";
+        this.accPath = "/";
     }
 
     public FileIO(String p, String p2, String p3) {
