@@ -10,9 +10,9 @@ public class Menu {
     private FileIO f;
     private Estado e;
 
-    public Menu(){
+    public Menu() {
         this.exec = true;
-        this.f = new FileIO("teste.txt","Estado.txt","Credentials.txt");
+        this.f = new FileIO("teste.txt", "Estado.txt", "Credentials.txt");
         this.e = new Estado();
     }
 
@@ -20,72 +20,71 @@ public class Menu {
         Scanner inp = new Scanner(System.in);
         int opcao = -1;
         f.loadFromFile(e);
-        while(e.getLogin() == null && this.exec) {
+        while (e.getLogin() == null && this.exec) {
             UI.printMenuInicial();
-            while((opcao = inp.nextInt()) < 0 || opcao > 2) {
+            while ((opcao = inp.nextInt()) < 0 || opcao > 2) {
                 UI.printIncorrectInput();
             }
-            switch(opcao) {
+            switch (opcao) {
                 case 0:
                     stopExec();
                     break;
                 case 1:
                     try {
                         this.loginUtilizador();
-                    }
-                    catch (Exception e) {
+                    } catch (Exception e) {
                         System.out.println(e.getMessage());
                     }
                     break;
                 case 2:
                     try {
                         this.novoRegisto();
-                    }
-                    catch (Exception e) {
+                    } catch (Exception e) {
                         System.out.println(e.getMessage());
                     }
                     break;
                 case 3:
                     try {
                         this.e = f.readObjectStream();
-                    }
-                    catch (Exception e) {
+                    } catch (Exception e) {
                         System.out.println(e.getMessage());
                     }
                 default:
                     throw new IllegalStateException("Unexpected value: " + opcao);
             }
         }
-        if(this.exec)
-            switch(e.getLogin().getClass().getSimpleName()) {
+        if (this.exec)
+            switch (e.getLogin().getClass().getSimpleName()) {
                 case "Utilizador":
-                    while(this.exec) {
+                    while (this.exec) {
                         UI.printMenuUtilizador();
-                        if(!MenuUtilizador()) stopExec();
+                        if (!menuUtilizador()) stopExec();
                     }
                     break;
                 case "Transportadora":
-                    while(this.exec) {
+                    while (this.exec) {
                         UI.printMenuTransportadora();
-                        if(!MenuTransportadora()) stopExec();
+                        // if(!MenuTransportadora()) stopExec();
                     }
                     break;
                 case "Voluntario":
-                    while(this.exec) {
+                    while (this.exec) {
                         UI.printMenuVoluntario();
-                        if(!MenuVoluntario()) stopExec();
+                        //    if(!MenuVoluntario()) stopExec();
                     }
                     break;
                 case "Loja":
-                    while(this.exec) {
+                    while (this.exec) {
                         UI.printMenuLoja();
-                        if(!MenuLoja()) stopExec();
+                        // if(!MenuLoja()) stopExec();
                     }
+                default:
+                    break;
             }
         UI.goodbye();
     }
 
-    public void stopExec(){
+    public void stopExec() {
         this.exec = false;
     }
 
@@ -95,7 +94,7 @@ public class Menu {
         String email = sc.nextLine();
         System.out.print("Password: ");
         String password = sc.nextLine();
-        this.e.login(email,password,this.f);
+        this.e.login(email, password, this.f);
     }
 
     public void novoRegisto() throws IOException {
@@ -106,7 +105,7 @@ public class Menu {
         String email = sc.nextLine();
         System.out.print("Password: ");
         String password = sc.nextLine();
-        System.out.print("Codigo: ");
+        System.out.print("Código: ");
         String cod = sc.nextLine();
         System.out.print("Nome: ");
         String nome = sc.nextLine();
@@ -114,21 +113,22 @@ public class Menu {
         double lat = sc.nextDouble();
         System.out.print("Longitude: ");
         double longi = sc.nextDouble();
-        this.e.registar(email,password,cod,nome,new GPS(lat,longi),this.f,tipo);
+        this.e.registar(email, password, cod, nome, new GPS(lat, longi), this.f, tipo);
     }
 
-    public Boolean menuUtilizador() throws IOException {
-        int opcao =0;
+    public boolean menuUtilizador() throws IOException {
+        boolean  bool = true;
+        int opcao = 0;
         Scanner sc = new Scanner(System.in);
         UI.printMenuUtilizador();
         opcao = sc.nextInt();
-        switch(opcao){
+        switch (opcao) {
             case 1:
                 Encomenda enc = new Encomenda();
-                double preco,quantidade ;
-                boolean fragil,conti = true;
-                String cod,descricao;
-                while(conti) {
+                double preco, quantidade;
+                boolean fragil, conti = true;
+                String cod, descricao;
+                while (conti) {
                     UI.print("Faça uma descrição do produto: ");
                     descricao = sc.nextLine();
                     UI.print("Indique preço: ");
@@ -145,14 +145,26 @@ public class Menu {
                 }
                 break;
             case 2:
-                    UI.print("Histórico de encomendas: \n");
-
+                UI.print("Histórico de encomendas: \n");
+                String codigoUtilizador = e.getLogin().getCod();
+                e.getUtilizador(codigoUtilizador).getEncomendasConcluidas();
+                break;
+            case 3:
+                String worker = "";
+                int clas = 0;
+                UI.print("Classifica voluntário/utilizador: ");
+                e.getTrabalhadores();
+                UI.print("Indique o códido do estafeta que deseja avaliar: ");
+                worker = sc.nextLine();
+                UI.print("Indique a classificação que deseja dar: ");
+                clas = sc.nextInt();
+                e.getEstafeta(worker).classifica(clas);
                 break;
             default:
                 break;
         }
+        return bool;
     }
-
 
 }
 //public LinhaEncomenda(String descricao, double preco,double quantidade,boolean fragil, String codigo)
