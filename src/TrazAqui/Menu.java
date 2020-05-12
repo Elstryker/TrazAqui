@@ -1,6 +1,8 @@
 package TrazAqui;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Scanner;
 
 public class Menu {
@@ -87,4 +89,44 @@ public class Menu {
 
         est.registar(email,password,cod,nome,new GPS(lat,longi),this.f,tipo);
     }
+
+    public Boolean menuUtilizador() throws IOException {
+        int opcao =0;
+        Scanner sc = new Scanner(System.in);
+        UI.printMenuUtilizador();
+        opcao = sc.nextInt();
+        switch(opcao){
+            case 1:
+                Encomenda enc = new Encomenda();
+                double preco,quantidade ;
+                boolean fragil,conti = true;
+                String cod,descricao;
+                while(conti) {
+                    UI.print("Faça uma descrição do produto: ");
+                    descricao = sc.nextLine();
+                    UI.print("Indique preço: ");
+                    preco = sc.nextDouble();
+                    UI.print("Indique a quantidade :");
+                    quantidade = sc.nextDouble();
+                    UI.print("Indique se é frágil ou não: ");
+                    fragil = sc.nextBoolean();
+                    UI.print("Indique o código do produto: ");
+                    cod = sc.nextLine();
+                    enc.addProduto(new LinhaEncomenda(descricao, preco, quantidade, fragil, cod));
+                    UI.print("Deseja pedir mais produtos?");
+                    conti = sc.nextBoolean();
+                }
+                break;
+            case 2:
+                    UI.print("Histórico de encomendas: \n");
+
+                break;
+            default:
+                break;
+        }
+    }
+
+
 }
+//public LinhaEncomenda(String descricao, double preco,double quantidade,boolean fragil, String codigo)
+//public Encomenda(double peso, boolean med, String descricao, String cod, String utilizador, String loja,ArrayList<LinhaEncomenda> produtos, LocalDateTime l)
