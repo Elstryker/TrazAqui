@@ -193,11 +193,12 @@ public class  Estado {
 
     public void registar(String email, String pass, String cod, String nome, GPS loc, FileIO f, String tipo) throws IOException {
         Entrada a = new Utilizador();
-        a = a.newEntrada(tipo);
         a.setCod(cod);
         a.setNome(nome);
         a.setLocalizacao(loc);
+        a.newEntrada(tipo);
         f.registaConta(email,pass,a,this);
+
     }
 
     public void login(String email, String pass, FileIO f) throws IOException {

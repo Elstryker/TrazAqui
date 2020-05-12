@@ -29,7 +29,7 @@ public class Menu {
                     break;
                 case 1:
                     try {
-                        this.novoRegisto();
+                        this.loginUtilizador();
                     }
                     catch (IOException e) {
                         e.printStackTrace();
@@ -40,7 +40,7 @@ public class Menu {
                     break;
                 case 2:
                     try {
-                        this.loginUtilizador();
+                        this.novoRegisto();
                     }
                     catch (IOException e) {
                         e.printStackTrace();
@@ -71,7 +71,7 @@ public class Menu {
 
         System.out.println("Password: ");
         String password = sc.nextLine();
-        this.e.login(email,password,io);
+        e.login(email,password,this.f);
     }
 
     private boolean verifica(String mail) {
