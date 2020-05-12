@@ -216,6 +216,7 @@ public class  Estado {
         if(a instanceof Loja) addLoja((Loja) a);
     }
 
+
     public void addEncomendaUtilizador(String cod,Encomenda e) {
         this.utilizadores.get(cod).addEncomenda(e);
     }

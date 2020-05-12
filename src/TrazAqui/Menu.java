@@ -7,6 +7,7 @@ public class Menu {
     private boolean exec;
     private FileIO f;
     private Estado e;
+    private int cod;
 
     public Menu(){
         this.exec = true;
@@ -117,5 +118,20 @@ public class Menu {
 
         this.e.registar(email,password,cod,nome,new GPS(lat,longi),this.f,tipo);
     }
+
+    public boolean menuTransportadora() {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("------------------Menu---------------\n");
+        System.out.println("Esta disposta a entregar encomendas: ");
+        String disponivel = sc.nextLine();
+        if (disponivel.equals("sim")) {
+            String cod = this.e.getLogin().getCod();
+            this.g
+        }
+
+
+
+    }
+
 
 }
