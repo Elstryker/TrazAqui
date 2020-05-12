@@ -18,7 +18,7 @@ public class Menu {
         Scanner inp = new Scanner(System.in);
         int opcao = -1;
         f.loadFromFile(e);
-        while(e.getLogin() == null || opcao == 0) {
+        while(e.getLogin() == null && this.exec) {
             UI.printMenuInicial();
             while((opcao = inp.nextInt()) < 0 || opcao > 2) {
                 UI.printIncorrectInput();
@@ -52,8 +52,8 @@ public class Menu {
         }
     }
 
-    public boolean stopExec(){
-        return !exec;
+    public void stopExec(){
+        this.exec = false;
     }
 
     public void loginUtilizador() throws IOException {
