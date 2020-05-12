@@ -6,25 +6,33 @@ import java.util.Map;
 
 public class FileIO {
     private String readLogPath;
-    private String writeLogPath;
+    private String savedPath;
     private String accPath;
 
     public FileIO() {
         this.readLogPath = "";
-        this.writeLogPath = "";
         this.accPath = "";
+        this.savedPath = "";
     }
 
     public FileIO(String p, String p2, String p3) {
         this.readLogPath = p;
-        this.writeLogPath = p2;
+        this.savedPath = p2;
         this.accPath = p3;
     }
 
     public FileIO(FileIO f) {
         this.readLogPath = f.getReadLogPath();
-        this.writeLogPath = f.getWriteLogPath();
+        this.savedPath = f.getSavedPath();
         this.accPath = f.getAccPath();
+    }
+
+    public String getSavedPath() {
+        return savedPath;
+    }
+
+    public void setSavedPath(String savedPath) {
+        this.savedPath = savedPath;
     }
 
     public String getAccPath() {
@@ -41,14 +49,6 @@ public class FileIO {
 
     public void setReadLogPath(String readLogPath) {
         this.readLogPath = readLogPath;
-    }
-
-    public String getWriteLogPath() {
-        return writeLogPath;
-    }
-
-    public void setWriteLogPath(String writeLogPath) {
-        this.writeLogPath = writeLogPath;
     }
 
     public void loadFromFile(Estado e) throws IOException {
@@ -135,7 +135,7 @@ public class FileIO {
     }
 
     public void saveToFile(Estado e) throws IOException {
-        BufferedWriter file = new BufferedWriter(new FileWriter(this.writeLogPath));
+        BufferedWriter file = new BufferedWriter(new FileWriter(this.savedPath));
         StringBuilder sb = new StringBuilder();
 
         for(Utilizador u: e.getUtilizadores().values())
@@ -238,5 +238,24 @@ public class FileIO {
         file.close();
         reader.close();
         return found;
+    }
+
+    public void saveObjectStream(Estado e) throws IOException {
+        FileOutputStream fos = new FileOutputStream(this.savedPath);
+        ObjectOutputStream oos = new ObjectOutputStream(fos);
+        oos.writeObject(e);
+        oos.flush();
+        oos.close();
+        fos.close();
+    }
+
+    public Estado readObjectStream() throws IOException, ClassNotFoundException {
+        FileInputStream fis = new FileInputStream(this.savedPath);
+        ObjectInputStream ois = new ObjectInputStream(fis);
+        Estado e;
+        e = (Estado) ois.readObject();
+        ois.close();
+        fis.close();
+        return e;
     }
 }

@@ -1,6 +1,8 @@
 package TrazAqui;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Scanner;
 
 public class Menu {
@@ -11,7 +13,7 @@ public class Menu {
 
     public Menu(){
         this.exec = true;
-        this.f = new FileIO("teste.txt","output.txt","Credentials.txt");
+        this.f = new FileIO("teste.txt","Estado.txt","Credentials.txt");
         this.e = new Estado();
     }
 
@@ -35,14 +37,16 @@ public class Menu {
                     catch (IOException e) {
                         e.printStackTrace();
                     }
-                    catch (LoginException l) {
-                        System.out.println(l.getMessage());
+                    catch (LoginException e) {
+                        System.out.println(e.getMessage());
                     }
+
                     break;
                 case 2:
                     try {
                         this.novoRegisto();
                     }
+
                     catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -50,29 +54,61 @@ public class Menu {
                         System.out.println(l.getMessage());
                     }
                     break;
+                case 3:
+                    try {
+                        this.e = f.readObjectStream();
+                    }
+                    catch (Exception e) {
+                        System.out.println(e.getMessage());
+                    }
                 default:
                     throw new IllegalStateException("Unexpected value: " + opcao);
             }
         }
-        while(this.exec) {
-
-        }
+        if(this.exec)
+            switch(e.getLogin().getClass().getSimpleName()) {
+                case "Utilizador":
+                    while(this.exec) {
+                        UI.printMenuUtilizador();
+                        if(!MenuUtilizador()) stopExec();
+                    }
+                    break;
+                case "Transportadora":
+                    while(this.exec) {
+                        UI.printMenuTransportadora();
+                        if(!MenuTransportadora()) stopExec();
+                    }
+                    break;
+                case "Voluntario":
+                    while(this.exec) {
+                        UI.printMenuVoluntario();
+                        if(!MenuVoluntario()) stopExec();
+                    }
+                    break;
+                case "Loja":
+                    while(this.exec) {
+                        UI.printMenuLoja();
+                        if(!MenuLoja()) stopExec();
+                    }
+                default:
+                    break;
+            }
+        UI.goodbye();
     }
 
     public void stopExec(){
         this.exec = false;
     }
 
-    public void loginUtilizador() throws IOException, LoginException {
-        FileIO io = new FileIO();
+    public void loginUtilizador() throws IOException , LoginException{
         Scanner sc = new Scanner(System.in);
-        System.out.println("Email: ");
+        System.out.print("Email: ");
         String email = sc.nextLine();
         if (!verifica(email)) throw new LoginException("Email invalido!");
 
         System.out.println("Password: ");
         String password = sc.nextLine();
-        e.login(email,password,this.f);
+        this.e.login(email,password,this.f);
     }
 
     private boolean verifica(String mail) {
@@ -88,6 +124,9 @@ public class Menu {
 
     public void novoRegisto() throws IOException, LoginException {
         Scanner sc = new Scanner(System.in);
+
+        System.out.print("Regista-se como Utilizador, Loja, Transportadora ou Voluntario?: ");
+        String tipo = sc.nextLine();
         System.out.print("Email: ");
         String email = sc.nextLine();
         if (!verifica(email)) {
@@ -113,13 +152,46 @@ public class Menu {
             throw new LoginException("GPS invalido!");
         }
 
-        System.out.print("Regista-se como Utilizador, Loja, Transportadora ou Voluntario?: ");
-        String tipo = sc.nextLine();
-
         this.e.registar(email,password,cod,nome,new GPS(lat,longi),this.f,tipo);
     }
 
-    public boolean menuTransportadora() {
+    /*public Boolean menuUtilizador() throws IOException {
+        int opcao =0;
+        Scanner sc = new Scanner(System.in);
+        UI.printMenuUtilizador();
+        opcao = sc.nextInt();
+        switch(opcao){
+            case 1:
+                Encomenda enc = new Encomenda();
+                double preco,quantidade ;
+                boolean fragil,conti = true;
+                String cod,descricao;
+                while(conti) {
+                    UI.print("Faça uma descrição do produto: ");
+                    descricao = sc.nextLine();
+                    UI.print("Indique preço: ");
+                    preco = sc.nextDouble();
+                    UI.print("Indique a quantidade :");
+                    quantidade = sc.nextDouble();
+                    UI.print("Indique se é frágil ou não: ");
+                    fragil = sc.nextBoolean();
+                    UI.print("Indique o código do produto: ");
+                    cod = sc.nextLine();
+                    enc.addProduto(new LinhaEncomenda(descricao, preco, quantidade, fragil, cod));
+                    UI.print("Deseja pedir mais produtos?");
+                    conti = sc.nextBoolean();
+                }
+                break;
+            case 2:
+                    UI.print("Histórico de encomendas: \n");
+
+                break;
+            default:
+                break;
+        }
+    }*/
+
+    /*public boolean menuTransportadora() {
         Scanner sc = new Scanner(System.in);
         System.out.println("------------------Menu---------------\n");
         System.out.println("Esta disposta a entregar encomendas: ");
@@ -131,7 +203,7 @@ public class Menu {
 
 
 
-    }
+    }*/
 
 
 }

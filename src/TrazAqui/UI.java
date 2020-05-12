@@ -1,5 +1,8 @@
 package TrazAqui;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+
 public class UI {
 
     public static void print(String s) {
@@ -35,6 +38,9 @@ public class UI {
         System.out.println("Classificar voluntario/transportadora: ");
     }
 
+
+
+
     public static void printMenuVoluntario() {
         System.out.println("Indicar que esta disponivel");
         System.out.println("Escolher encomenda para ir buscar");
@@ -52,6 +58,10 @@ public class UI {
         System.out.println("Encomenda disponivel para ser entregue");
         System.out.println("Indicar tamanho da fila");
 
+    }
+
+    public static void goodbye() {
+        System.out.println("A sair..\nObrigado por usar a nossa aplicação! :)");
     }
 }
 
