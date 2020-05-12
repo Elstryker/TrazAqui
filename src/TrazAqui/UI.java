@@ -59,6 +59,10 @@ public class UI {
         System.out.println("Indicar tamanho da fila");
 
     }
+
+    public static void goodbye() {
+        System.out.println("A sair..\nObrigado por usar a nossa aplicação! :)");
+    }
 }
 
 

@@ -1,10 +1,11 @@
 package TrazAqui;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Encomenda {
+public class Encomenda implements Serializable {
     //Variaveis de instancia
     private double peso;
     private String descricao;

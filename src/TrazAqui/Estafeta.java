@@ -1,11 +1,12 @@
 package TrazAqui;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
-public abstract class Estafeta implements Entrada{
+public abstract class Estafeta implements Entrada, Serializable {
     private String cod;
     private String nome;
     private GPS localizacao;

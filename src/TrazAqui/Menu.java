@@ -12,7 +12,7 @@ public class Menu {
 
     public Menu(){
         this.exec = true;
-        this.f = new FileIO("teste.txt","output.txt","Credentials.txt");
+        this.f = new FileIO("teste.txt","Estado.txt","Credentials.txt");
         this.e = new Estado();
     }
 
@@ -34,7 +34,7 @@ public class Menu {
                         this.loginUtilizador();
                     }
                     catch (Exception e) {
-                        e.printStackTrace();
+                        System.out.println(e.getMessage());
                     }
                     break;
                 case 2:
@@ -42,16 +42,47 @@ public class Menu {
                         this.novoRegisto();
                     }
                     catch (Exception e) {
-                        e.printStackTrace();
+                        System.out.println(e.getMessage());
                     }
                     break;
+                case 3:
+                    try {
+                        this.e = f.readObjectStream();
+                    }
+                    catch (Exception e) {
+                        System.out.println(e.getMessage());
+                    }
                 default:
                     throw new IllegalStateException("Unexpected value: " + opcao);
             }
         }
-        while(this.exec) {
-
-        }
+        if(this.exec)
+            switch(e.getLogin().getClass().getSimpleName()) {
+                case "Utilizador":
+                    while(this.exec) {
+                        UI.printMenuUtilizador();
+                        if(!MenuUtilizador()) stopExec();
+                    }
+                    break;
+                case "Transportadora":
+                    while(this.exec) {
+                        UI.printMenuTransportadora();
+                        if(!MenuTransportadora()) stopExec();
+                    }
+                    break;
+                case "Voluntario":
+                    while(this.exec) {
+                        UI.printMenuVoluntario();
+                        if(!MenuVoluntario()) stopExec();
+                    }
+                    break;
+                case "Loja":
+                    while(this.exec) {
+                        UI.printMenuLoja();
+                        if(!MenuLoja()) stopExec();
+                    }
+            }
+        UI.goodbye();
     }
 
     public void stopExec(){
@@ -59,18 +90,16 @@ public class Menu {
     }
 
     public void loginUtilizador() throws IOException {
-        FileIO io = new FileIO();
         Scanner sc = new Scanner(System.in);
-        System.out.println("Email: ");
+        System.out.print("Email: ");
         String email = sc.nextLine();
-        System.out.println("Password: ");
+        System.out.print("Password: ");
         String password = sc.nextLine();
-        e.login(email,password,this.f);
+        this.e.login(email,password,this.f);
     }
 
     public void novoRegisto() throws IOException {
         Scanner sc = new Scanner(System.in);
-        Estado est = new Estado();
         System.out.print("Regista-se como Utilizador, Loja, Transportadora ou Voluntario?: ");
         String tipo = sc.nextLine();
         System.out.print("Email: ");
@@ -85,9 +114,7 @@ public class Menu {
         double lat = sc.nextDouble();
         System.out.print("Longitude: ");
         double longi = sc.nextDouble();
-
-
-        est.registar(email,password,cod,nome,new GPS(lat,longi),this.f,tipo);
+        this.e.registar(email,password,cod,nome,new GPS(lat,longi),this.f,tipo);
     }
 
     public Boolean menuUtilizador() throws IOException {

@@ -1,6 +1,8 @@
 package TrazAqui;
 
-public class LinhaEncomenda {
+import java.io.Serializable;
+
+public class LinhaEncomenda implements Serializable {
     //Variaveis de instancia
     private String descricao;
     private double preco;
