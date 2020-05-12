@@ -9,6 +9,7 @@ public class Menu {
     private boolean exec;
     private FileIO f;
     private Estado e;
+    private int cod;
 
     public Menu() {
         this.exec = true;
@@ -32,15 +33,25 @@ public class Menu {
                 case 1:
                     try {
                         this.loginUtilizador();
-                    } catch (Exception e) {
+                    }
+                    catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    catch (LoginException e) {
                         System.out.println(e.getMessage());
                     }
+
                     break;
                 case 2:
                     try {
                         this.novoRegisto();
-                    } catch (Exception e) {
-                        System.out.println(e.getMessage());
+                    }
+
+                    catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    catch (LoginException l) {
+                        System.out.println(l.getMessage());
                     }
                     break;
                 case 3:
@@ -88,21 +99,38 @@ public class Menu {
         this.exec = false;
     }
 
-    public void loginUtilizador() throws IOException {
+    public void loginUtilizador() throws IOException , LoginException{
         Scanner sc = new Scanner(System.in);
         System.out.print("Email: ");
         String email = sc.nextLine();
-        System.out.print("Password: ");
+        if (!verifica(email)) throw new LoginException("Email invalido!");
+
+        System.out.println("Password: ");
         String password = sc.nextLine();
         this.e.login(email, password, this.f);
     }
 
-    public void novoRegisto() throws IOException {
+    private boolean verifica(String mail) {
+        String[] tokens;
+        String temp;
+        tokens = mail.split("@");
+        if (tokens[0].equals(mail)) return false;
+        temp = tokens[1];
+        tokens = tokens[1].split("\\.");
+        if (tokens[1].equals(temp)) return false;
+        return true;
+    }
+
+    public void novoRegisto() throws IOException, LoginException {
         Scanner sc = new Scanner(System.in);
+
         System.out.print("Regista-se como Utilizador, Loja, Transportadora ou Voluntario?: ");
         String tipo = sc.nextLine();
         System.out.print("Email: ");
         String email = sc.nextLine();
+        if (!verifica(email)) {
+            throw new LoginException("Email invalido!");
+        }
         System.out.print("Password: ");
         String password = sc.nextLine();
         System.out.print("Código: ");
@@ -116,9 +144,11 @@ public class Menu {
         this.e.registar(email, password, cod, nome, new GPS(lat, longi), this.f, tipo);
     }
 
+
+
     public boolean menuUtilizador() throws IOException {
-        boolean  bool = true;
-        int opcao = 0;
+        boolean bool = true;
+        int opcao =0;
         Scanner sc = new Scanner(System.in);
         UI.printMenuUtilizador();
         opcao = sc.nextInt();
@@ -163,9 +193,21 @@ public class Menu {
             default:
                 break;
         }
+
         return bool;
     }
+    }
 
-}
-//public LinhaEncomenda(String descricao, double preco,double quantidade,boolean fragil, String codigo)
-//public Encomenda(double peso, boolean med, String descricao, String cod, String utilizador, String loja,ArrayList<LinhaEncomenda> produtos, LocalDateTime l)
+    /*public boolean menuTransportadora() {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("------------------Menu---------------\n");
+        System.out.println("Esta disposta a entregar encomendas: ");
+        String disponivel = sc.nextLine();
+        if (disponivel.equals("sim")) {
+            String cod = this.e.getLogin().getCod();
+            this.g
+        }
+
+
+
+    }*/
