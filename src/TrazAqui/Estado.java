@@ -58,7 +58,7 @@ public class  Estado {
     }
 
     public Entrada getLogin() {
-        return this.login.clone();
+        return this.login == null ? null : this.login.clone();
     }
 
     public void setLogin(Entrada login) {
