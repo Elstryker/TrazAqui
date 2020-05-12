@@ -198,7 +198,7 @@ public class FileIO {
     public void registaConta(String email, String password, Entrada ent, Estado e) throws IOException {
         FileWriter fw = new FileWriter(this.accPath,true);
         BufferedWriter writer = new BufferedWriter(fw);
-        writer.write(email + "," + password + "," + ent.getNome() + "," + ent.toStringNome() + "\n");
+        writer.write(email + "," + password + "," + ent.getCod() + "," + ent.toStringNome() + "\n");
         writer.flush();
         writer.close();
         fw.close();
