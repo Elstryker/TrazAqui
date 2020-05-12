@@ -150,13 +150,11 @@ public class  Estado {
         TreeMap<Integer,Set<Utilizador>> vezes = new TreeMap<>(comp);
         List<Utilizador> res = new ArrayList<>();
         int cont=0;
-
         for (Map.Entry<String,Utilizador> aux : this.utilizadores.entrySet()) {
             int numPedidos = aux.getValue().getNumPedidos();
             vezes.putIfAbsent(numPedidos,new HashSet<>());
             vezes.get(numPedidos).add(aux.getValue());
         }
-
         for (Map.Entry<Integer,Set<Utilizador>> aux : vezes.entrySet()) {
             if (cont==10) break;
             for (Utilizador u : aux.getValue()) {
@@ -182,7 +180,6 @@ public class  Estado {
                 vezes.get(numKms).add(t);
             }
         }
-
         for (Map.Entry<Double,Set<Estafeta>> aux : vezes.entrySet()) {
             if (cont==10) break;
             for (Estafeta e : aux.getValue()) {
@@ -201,6 +198,7 @@ public class  Estado {
         a.setLocalizacao(loc);
         a.newEntrada(tipo);
         f.registaConta(email,pass,a,this);
+
     }
 
     public void login(String email, String pass, FileIO f) throws IOException {

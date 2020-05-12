@@ -57,14 +57,13 @@ public class Menu {
     }
 
     public void loginUtilizador() throws IOException {
-        Estado estado = new Estado();
         FileIO io = new FileIO();
         Scanner sc = new Scanner(System.in);
         System.out.println("Email: ");
         String email = sc.nextLine();
         System.out.println("Password: ");
         String password = sc.nextLine();
-        estado.login(email,password,this.f);
+        e.login(email,password,this.f);
     }
 
     public void novoRegisto() throws IOException {

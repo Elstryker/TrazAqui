@@ -12,7 +12,7 @@ public class FileIO {
     public FileIO() {
         this.readLogPath = "";
         this.writeLogPath = "";
-        this.accPath = "/";
+        this.accPath = "";
     }
 
     public FileIO(String p, String p2, String p3) {
@@ -213,12 +213,12 @@ public class FileIO {
         String data = null;
         String[] tok = new String[0];
         while ((data = reader.readLine())!=null && !found) {
-           tok = data.split(",");
-           if(tok[0].equals(email) && tok[1].equals(pass)) {
-               found = true;
-               cod=tok[2];
-           }
-        }
+            tok = data.split(",");
+                if (tok[0].equals(email) && tok[1].equals(pass)) {
+                    found = true;
+                    cod = tok[2];
+                }
+            }
         if(found) {
             switch(tok[3]) {
                 case "Utilizador":
@@ -239,7 +239,6 @@ public class FileIO {
         reader.close();
         return found;
     }
-
 
 
 }
