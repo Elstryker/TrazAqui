@@ -155,7 +155,7 @@ public class Menu {
         this.e.registar(email,password,cod,nome,new GPS(lat,longi),this.f,tipo);
     }
 
-    /*public Boolean menuUtilizador() throws IOException {
+    public Boolean menuUtilizador() throws IOException {
         int opcao =0;
         Scanner sc = new Scanner(System.in);
         UI.printMenuUtilizador();
@@ -189,21 +189,70 @@ public class Menu {
             default:
                 break;
         }
-    }*/
+    }
 
-    /*public boolean menuTransportadora() {
+    public boolean menuTransportadora() {
+        int opcao =0;
         Scanner sc = new Scanner(System.in);
-        System.out.println("------------------Menu---------------\n");
-        System.out.println("Esta disposta a entregar encomendas: ");
-        String disponivel = sc.nextLine();
-        if (disponivel.equals("sim")) {
-            String cod = this.e.getLogin().getCod();
-            this.g
+        UI.printMenuTransportadora();
+        opcao = sc.nextInt();
+        String cod = this.e.getLogin().getCod();
+        switch(opcao){
+            case 1:
+                this.e.mudaDisponibilidade(cod);
+                break;
+            case 2:
+                break;
+            case 3:
+                break;
+            default:
+                break;
         }
+    }
+
+    public boolean menuVoluntario() {
+        int opcao = 0;
+        Scanner sc = new Scanner(System.in);
+        UI.printMenuVoluntario();
+        opcao = sc.nextInt();
+        String cod = this.e.getLogin().getCod();
+        switch (opcao) {
+            case 1:
+                this.e.mudaDisponibilidade(cod);
+                break;
+            case 2:
+                break;
+            case 3:
+                break;
+            default:
+                break;
+        }
+    }
+
+    public boolean menuLojas() {
+        int opcao = 0;
+        Scanner sc = new Scanner(System.in);
+        UI.printMenuLoja();
+        opcao = sc.nextInt();
+        String cod = this.e.getLogin().getCod();
+        switch(opcao){
+            case 1:
+                this.e.mudaDisponibilidade(cod);
+                break;
+            case 2:
+                break;
+            case 3:
+                break;
+            default:
+                break;
+        }
+    }
 
 
 
-    }*/
+
+
+
 
 
 }

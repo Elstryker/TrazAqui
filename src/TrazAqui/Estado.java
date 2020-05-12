@@ -217,7 +217,6 @@ public class  Estado implements Serializable {
         if(a instanceof Loja) addLoja((Loja) a);
     }
 
-
     public void addEncomendaUtilizador(String cod,Encomenda e) {
         this.utilizadores.get(cod).addEncomenda(e);
     }
@@ -238,4 +237,7 @@ public class  Estado implements Serializable {
         return this.trabalhadores.get(cod).clone();
     }
 
+    public void mudaDisponibilidade(String cod) {
+        this.trabalhadores.get(cod).mudaDisponibilidade();
+    }
 }
