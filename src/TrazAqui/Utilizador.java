@@ -1,9 +1,10 @@
 package TrazAqui;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Utilizador implements Entrada {
+public class Utilizador implements Entrada, Serializable {
     //Variaveis de instancia
     private String nome;
     private String cod;

@@ -44,6 +44,10 @@ public class UI {
     public static void printMenuLoja() {
 
     }
+
+    public static void goodbye() {
+        System.out.println("A sair..\nObrigado por usar a nossa aplicação! :)");
+    }
 }
 
 

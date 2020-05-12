@@ -1,10 +1,11 @@
 package TrazAqui;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.*;
 
-public class  Estado {
+public class  Estado implements Serializable {
     //Variaveis de instancia
     private HashMap<String,Utilizador> utilizadores;
     private HashMap<String,Estafeta> trabalhadores;

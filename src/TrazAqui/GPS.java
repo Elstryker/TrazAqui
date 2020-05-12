@@ -1,9 +1,10 @@
 package TrazAqui;
 
+import java.io.Serializable;
 import java.util.Objects;
 import java.lang.Math;
 
-public class GPS {
+public class GPS implements Serializable {
     private double latitude;
     private double longitude;
 

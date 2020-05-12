@@ -1,10 +1,11 @@
 package TrazAqui;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class Loja implements Entrada {
+public class Loja implements Entrada, Serializable {
     private String cod;
     private String nome;
     private GPS localizacao;
