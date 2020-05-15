@@ -39,8 +39,6 @@ public class UI {
     }
 
 
-
-
     public static void printMenuVoluntario() {
         System.out.println("Indicar que esta disponivel");
         System.out.println("Escolher encomenda para ir buscar");

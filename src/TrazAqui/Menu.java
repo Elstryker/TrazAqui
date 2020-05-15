@@ -1,8 +1,6 @@
 package TrazAqui;
 
 import java.io.IOException;
-import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Scanner;
 
 public class Menu {
@@ -11,9 +9,9 @@ public class Menu {
     private Estado e;
     private int cod;
 
-    public Menu(){
+    public Menu() {
         this.exec = true;
-        this.f = new FileIO("teste.txt","Estado.txt","Credentials.txt");
+        this.f = new FileIO("teste.txt", "Estado.txt", "Credentials.txt");
         this.e = new Estado();
     }
 
@@ -21,12 +19,12 @@ public class Menu {
         Scanner inp = new Scanner(System.in);
         int opcao = -1;
         f.loadFromFile(e);
-        while(e.getLogin() == null && this.exec) {
+        while (e.getLogin() == null && this.exec) {
             UI.printMenuInicial();
-            while((opcao = inp.nextInt()) < 0 || opcao > 2) {
+            while ((opcao = inp.nextInt()) < 0 || opcao > 2) {
                 UI.printIncorrectInput();
             }
-            switch(opcao) {
+            switch (opcao) {
                 case 0:
                     stopExec();
                     break;
@@ -57,38 +55,37 @@ public class Menu {
                 case 3:
                     try {
                         this.e = f.readObjectStream();
-                    }
-                    catch (Exception e) {
+                    } catch (Exception e) {
                         System.out.println(e.getMessage());
                     }
                 default:
                     throw new IllegalStateException("Unexpected value: " + opcao);
             }
         }
-        if(this.exec)
-            switch(e.getLogin().getClass().getSimpleName()) {
+        if (this.exec)
+            switch (e.getLogin().getClass().getSimpleName()) {
                 case "Utilizador":
-                    while(this.exec) {
+                    while (this.exec) {
                         UI.printMenuUtilizador();
-                        if(!MenuUtilizador()) stopExec();
+                        if (!menuUtilizador()) stopExec();
                     }
                     break;
                 case "Transportadora":
-                    while(this.exec) {
+                    while (this.exec) {
                         UI.printMenuTransportadora();
-                        if(!MenuTransportadora()) stopExec();
+                        // if(!MenuTransportadora()) stopExec();
                     }
                     break;
                 case "Voluntario":
-                    while(this.exec) {
+                    while (this.exec) {
                         UI.printMenuVoluntario();
-                        if(!MenuVoluntario()) stopExec();
+                        //    if(!MenuVoluntario()) stopExec();
                     }
                     break;
                 case "Loja":
-                    while(this.exec) {
+                    while (this.exec) {
                         UI.printMenuLoja();
-                        if(!MenuLoja()) stopExec();
+                        // if(!MenuLoja()) stopExec();
                     }
                 default:
                     break;
@@ -96,7 +93,7 @@ public class Menu {
         UI.goodbye();
     }
 
-    public void stopExec(){
+    public void stopExec() {
         this.exec = false;
     }
 
@@ -108,7 +105,7 @@ public class Menu {
 
         System.out.println("Password: ");
         String password = sc.nextLine();
-        this.e.login(email,password,this.f);
+        this.e.login(email, password, this.f);
     }
 
     private boolean verifica(String mail) {
@@ -134,39 +131,30 @@ public class Menu {
         }
         System.out.print("Password: ");
         String password = sc.nextLine();
-        System.out.print("Codigo: ");
+        System.out.print("Código: ");
         String cod = sc.nextLine();
         System.out.print("Nome: ");
         String nome = sc.nextLine();
-
-        double lat;
-        double longi;
-
-        try {
-            System.out.print("Latitude: ");
-            lat = sc.nextDouble();
-            System.out.print("Longitude: ");
-            longi = sc.nextDouble();
-
-        } catch (Exception e) {
-            throw new LoginException("GPS invalido!");
-        }
-
-        this.e.registar(email,password,cod,nome,new GPS(lat,longi),this.f,tipo);
+        System.out.print("Latitude: ");
+        double lat = sc.nextDouble();
+        System.out.print("Longitude: ");
+        double longi = sc.nextDouble();
+        this.e.registar(email, password, cod, nome, new GPS(lat, longi), this.f, tipo);
     }
 
-    public Boolean menuUtilizador() throws IOException {
+    public boolean menuUtilizador() throws IOException {
+        boolean bool = true;
         int opcao =0;
         Scanner sc = new Scanner(System.in);
         UI.printMenuUtilizador();
         opcao = sc.nextInt();
-        switch(opcao){
+        switch (opcao) {
             case 1:
                 Encomenda enc = new Encomenda();
-                double preco,quantidade ;
-                boolean fragil,conti = true;
-                String cod,descricao;
-                while(conti) {
+                double preco, quantidade;
+                boolean fragil, conti = true;
+                String cod, descricao;
+                while (conti) {
                     UI.print("Faça uma descrição do produto: ");
                     descricao = sc.nextLine();
                     UI.print("Indique preço: ");
@@ -183,12 +171,25 @@ public class Menu {
                 }
                 break;
             case 2:
-                    UI.print("Histórico de encomendas: \n");
-
+                UI.print("Histórico de encomendas: \n");
+                String codigoUtilizador = e.getLogin().getCod();
+                e.getUtilizador(codigoUtilizador).getEncomendasConcluidas();
+                break;
+            case 3:
+                String worker = "";
+                int clas = 0;
+                UI.print("Classifica voluntário/utilizador: ");
+                e.getTrabalhadores();
+                UI.print("Indique o códido do estafeta que deseja avaliar: ");
+                worker = sc.nextLine();
+                UI.print("Indique a classificação que deseja dar: ");
+                clas = sc.nextInt();
+                e.getEstafeta(worker).classifica(clas);
                 break;
             default:
                 break;
         }
+        return bool;
     }
 
     public boolean menuTransportadora() {
@@ -227,7 +228,9 @@ public class Menu {
             default:
                 break;
         }
+        return true;
     }
+
 
     public boolean menuLojas() {
         int opcao = 0;
@@ -246,13 +249,6 @@ public class Menu {
             default:
                 break;
         }
+        return true;
     }
-
-
-
-
-
-
-
-
 }
