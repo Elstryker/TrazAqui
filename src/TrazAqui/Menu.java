@@ -194,6 +194,8 @@ public class Menu {
                 case 0:
                     bool = false ;
                     break;
+                case 4:
+                    UI.printUtilizadores(this.e.getTop10Util());
                 default:
                     UI.printIncorrectInput();
                     break;
@@ -233,6 +235,9 @@ public class Menu {
                 }
                 break;
             case 3:
+                break;
+            case 4:
+                UI.printTransportadoras(this.e.getTop10Trans());
                 break;
             default:
                 break;

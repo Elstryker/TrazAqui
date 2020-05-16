@@ -167,10 +167,10 @@ public class  Estado implements Serializable {
         return res;
     }
 
-    public List<Estafeta> getTop10Trans() {
+    public List<Transportadora> getTop10Trans() {
         Comparator<Double> comp = Double::compareTo;
         TreeMap<Double,Set<Estafeta>> vezes = new TreeMap<>(comp);
-        List<Estafeta> res = new ArrayList<>();
+        List<Transportadora> res = new ArrayList<>();
         int cont=0;
 
         for (Map.Entry<String,Estafeta> aux : this.trabalhadores.entrySet()) {
@@ -184,7 +184,7 @@ public class  Estado implements Serializable {
         for (Map.Entry<Double,Set<Estafeta>> aux : vezes.entrySet()) {
             if (cont==10) break;
             for (Estafeta e : aux.getValue()) {
-                res.add(e);
+                res.add((Transportadora) e);
                 cont++;
             }
             cont++;
