@@ -148,6 +148,7 @@ public class FileIO {
                 file.write("Transportadora:"+t.getCod()+","+t.getNome()+","+t.getLocalizacao().getLatitude()+","+t.getLocalizacao().getLongitude()+","+t.getNIF()+","+u.getRaio()+","+t.getPrecoKM()+"\n");
             }
         }
+
         for(Loja u: e.getLojas().values())
             file.write("Loja:"+u.getCod()+","+u.getNome()+","+u.getLocalizacao().getLatitude()+","+u.getLocalizacao().getLongitude()+"\n");
 
@@ -250,4 +251,6 @@ public class FileIO {
         fis.close();
         return e;
     }
+
+
 }

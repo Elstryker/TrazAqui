@@ -1,6 +1,7 @@
 package TrazAqui;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Scanner;
 
 public class Menu {
@@ -202,17 +203,35 @@ public class Menu {
         return bool;
     }
 
-    public boolean menuTransportadora() {
+    public boolean menuVoluntario() {
         int opcao;
         Scanner sc = new Scanner(System.in);
-        UI.printMenuTransportadora();
+        UI.printMenuVoluntario();
         opcao = sc.nextInt();
         String cod = this.e.getLogin().getCod();
-        switch(opcao){
+        switch (opcao) {
+            case 0:
+                try {
+                    f.saveObjectStream(e);
+                }
+                catch (IOException e) {
+                    e.printStackTrace();
+                }
+                exec = false;
             case 1:
                 this.e.mudaDisponibilidade(cod);
                 break;
             case 2:
+                List<Encomenda> enc = this.e.encomendasDisponiveis(cod);
+                UI.printEncomendas(enc);
+                String codEncomenda = sc.nextLine();
+                this.e.getLojas().get(codEncomenda).removePedido(codEncomenda);
+                for (Encomenda e : enc) {
+                    if (e.getCod().equals(codEncomenda)) {
+                        this.e.getUtilizadores().get(cod).addEncomenda(e);
+                        break;
+                    }
+                }
                 break;
             case 3:
                 break;
@@ -222,17 +241,29 @@ public class Menu {
         return true;
     }
 
-    public boolean menuVoluntario() {
+    public boolean menuTransportadora() {
         int opcao;
         Scanner sc = new Scanner(System.in);
-        UI.printMenuVoluntario();
+        UI.printMenuTransportadora();
         opcao = sc.nextInt();
         String cod = this.e.getLogin().getCod();
-        switch (opcao) {
+        switch(opcao){
+            case 0:
+                try {
+                    f.saveObjectStream(e);
+                }
+                catch (IOException e) {
+                    e.printStackTrace();
+                }
+                exec = false;
             case 1:
                 this.e.mudaDisponibilidade(cod);
                 break;
             case 2:
+                UI.print("Codigo de encomenda: ");
+                String codEncomenda = sc.nextLine();
+                double p = this.e.precoDaEncomenda(codEncomenda,cod);
+                UI.printPreco(p);
                 break;
             case 3:
                 break;
@@ -270,6 +301,9 @@ public class Menu {
                 }
                 break;
             case 3:
+
+
+
                 break;
             default:
                 break;
