@@ -84,12 +84,14 @@ public class UI {
         System.out.println("2 - Determinar preço da encomenda");
         System.out.println("3 - Transportar encomenda");
         System.out.println("4 - Lista das 10 transportadoras com mais kms");
+        System.out.println("5 - Indicar o total faturado");
         System.out.println("Opcao: ");
     }
 
     public static void printMenuLoja() {
-        System.out.println("1 - Encomenda disponivel para ser entregue");
-        System.out.println("2 - Indicar tamanho da fila");
+        System.out.println("0) Sair");
+        System.out.println("1) Encomendas disponiveis para serem entregues");
+        System.out.println("2) Indicar tamanho da fila");
     }
 
     public static void printEncomendas(List<Encomenda> enc) {
@@ -117,10 +119,6 @@ public class UI {
 
     public static void printPreco(double p) {
         System.out.println(p);
-    }
-
-    public static void printListEnc(List<Encomenda> a) {
-        System.out.println(a.toString());
     }
 
     public static void goodbye() {

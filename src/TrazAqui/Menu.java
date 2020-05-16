@@ -1,7 +1,6 @@
 package TrazAqui;
 
 import java.io.IOException;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Scanner;
 
@@ -12,7 +11,7 @@ public class Menu {
 
     public Menu() {
         this.exec = true;
-        this.f = new FileIO("teste.txt", "Estado.txt", "Credentials.txt");
+        this.f = new FileIO("teste.txt", "Estado", "Credentials.txt");
         this.e = new Estado();
     }
 
@@ -72,13 +71,13 @@ public class Menu {
             switch (e.getLogin().getClass().getSimpleName()) {
                 case "Utilizador":
                     while (this.exec) {
-                        if (!menuUtilizador()) stopExec();
+                        menuUtilizador();
                     }
                     break;
                 case "Transportadora":
                     while (this.exec) {
                         UI.printMenuTransportadora();
-                        if(!menuTransportadora()) stopExec();
+                        menuTransportadora();
                     }
                     break;
                 case "Voluntario":
@@ -90,7 +89,7 @@ public class Menu {
                 case "Loja":
                     while (this.exec) {
                         UI.printMenuLoja();
-                        if(!menuLoja()) stopExec();
+                        menuLoja();
                     }
                 default:
                     break;
@@ -100,6 +99,7 @@ public class Menu {
 
     public void stopExec() {
         this.exec = false;
+        e.logoff();
     }
 
     public void loginUtilizador() throws IOException , LoginException{
@@ -108,7 +108,7 @@ public class Menu {
         String email = sc.nextLine();
         if (verifica(email)) throw new LoginException("Email invalido!");
 
-        System.out.println("Password: ");
+        System.out.print("Password: ");
         String password = sc.nextLine();
         this.e.login(email, password, this.f);
     }
@@ -226,27 +226,16 @@ public class Menu {
             case 2:
                 List<Encomenda> enc = this.e.encomendasDisponiveis(cod);
                 UI.printEncomendas(enc);
+                UI.print("Codigo da encomenda: ");
                 String codEncomenda = sc.nextLine();
                 this.e.getLojas().get(codEncomenda).removePedido(codEncomenda);
                 for (Encomenda e : enc) {
                     if (e.getCod().equals(codEncomenda)) {
-                        this.e.getUtilizadores().get(cod).addEncomenda(e);
+                        this.e.getTrabalhadores().get(cod).addEncomendaEntregue(e);
                         break;
                     }
                 }
                 break;
-            case 3:
-
-                break;
-            case 4:
-                UI.printTransportadoras(this.e.getTop10Trans());
-                break;
-            case 5:
-                UI.print("Indique o inicio: ");
-                String si = sc.nextLine();
-                UI.print("Indique o fim: ");
-                String sf = sc.nextLine();
-                //UI.printTotFat(this.e.totalFaturado(cod,si,sf))
             default:
                 break;
         }
@@ -278,31 +267,49 @@ public class Menu {
                 UI.printPreco(p);
                 break;
             case 3:
+                UI.print("Codigo da encomenda: ");
+                String codEnc = sc.nextLine();
+                for (Loja lj : this.e.getLojas().values()){
+                    for (Encomenda e : lj.getPedidos()) {
+                        if (e.getCod().equals(codEnc)) {
+                            lj.removePedido(codEnc);
+                        }
+                    }
+                }
+                this.e.getTrabalhadores().get(cod).removerEncomenda(codEnc);
                 break;
+            case 4:
+                UI.printTransportadoras(this.e.getTop10Trans());
+                break;
+            case 5:
+                UI.print("Indique o inicio: ");
+                String si = sc.nextLine();
+                UI.print("Indique o fim: ");
+                String sf = sc.nextLine();
+                //UI.printTotFat(this.e.totalFaturado(cod,si,sf))
             default:
                 break;
         }
         return true;
     }
 
-    public boolean menuLoja() {
+    public void menuLoja() {
         int opcao;
-        boolean exec = true;
         Scanner sc = new Scanner(System.in);
-        UI.printMenuLoja();
         opcao = sc.nextInt();
         String cod = this.e.getLogin().getCod();
         switch(opcao){
             case 0:
+                stopExec();
                 try {
                     f.saveObjectStream(e);
                 }
                 catch (IOException e) {
                     e.printStackTrace();
                 }
-                exec = false;
+                break;
             case 1:
-                UI.printListEnc(e.getLoja(e.getLogin().getCod()).getPedidos());
+                UI.printEncomendas(e.getLoja(e.getLogin().getCod()).getPedidos());
                 break;
             case 2:
                 if(e.getLogin() instanceof LojaFilaEspera) {
@@ -321,6 +328,5 @@ public class Menu {
             default:
                 break;
         }
-        return exec;
     }
 }

@@ -162,6 +162,16 @@ public abstract class Estafeta implements Entrada, Serializable {
         return pedidosEncomenda;
     }
 
+    public void removerEncomenda(String cod) {
+        for (Encomenda e : this.pedidosEncomenda) {
+            if (e.getCod().equals(cod)) {
+                this.addEncomendaEntregue(e);
+                this.pedidosEncomenda.removeIf(enc -> enc.getCod().equals(cod));
+                break;
+            }
+        }
+    }
+
     public void mudaDisponibilidade(){
         this.disponivel= !this.disponivel;
     }
