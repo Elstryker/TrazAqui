@@ -2,6 +2,7 @@ package TrazAqui;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 
 public class UI {
 
@@ -53,9 +54,12 @@ public class UI {
     }
 
     public static void printMenuLoja() {
-        System.out.println("Encomenda disponivel para ser entregue");
-        System.out.println("Indicar tamanho da fila");
+        System.out.println("1) Encomendas disponiveis para serem entregues");
+        System.out.println("2) Indicar tamanho da fila");
+    }
 
+    public static void printListEnc(List<Encomenda> a) {
+        System.out.println(a.toString());
     }
 
     public static void goodbye() {

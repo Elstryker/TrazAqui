@@ -1,7 +1,6 @@
 package TrazAqui;
 
 import java.io.Serializable;
-import java.util.Objects;
 import java.lang.Math;
 
 public class GPS implements Serializable {
@@ -46,11 +45,6 @@ public class GPS implements Serializable {
         GPS gps = (GPS) o;
         return Double.compare(gps.latitude, latitude) == 0 &&
                 Double.compare(gps.longitude, longitude) == 0;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(latitude, longitude);
     }
 
     @Override

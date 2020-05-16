@@ -3,21 +3,18 @@ package TrazAqui;
 import java.util.List;
 
 public class Transportadora extends Estafeta {
-    private boolean certificada;
     private double numKms;
     private String NIF;
     private double precoKM;
 
     public Transportadora() {
-        this.certificada = false;
         this.numKms = 0;
         this.NIF = "";
         this.precoKM = 0;
     }
 
     public Transportadora(String cod, String nome, GPS localizacao, double raio, List<Encomenda> encomendasEntregues, List<Encomenda> pedidosEncomenda, int[] classificacao, boolean disponivel, boolean certificada, double numKms, String NIF, double precoKM) {
-        super(cod, nome, localizacao, raio, encomendasEntregues, pedidosEncomenda, classificacao, disponivel);
-        this.certificada = certificada;
+        super(cod, nome, localizacao, raio, encomendasEntregues, pedidosEncomenda, classificacao, disponivel, certificada);
         this.numKms = numKms;
         this.NIF = NIF;
         this.precoKM = precoKM;
@@ -25,7 +22,6 @@ public class Transportadora extends Estafeta {
 
     public Transportadora(Transportadora a) {
         super(a);
-        this.certificada = a.isCertificada();
         this.numKms = a.getNumKms();
         this.NIF = a.getNIF();
         this.precoKM = a.getPrecoKM();
@@ -47,14 +43,6 @@ public class Transportadora extends Estafeta {
         this.NIF = NIF;
     }
 
-    public boolean isCertificada() {
-        return certificada;
-    }
-
-    public void setCertificada(boolean certificada) {
-        this.certificada = certificada;
-    }
-
     public double getPrecoKM() {
         return precoKM;
     }
@@ -71,14 +59,6 @@ public class Transportadora extends Estafeta {
         else total = this.precoKM*dist+2.5;
 
         return total;
-    }
-
-    public void aceitaMedicamentos(boolean certificada){
-        this.certificada=true;
-    }
-
-    public boolean aceitoTransportesMedicamentos(){
-        return this.certificada;
     }
 
     public Transportadora clone() {
