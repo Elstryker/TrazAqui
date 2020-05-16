@@ -193,7 +193,7 @@ public class Menu {
     }
 
     public boolean menuTransportadora() {
-        int opcao =0;
+        int opcao;
         Scanner sc = new Scanner(System.in);
         UI.printMenuTransportadora();
         opcao = sc.nextInt();
@@ -209,10 +209,11 @@ public class Menu {
             default:
                 break;
         }
+        return true;
     }
 
     public boolean menuVoluntario() {
-        int opcao = 0;
+        int opcao;
         Scanner sc = new Scanner(System.in);
         UI.printMenuVoluntario();
         opcao = sc.nextInt();
@@ -233,14 +234,14 @@ public class Menu {
 
 
     public boolean menuLojas() {
-        int opcao = 0;
+        int opcao;
         Scanner sc = new Scanner(System.in);
         UI.printMenuLoja();
         opcao = sc.nextInt();
         String cod = this.e.getLogin().getCod();
         switch(opcao){
             case 1:
-                this.e.mudaDisponibilidade(cod);
+                this.e.existeEncomenda(cod);
                 break;
             case 2:
                 break;
