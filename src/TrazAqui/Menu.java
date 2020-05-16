@@ -1,6 +1,7 @@
 package TrazAqui;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Scanner;
 
@@ -235,10 +236,17 @@ public class Menu {
                 }
                 break;
             case 3:
+
                 break;
             case 4:
                 UI.printTransportadoras(this.e.getTop10Trans());
                 break;
+            case 5:
+                UI.print("Indique o inicio: ");
+                String si = sc.nextLine();
+                UI.print("Indique o fim: ");
+                String sf = sc.nextLine();
+                //UI.printTotFat(this.e.totalFaturado(cod,si,sf))
             default:
                 break;
         }

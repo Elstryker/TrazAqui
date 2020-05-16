@@ -109,6 +109,12 @@ public class UI {
         l.forEach(t -> System.out.println(t.toString()));
     }
 
+    public static void printTotFat(double f) {
+        StringBuilder sc = new StringBuilder();
+        sc.append("Total faturado: ").append(f);
+        System.out.println(sc.toString());
+    }
+
     public static void printPreco(double p) {
         System.out.println(p);
     }
