@@ -115,4 +115,6 @@ public class Utilizador implements Entrada, Serializable {
     public String toStringNome() {
         return "Utilizador";
     }
+
+
 }

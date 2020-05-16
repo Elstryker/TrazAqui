@@ -1,7 +1,9 @@
 package TrazAqui;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 public class Menu {
@@ -180,17 +182,44 @@ public class Menu {
                 case 2:
                     UI.printHistoricoEncomendas();
                     String codigoUtilizador = e.getLogin().getCod();
-                    e.getUtilizador(codigoUtilizador).getEncomendasConcluidas();
+                    Map<String,Encomenda> lstEnc = e.getUtilizador(codigoUtilizador).getEncomendasConcluidas();
+                    UI.print("Indique o periodo em que quer procurar");
+                    UI.print("Indique os anos iniciais e finais");
+                    int anoi = sc.nextInt();
+                    int anof = sc.nextInt();
+                    UI.print("Indique os meses inicial e final");
+                    int mesi = sc.nextInt();
+                    int mesf = sc.nextInt();
+                    UI.print("Indique o dia do mes inicial e final");
+                    int diamesi = sc.nextInt();
+                    int diamesf = sc.nextInt();
+                    UI.print("Indique a hora inicial e final");
+                    int horai = sc.nextInt();
+                    int horaf = sc.nextInt();
+                    UI.print("Indique os minutos iniciais e finais");
+                    int minutosi = sc.nextInt();
+                    int minutosf = sc.nextInt();
+                    sc.nextLine();
+                    LocalDateTime inicio = LocalDateTime.of(anoi,mesi,diamesi,horai,minutosi);
+                    LocalDateTime fim = LocalDateTime.of(anof,mesf,diamesf,horaf,minutosf);
+                    UI.print("Indique o estafeta que deseja procurar: ");
+                    String codEst = sc.nextLine();
+                    UI.printEncomendas(e.getEstafeta(codEst).procuraPor(inicio,fim));
                     break;
                 case 3:
-                    String worker = "";
                     int clas = 0;
-                    UI.printTrabalhadores(e.getTrabalhadores()); //("Voluntário/Utilizador ");
-                    UI.print("Indique o códido do estafeta que deseja avaliar: ");
-                    worker = sc.nextLine();
+                    for(Map.Entry<String,Estafeta> a : e.getTrabalhadores().entrySet()){
+                        System.out.println(a.getValue().getPedidosEncomenda());
+                    }
+                    UI.print("Indique o codigo do estafeta cuja encomenda deseja aceitar:");
+                    String codEsta = sc.nextLine();
+                    UI.print("Indique o indice da encomenda que deseja aceitar: ");
+                    int index = sc.nextInt();
+                    Encomenda encomenda = e.getEstafeta(codEsta).getPedidosEncomenda().get(index);
+                    e.getEstafeta(codEsta).addEncomendaEntregue(encomenda);
                     UI.print("Indique a classificação que deseja dar: ");
                     clas = sc.nextInt();
-                    e.getEstafeta(worker).classifica(clas);
+                    e.getEstafeta(codEsta).classifica(clas);
                     break;
                 case 0:
                     bool = false ;
@@ -289,7 +318,7 @@ public class Menu {
                 }
                 break;
             case 1:
-                UI.printListEnc(e.getLoja(e.getLogin().getCod()).getPedidos());
+                UI.printEncomendas(e.getLoja(e.getLogin().getCod()).getPedidos());
                 break;
             case 2:
                 if(e.getLogin() instanceof LojaFilaEspera) {

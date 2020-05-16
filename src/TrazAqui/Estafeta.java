@@ -1,10 +1,9 @@
 package TrazAqui;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Objects;
+import java.time.LocalDateTime;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public abstract class Estafeta implements Entrada, Serializable {
     private String cod;
@@ -204,4 +203,11 @@ public abstract class Estafeta implements Entrada, Serializable {
 
     public abstract String toStringNome();
 
+    public List<Encomenda> procuraPor(LocalDateTime inicio, LocalDateTime fim){
+       List<Encomenda> aux = new ArrayList<>();
+       for(Encomenda a : this.getEncomendasEntregues()){
+           if(a.getData().isAfter(inicio) && a.getData().isBefore(fim)) aux.add(a);
+       }
+       return aux;
+    }
 }

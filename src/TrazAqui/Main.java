@@ -11,7 +11,6 @@ public class Main {
             e.printStackTrace();
         }
 
-        m.menuVoluntario();
 
 
 

@@ -35,7 +35,8 @@ public class UI {
     public static void printMenuUtilizador() {
         System.out.println("1 - Efetuar uma encomenda: ");
         System.out.println("2 - Ver historico de encomendas: ");
-        System.out.println("3 - Classificar voluntario/transportadora: ");
+        System.out.println("3 - Aceitar pedidos: ");
+        System.out.println("0 - Sair");
     }
 
     public static void printFazerDescricao() {
