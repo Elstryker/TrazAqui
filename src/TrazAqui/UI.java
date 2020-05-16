@@ -90,6 +90,14 @@ public class UI {
         System.out.println("0) Sair");
         System.out.println("1) Encomendas disponiveis para serem entregues");
         System.out.println("2) Indicar tamanho da fila");
+        System.out.println("3) Top 10 utilizadores");
+        System.out.println("4) Top 10 Transportadoras");
+    }
+
+    public static void printTop10(List<String> r) {
+        System.out.println("Top 10 Utilizadores:");
+        for(String nome: r)
+            System.out.println(nome);
     }
 
     public static void printEncomendas(List<Encomenda> enc) {

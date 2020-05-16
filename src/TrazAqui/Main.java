@@ -10,10 +10,5 @@ public class Main {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        m.menuVoluntario();
-
-
-
     }
 }

@@ -68,7 +68,7 @@ public class FileIO {
                 switch(temp) {
                     case "Utilizador":
                         gps = new GPS(Double.parseDouble(tokens[2]),Double.parseDouble(tokens[3]));
-                        Utilizador u = new Utilizador(tokens[1],tokens[0],gps,0,new HashMap<>());
+                        Utilizador u = new Utilizador(tokens[1],tokens[0],gps,new HashMap<>());
                         e.addUtilizador(u);
                         break;
                     case "Voluntario":
@@ -178,7 +178,6 @@ public class FileIO {
                 file.newLine();
             }
         }
-
         file.close();
     }
 
