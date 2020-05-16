@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class Menu {
     private boolean exec;
@@ -96,6 +97,12 @@ public class Menu {
                 default:
                     break;
             }
+        try {
+            f.saveObjectStream(e);
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
         UI.goodbye();
     }
 
@@ -224,6 +231,8 @@ public class Menu {
                 case 0:
                     bool = false ;
                     break;
+                case 4:
+                    UI.printUtilizadores(this.e.getTop10Util());
                 default:
                     UI.printIncorrectInput();
                     break;
@@ -235,17 +244,10 @@ public class Menu {
     public boolean menuVoluntario() {
         int opcao;
         Scanner sc = new Scanner(System.in);
-        UI.printMenuVoluntario();
         opcao = sc.nextInt();
         String cod = this.e.getLogin().getCod();
         switch (opcao) {
             case 0:
-                try {
-                    f.saveObjectStream(e);
-                }
-                catch (IOException e) {
-                    e.printStackTrace();
-                }
                 exec = false;
             case 1:
                 this.e.mudaDisponibilidade(cod);
@@ -253,16 +255,15 @@ public class Menu {
             case 2:
                 List<Encomenda> enc = this.e.encomendasDisponiveis(cod);
                 UI.printEncomendas(enc);
+                UI.print("Codigo da encomenda: ");
                 String codEncomenda = sc.nextLine();
                 this.e.getLojas().get(codEncomenda).removePedido(codEncomenda);
                 for (Encomenda e : enc) {
                     if (e.getCod().equals(codEncomenda)) {
-                        this.e.getUtilizadores().get(cod).addEncomenda(e);
+                        this.e.getTrabalhadores().get(cod).addEncomendaEntregue(e);
                         break;
                     }
                 }
-                break;
-            case 3:
                 break;
             default:
                 break;
@@ -273,7 +274,6 @@ public class Menu {
     public boolean menuTransportadora() {
         int opcao;
         Scanner sc = new Scanner(System.in);
-        UI.printMenuTransportadora();
         opcao = sc.nextInt();
         String cod = this.e.getLogin().getCod();
         switch(opcao){
@@ -295,7 +295,34 @@ public class Menu {
                 UI.printPreco(p);
                 break;
             case 3:
+                UI.print("Codigo da encomenda: ");
+                String codEnc = sc.nextLine();
+                for (Loja lj : this.e.getLojas().values()){
+                    for (Encomenda e : lj.getPedidos()) {
+                        if (e.getCod().equals(codEnc)) {
+                            lj.removePedido(codEnc);
+                        }
+                    }
+                }
+                this.e.getTrabalhadores().get(cod).removerEncomenda(codEnc);
                 break;
+            case 4:
+                UI.printTransportadoras(this.e.getTop10Trans());
+                break;
+            case 5:
+                int i=0;
+                LocalDateTime[] data = new LocalDateTime[2];
+                while (i<2) {
+                    UI.print("Indique o ano: ");
+                    int ano = sc.nextInt();
+                    UI.print("Indique o mes: ");
+                    int mes = sc.nextInt();
+                    UI.print("Indique o dia: ");
+                    int dia = sc.nextInt();
+                    data[i++] = LocalDateTime.of(ano,mes,dia,0,0);
+                }
+                Transportadora t = (Transportadora) this.e.getTrabalhadores().get(cod);
+                UI.printTotFat(this.e.totalFaturado(t,data[0],data[1]));
             default:
                 break;
         }
@@ -319,6 +346,7 @@ public class Menu {
                 break;
             case 1:
                 UI.printEncomendas(e.getLoja(e.getLogin().getCod()).getPedidos());
+
                 break;
             case 2:
                 if(e.getLogin() instanceof LojaFilaEspera) {
@@ -330,8 +358,10 @@ public class Menu {
                 }
                 break;
             case 3:
-
-
+                UI.printTop10(e.getTop10Util().stream().map(Utilizador::getNome).collect(Collectors.toList()));
+                break;
+            case 4:
+                UI.printTop10(e.getTop10Trans().stream().map(Estafeta::getNome).collect(Collectors.toList()));
 
                 break;
             default:

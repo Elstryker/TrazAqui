@@ -132,7 +132,6 @@ public class  Estado implements Serializable {
     public double totalFaturado(Transportadora t, LocalDateTime min, LocalDateTime max) {
         double total=0;
         for (Encomenda e : t.getEncomendasEntregues()) {
-            System.out.println("ola");
             if (e.getData().isAfter(min) && e.getData().isBefore(max)) {
                 if (this.lojas.containsKey(e.getLoja()) && this.utilizadores.containsKey(e.getUtilizador())) {
                     Loja l = this.lojas.get(e.getLoja());
@@ -140,7 +139,7 @@ public class  Estado implements Serializable {
                     double dist = l.getLocalizacao().distancia(u.getLocalizacao());
                     System.out.println(dist);
                     total += t.precoEncomenda(e.getPeso(),dist);
-                } else System.out.println("Dados invalidos!");
+                }
             }
         }
         return total;
@@ -152,25 +151,25 @@ public class  Estado implements Serializable {
         List<Utilizador> res = new ArrayList<>();
         int cont=0;
         for (Map.Entry<String,Utilizador> aux : this.utilizadores.entrySet()) {
-            int numPedidos = aux.getValue().getNumPedidos();
+            int numPedidos = aux.getValue().getEncomendasConcluidas().size();
             vezes.putIfAbsent(numPedidos,new HashSet<>());
             vezes.get(numPedidos).add(aux.getValue());
         }
         for (Map.Entry<Integer,Set<Utilizador>> aux : vezes.entrySet()) {
             if (cont==10) break;
             for (Utilizador u : aux.getValue()) {
-                res.add(u);
+                res.add(u.clone());
                 cont++;
+                if(cont == 10) break;
             }
         }
-
         return res;
     }
 
-    public List<Estafeta> getTop10Trans() {
+    public List<Transportadora> getTop10Trans() {
         Comparator<Double> comp = Double::compareTo;
         TreeMap<Double,Set<Estafeta>> vezes = new TreeMap<>(comp);
-        List<Estafeta> res = new ArrayList<>();
+        List<Transportadora> res = new ArrayList<>();
         int cont=0;
 
         for (Map.Entry<String,Estafeta> aux : this.trabalhadores.entrySet()) {
@@ -184,8 +183,9 @@ public class  Estado implements Serializable {
         for (Map.Entry<Double,Set<Estafeta>> aux : vezes.entrySet()) {
             if (cont==10) break;
             for (Estafeta e : aux.getValue()) {
-                res.add(e);
+                res.add((Transportadora) e);
                 cont++;
+                if(cont==10) break;
             }
             cont++;
         }

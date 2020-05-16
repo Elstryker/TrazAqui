@@ -84,6 +84,8 @@ public class UI {
         System.out.println("1 - Indicar que esta disponivel");
         System.out.println("2 - Determinar preço da encomenda");
         System.out.println("3 - Transportar encomenda");
+        System.out.println("4 - Lista das 10 transportadoras com mais kms");
+        System.out.println("5 - Indicar o total faturado");
         System.out.println("Opcao: ");
     }
 
@@ -91,6 +93,14 @@ public class UI {
         System.out.println("0) Sair");
         System.out.println("1) Encomendas disponiveis para serem entregues");
         System.out.println("2) Indicar tamanho da fila");
+        System.out.println("3) Top 10 utilizadores");
+        System.out.println("4) Top 10 Transportadoras");
+    }
+
+    public static void printTop10(List<String> r) {
+        System.out.println("Top 10 Utilizadores:");
+        for(String nome: r)
+            System.out.println(nome);
     }
 
     public static void printEncomendas(List<Encomenda> enc) {
@@ -100,6 +110,20 @@ public class UI {
             sb.append("Codigo: ").append(e.getCod()).append(" Conteudo: ").append(e.getDescricao());
             System.out.println(sb.toString());
         }
+    }
+
+    public static void printUtilizadores(List<Utilizador> l) {
+        l.forEach(t -> System.out.println(t.toString()));
+    }
+
+    public static void printTransportadoras(List<Transportadora> l) {
+        l.forEach(t -> System.out.println(t.toString()));
+    }
+
+    public static void printTotFat(double f) {
+        StringBuilder sc = new StringBuilder();
+        sc.append("Total faturado: ").append(f);
+        System.out.println(sc.toString());
     }
 
     public static void printPreco(double p) {
