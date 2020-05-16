@@ -10,7 +10,7 @@ public class Menu {
 
     public Menu() {
         this.exec = true;
-        this.f = new FileIO("teste.txt", "Estado.txt", "Credentials.txt");
+        this.f = new FileIO("teste.txt", "Estado", "Credentials.txt");
         this.e = new Estado();
     }
 
@@ -70,13 +70,13 @@ public class Menu {
             switch (e.getLogin().getClass().getSimpleName()) {
                 case "Utilizador":
                     while (this.exec) {
-                        if (!menuUtilizador()) stopExec();
+                        menuUtilizador();
                     }
                     break;
                 case "Transportadora":
                     while (this.exec) {
                         UI.printMenuTransportadora();
-                        if(!menuTransportadora()) stopExec();
+                        menuTransportadora();
                     }
                     break;
                 case "Voluntario":
@@ -88,7 +88,7 @@ public class Menu {
                 case "Loja":
                     while (this.exec) {
                         UI.printMenuLoja();
-                        if(!menuLoja()) stopExec();
+                        menuLoja();
                     }
                 default:
                     break;
@@ -98,6 +98,7 @@ public class Menu {
 
     public void stopExec() {
         this.exec = false;
+        e.logoff();
     }
 
     public void loginUtilizador() throws IOException , LoginException{
@@ -106,7 +107,7 @@ public class Menu {
         String email = sc.nextLine();
         if (verifica(email)) throw new LoginException("Email invalido!");
 
-        System.out.println("Password: ");
+        System.out.print("Password: ");
         String password = sc.nextLine();
         this.e.login(email, password, this.f);
     }
@@ -241,22 +242,21 @@ public class Menu {
         return true;
     }
 
-    public boolean menuLoja() {
+    public void menuLoja() {
         int opcao;
-        boolean exec = true;
         Scanner sc = new Scanner(System.in);
-        UI.printMenuLoja();
         opcao = sc.nextInt();
         String cod = this.e.getLogin().getCod();
         switch(opcao){
             case 0:
+                stopExec();
                 try {
                     f.saveObjectStream(e);
                 }
                 catch (IOException e) {
                     e.printStackTrace();
                 }
-                exec = false;
+                break;
             case 1:
                 UI.printListEnc(e.getLoja(e.getLogin().getCod()).getPedidos());
                 break;
@@ -274,6 +274,5 @@ public class Menu {
             default:
                 break;
         }
-        return exec;
     }
 }

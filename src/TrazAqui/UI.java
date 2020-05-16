@@ -85,6 +85,7 @@ public class UI {
     }
 
     public static void printMenuLoja() {
+        System.out.println("0) Sair");
         System.out.println("1) Encomendas disponiveis para serem entregues");
         System.out.println("2) Indicar tamanho da fila");
     }
