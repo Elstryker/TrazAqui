@@ -9,7 +9,6 @@ public class Menu {
     private FileIO f;
     private Estado e;
 
-
     public Menu() {
         this.exec = true;
         this.f = new FileIO("teste.txt", "Estado.txt", "Credentials.txt");
@@ -18,8 +17,13 @@ public class Menu {
 
     public void run() throws IOException {
         Scanner inp = new Scanner(System.in);
-        int opcao = -1;
-        f.loadFromFile(e);
+        int opcao;
+        try {
+            e = f.readObjectStream();
+        }
+        catch (IOException | ClassNotFoundException ex) {
+            f.loadFromFile(e);
+        }
         while (e.getLogin() == null && this.exec) {
             UI.printMenuInicial();
             while ((opcao = inp.nextInt()) < 0 || opcao > 2) {
@@ -73,19 +77,19 @@ public class Menu {
                 case "Transportadora":
                     while (this.exec) {
                         UI.printMenuTransportadora();
-                        // if(!MenuTransportadora()) stopExec();
+                        if(!menuTransportadora()) stopExec();
                     }
                     break;
                 case "Voluntario":
                     while (this.exec) {
                         UI.printMenuVoluntario();
-                        //    if(!MenuVoluntario()) stopExec();
+                        if(!menuVoluntario()) stopExec();
                     }
                     break;
                 case "Loja":
                     while (this.exec) {
                         UI.printMenuLoja();
-                        // if(!MenuLoja()) stopExec();
+                        if(!menuLoja()) stopExec();
                     }
                 default:
                     break;
@@ -101,7 +105,7 @@ public class Menu {
         Scanner sc = new Scanner(System.in);
         System.out.print("Email: ");
         String email = sc.nextLine();
-        if (!verifica(email)) throw new LoginException("Email invalido!");
+        if (verifica(email)) throw new LoginException("Email invalido!");
 
         System.out.println("Password: ");
         String password = sc.nextLine();
@@ -112,11 +116,10 @@ public class Menu {
         String[] tokens;
         String temp;
         tokens = mail.split("@");
-        if (tokens[0].equals(mail)) return false;
+        if (tokens[0].equals(mail)) return true;
         temp = tokens[1];
         tokens = tokens[1].split("\\.");
-        if (tokens[1].equals(temp)) return false;
-        return true;
+        return tokens[1].equals(temp);
     }
 
     public void novoRegisto() throws IOException, LoginException {
@@ -126,7 +129,7 @@ public class Menu {
         String tipo = sc.nextLine();
         System.out.print("Email: ");
         String email = sc.nextLine();
-        if (!verifica(email)) {
+        if (verifica(email)) {
             throw new LoginException("Email invalido!");
         }
         System.out.print("Password: ");
@@ -142,7 +145,7 @@ public class Menu {
         this.e.registar(email, password, cod, nome, new GPS(lat, longi), this.f, tipo);
     }
 
-    public boolean menuUtilizador() throws IOException {
+    public boolean menuUtilizador() {
         boolean bool = true;
         int opcao =-1;
         Scanner sc = new Scanner(System.in);
@@ -206,6 +209,14 @@ public class Menu {
         opcao = sc.nextInt();
         String cod = this.e.getLogin().getCod();
         switch (opcao) {
+            case 0:
+                try {
+                    f.saveObjectStream(e);
+                }
+                catch (IOException e) {
+                    e.printStackTrace();
+                }
+                exec = false;
             case 1:
                 this.e.mudaDisponibilidade(cod);
                 break;
@@ -236,6 +247,14 @@ public class Menu {
         opcao = sc.nextInt();
         String cod = this.e.getLogin().getCod();
         switch(opcao){
+            case 0:
+                try {
+                    f.saveObjectStream(e);
+                }
+                catch (IOException e) {
+                    e.printStackTrace();
+                }
+                exec = false;
             case 1:
                 this.e.mudaDisponibilidade(cod);
                 break;
@@ -253,24 +272,42 @@ public class Menu {
         return true;
     }
 
-
-    public boolean menuLojas() {
+    public boolean menuLoja() {
         int opcao;
+        boolean exec = true;
         Scanner sc = new Scanner(System.in);
         UI.printMenuLoja();
         opcao = sc.nextInt();
         String cod = this.e.getLogin().getCod();
         switch(opcao){
+            case 0:
+                try {
+                    f.saveObjectStream(e);
+                }
+                catch (IOException e) {
+                    e.printStackTrace();
+                }
+                exec = false;
             case 1:
-                this.e.existeEncomenda(cod);
+                UI.printListEnc(e.getLoja(e.getLogin().getCod()).getPedidos());
                 break;
             case 2:
+                if(e.getLogin() instanceof LojaFilaEspera) {
+                    LojaFilaEspera l = (LojaFilaEspera) e.getLogin();
+                    UI.print("Tamanho da lista de espera: "+l.getTamanhoListaEspera());
+                }
+                else {
+                    UI.print("Esta loja não tem lista de espera");
+                }
                 break;
             case 3:
+
+
+
                 break;
             default:
                 break;
         }
-        return true;
+        return exec;
     }
 }

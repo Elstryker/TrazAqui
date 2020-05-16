@@ -88,11 +88,6 @@ public class Loja implements Entrada, Serializable {
     }
 
     @Override
-    public int hashCode() {
-        return Objects.hash(cod, nome, localizacao);
-    }
-
-    @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("Loja {");
         sb.append("cod = ").append(cod);

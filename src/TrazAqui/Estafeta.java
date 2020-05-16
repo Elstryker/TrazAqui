@@ -15,6 +15,7 @@ public abstract class Estafeta implements Entrada, Serializable {
     private List<Encomenda> pedidosEncomenda;
     private int[] classificacao;
     private boolean disponivel;
+    private boolean certificada;
 
     public Estafeta (){
         this.cod = "";
@@ -25,9 +26,10 @@ public abstract class Estafeta implements Entrada, Serializable {
         this.pedidosEncomenda = new ArrayList<>();
         this.classificacao = new int[5];
         this.disponivel= true;
+        this.certificada = false;
     }
 
-    public Estafeta(String cod, String nome, GPS localizacao, double raio, List<Encomenda> encomendasEntregues, List<Encomenda> pedidosEncomenda, int[] classificacao, boolean disponivel) {
+    public Estafeta(String cod, String nome, GPS localizacao, double raio, List<Encomenda> encomendasEntregues, List<Encomenda> pedidosEncomenda, int[] classificacao, boolean disponivel, boolean certificada) {
         this.cod = cod;
         this.nome = nome;
         this.localizacao = localizacao;
@@ -36,6 +38,7 @@ public abstract class Estafeta implements Entrada, Serializable {
         this.pedidosEncomenda = pedidosEncomenda;
         this.classificacao = classificacao;
         this.disponivel = disponivel;
+        this.certificada = certificada;
     }
 
     public Estafeta(Estafeta a){
@@ -47,6 +50,7 @@ public abstract class Estafeta implements Entrada, Serializable {
         this.setPedidosEncomenda(a.pedidosEncomenda);
         this.setClassificacao(a.classificacao);
         this.disponivel=a.disponivel;
+        this.certificada = a.aceitoTransportesMedicamentos();
     }
 
     public String getCod(){
@@ -87,6 +91,14 @@ public abstract class Estafeta implements Entrada, Serializable {
 
     public void setDisponivel(boolean disponivel) {
         this.disponivel = disponivel;
+    }
+
+    public void aceitaMedicamentos(boolean certificada){
+        this.certificada=certificada;
+    }
+
+    public boolean aceitoTransportesMedicamentos(){
+        return this.certificada;
     }
 
     public List<Encomenda> getEncomendasEntregues() {

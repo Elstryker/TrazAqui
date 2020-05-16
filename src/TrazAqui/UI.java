@@ -104,6 +104,10 @@ public class UI {
         System.out.println(p);
     }
 
+    public static void printListEnc(List<Encomenda> a) {
+        System.out.println(a.toString());
+    }
+
     public static void goodbye() {
         System.out.println("A sair..\nObrigado por usar a nossa aplicação! :)");
     }

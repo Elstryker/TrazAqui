@@ -40,7 +40,7 @@ public class FileIO {
     }
 
     public void setAccPath(String accPath) {
-        accPath = accPath;
+        this.accPath = accPath;
     }
 
     public String getReadLogPath() {
@@ -136,8 +136,6 @@ public class FileIO {
 
     public void saveToFile(Estado e) throws IOException {
         BufferedWriter file = new BufferedWriter(new FileWriter(this.savedPath));
-        StringBuilder sb = new StringBuilder();
-
         for(Utilizador u: e.getUtilizadores().values())
             file.write("Utilizador:"+u.getCod()+","+u.getNome()+","+u.getLocalizacao().getLatitude()+","+u.getLocalizacao().getLongitude()+"\n");
 
@@ -156,33 +154,21 @@ public class FileIO {
 
         for(Loja u: e.getLojas().values())
             for(Encomenda enc: u.getPedidos()) {
-                file.write("Encomenda:"+enc.getCod()+","+enc.getUtilizador()+","+enc.getLoja()+","+enc.getPeso());
-                for(LinhaEncomenda linha: enc.getProdutos())
-                    file.write(","+linha.getCod()+","+linha.getDescricao()+","+linha.getQuantidade()+","+linha.getPreco());
-                file.newLine();
+                write(file, enc);
             }
 
         for (Utilizador u : e.getUtilizadores().values()) {
             for (Encomenda enc : u.getEncomendasConcluidas().values()) {
-                file.write("Encomenda:"+enc.getCod()+","+enc.getUtilizador()+","+enc.getLoja()+","+enc.getPeso());
-                for(LinhaEncomenda linha: enc.getProdutos())
-                    file.write(","+linha.getCod()+","+linha.getDescricao()+","+linha.getQuantidade()+","+linha.getPreco());
-                file.newLine();
+                write(file, enc);
             }
         }
 
         for (Estafeta u : e.getTrabalhadores().values()) {
             for (Encomenda enc : u.getEncomendasEntregues()) {
-                file.write("Encomenda:"+enc.getCod()+","+enc.getUtilizador()+","+enc.getLoja()+","+enc.getPeso());
-                for(LinhaEncomenda linha: enc.getProdutos())
-                    file.write(","+linha.getCod()+","+linha.getDescricao()+","+linha.getQuantidade()+","+linha.getPreco());
-                file.newLine();
+                write(file, enc);
             }
             for (Encomenda enc : u.getPedidosEncomenda()) {
-                file.write("Encomenda:"+enc.getCod()+","+enc.getUtilizador()+","+enc.getLoja()+","+enc.getPeso());
-                for(LinhaEncomenda linha: enc.getProdutos())
-                    file.write(","+linha.getCod()+","+linha.getDescricao()+","+linha.getQuantidade()+","+linha.getPreco());
-                file.newLine();
+                write(file, enc);
             }
         }
 
@@ -196,6 +182,13 @@ public class FileIO {
         file.close();
     }
 
+    private void write(BufferedWriter file, Encomenda enc) throws IOException {
+        file.write("Encomenda:"+enc.getCod()+","+enc.getUtilizador()+","+enc.getLoja()+","+enc.getPeso());
+        for(LinhaEncomenda linha: enc.getProdutos())
+            file.write(","+linha.getCod()+","+linha.getDescricao()+","+linha.getQuantidade()+","+linha.getPreco());
+        file.newLine();
+    }
+
     public void registaConta(String email, String password, Entrada ent, Estado e) throws IOException {
         FileWriter fw = new FileWriter(this.accPath,true);
         BufferedWriter writer = new BufferedWriter(fw);
@@ -206,12 +199,12 @@ public class FileIO {
         e.add(ent);
     }
 
-    public boolean validaLogin(String email,String pass,Estado e) throws IOException {
+    public void validaLogin(String email, String pass, Estado e) throws IOException {
         boolean found = false;
         String cod = "";
         FileReader file = new FileReader(this.accPath);
         BufferedReader reader = new BufferedReader(file);
-        String data = null;
+        String data;
         String[] tok = new String[0];
         while ((data = reader.readLine())!=null && !found) {
             tok = data.split(",");
@@ -238,7 +231,6 @@ public class FileIO {
         }
         file.close();
         reader.close();
-        return found;
     }
 
     public void saveObjectStream(Estado e) throws IOException {
