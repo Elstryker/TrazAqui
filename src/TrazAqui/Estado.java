@@ -151,18 +151,18 @@ public class  Estado implements Serializable {
         List<Utilizador> res = new ArrayList<>();
         int cont=0;
         for (Map.Entry<String,Utilizador> aux : this.utilizadores.entrySet()) {
-            int numPedidos = aux.getValue().getNumPedidos();
+            int numPedidos = aux.getValue().getEncomendasConcluidas().size();
             vezes.putIfAbsent(numPedidos,new HashSet<>());
             vezes.get(numPedidos).add(aux.getValue());
         }
         for (Map.Entry<Integer,Set<Utilizador>> aux : vezes.entrySet()) {
             if (cont==10) break;
             for (Utilizador u : aux.getValue()) {
-                res.add(u);
+                res.add(u.clone());
                 cont++;
+                if(cont == 10) break;
             }
         }
-
         return res;
     }
 
@@ -185,6 +185,7 @@ public class  Estado implements Serializable {
             for (Estafeta e : aux.getValue()) {
                 res.add((Transportadora) e);
                 cont++;
+                if(cont==10) break;
             }
             cont++;
         }

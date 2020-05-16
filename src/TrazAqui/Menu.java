@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class Menu {
     private boolean exec;
@@ -95,6 +96,12 @@ public class Menu {
                 default:
                     break;
             }
+        try {
+            f.saveObjectStream(e);
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
         UI.goodbye();
     }
 
@@ -213,12 +220,6 @@ public class Menu {
         String cod = this.e.getLogin().getCod();
         switch (opcao) {
             case 0:
-                try {
-                    f.saveObjectStream(e);
-                }
-                catch (IOException e) {
-                    e.printStackTrace();
-                }
                 exec = false;
             case 1:
                 this.e.mudaDisponibilidade(cod);
@@ -316,7 +317,12 @@ public class Menu {
                 }
                 break;
             case 1:
-                UI.printEncomendas(e.getLoja(e.getLogin().getCod()).getPedidos());
+                try {
+                    UI.printEncomendas(e.getLoja(e.getLogin().getCod()).getPedidos());
+                }
+                catch(Exception ex) {
+                    ex.printStackTrace();
+                }
                 break;
             case 2:
                 if(e.getLogin() instanceof LojaFilaEspera) {
@@ -328,6 +334,11 @@ public class Menu {
                 }
                 break;
             case 3:
+                UI.printTop10(e.getTop10Util().stream().map(Utilizador::getNome).collect(Collectors.toList()));
+                break;
+            case 4:
+                UI.printTop10(e.getTop10Trans().stream().map(Estafeta::getNome).collect(Collectors.toList()));
+
                 break;
             default:
                 break;
