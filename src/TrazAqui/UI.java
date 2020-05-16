@@ -2,6 +2,7 @@ package TrazAqui;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class UI {
 
@@ -33,11 +34,39 @@ public class UI {
     }
 
     public static void printMenuUtilizador() {
-        System.out.println("Efetuar uma encomenda: ");
-        System.out.println("Ver historico de encomendas: ");
-        System.out.println("Classificar voluntario/transportadora: ");
+        System.out.println("1 - Efetuar uma encomenda ");
+        System.out.println("2 - Ver historico de encomendas: ");
+        System.out.println("3 - Classificar voluntario/transportadora: ");
     }
 
+    public static void printFazerDescricao() {
+        System.out.print("Faça a descrição do produto: ");
+    }
+
+    public static void printIndicarPreco() {
+        System.out.print("Indique o preço: ");
+    }
+
+    public static void printIndicarQuant() {
+        System.out.print("Indique a quantidade: ");
+    }
+
+    public static void printIndicarFragil() {
+        System.out.print("Indique se o produto é frágil ou não: ");
+    }
+
+    public static void printIndiqueCodProd() {
+        System.out.print("Indique o código do produto: ");
+    }
+
+
+    public static void printDesejaMaisProd() {
+        System.out.print("Deseja encomendar mais produtos? ");
+    }
+
+    public static void printHistoricoEncomendas() {
+        System.out.println("Histórico de encomendas");
+    }
 
     public static void printMenuVoluntario() {
         System.out.println("Indicar que esta disponivel");
@@ -46,6 +75,10 @@ public class UI {
 
     }
 
+    public static void printTrabalhadores(HashMap<String, Estafeta> trab) {
+        System.out.println("Trabalhadores");
+        System.out.println(trab.toString());
+    }
     public static void printMenuTransportadora() {
         System.out.println("Indicar que esta disponivel");
         System.out.println("Determinar preço da encomenda");

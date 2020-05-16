@@ -66,7 +66,6 @@ public class Menu {
             switch (e.getLogin().getClass().getSimpleName()) {
                 case "Utilizador":
                     while (this.exec) {
-                        UI.printMenuUtilizador();
                         if (!menuUtilizador()) stopExec();
                     }
                     break;
@@ -144,50 +143,57 @@ public class Menu {
 
     public boolean menuUtilizador() throws IOException {
         boolean bool = true;
-        int opcao =0;
+        int opcao =-1;
         Scanner sc = new Scanner(System.in);
-        UI.printMenuUtilizador();
-        opcao = sc.nextInt();
-        switch (opcao) {
-            case 1:
-                Encomenda enc = new Encomenda();
-                double preco, quantidade;
-                boolean fragil, conti = true;
-                String cod, descricao;
-                while (conti) {
-                    UI.print("Faça uma descrição do produto: ");
-                    descricao = sc.nextLine();
-                    UI.print("Indique preço: ");
-                    preco = sc.nextDouble();
-                    UI.print("Indique a quantidade :");
-                    quantidade = sc.nextDouble();
-                    UI.print("Indique se é frágil ou não: ");
-                    fragil = sc.nextBoolean();
-                    UI.print("Indique o código do produto: ");
-                    cod = sc.nextLine();
-                    enc.addProduto(new LinhaEncomenda(descricao, preco, quantidade, fragil, cod));
-                    UI.print("Deseja pedir mais produtos?");
-                    conti = sc.nextBoolean();
-                }
-                break;
-            case 2:
-                UI.print("Histórico de encomendas: \n");
-                String codigoUtilizador = e.getLogin().getCod();
-                e.getUtilizador(codigoUtilizador).getEncomendasConcluidas();
-                break;
-            case 3:
-                String worker = "";
-                int clas = 0;
-                UI.print("Classifica voluntário/utilizador: ");
-                e.getTrabalhadores();
-                UI.print("Indique o códido do estafeta que deseja avaliar: ");
-                worker = sc.nextLine();
-                UI.print("Indique a classificação que deseja dar: ");
-                clas = sc.nextInt();
-                e.getEstafeta(worker).classifica(clas);
-                break;
-            default:
-                break;
+        while(opcao!=0) {
+            UI.printMenuUtilizador();
+            opcao = sc.nextInt();
+            sc.nextLine();
+            switch (opcao) {
+                case 1:
+                    Encomenda enc = new Encomenda();
+                    double preco, quantidade;
+                    boolean fragil, conti = true;
+                    String cod, descricao;
+                    while (conti) {
+                        UI.printFazerDescricao();
+                        descricao = sc.nextLine();
+                        UI.printIndicarPreco();
+                        preco = sc.nextDouble();
+                        UI.printIndicarQuant();
+                        quantidade = sc.nextDouble();
+                        UI.printIndicarFragil();
+                        fragil = sc.nextBoolean();
+                        sc.nextLine();
+                        UI.printIndiqueCodProd();
+                        cod = sc.nextLine();
+                        enc.addProduto(new LinhaEncomenda(descricao, preco, quantidade, fragil, cod));
+                        UI.printDesejaMaisProd();
+                        conti = sc.nextBoolean();
+                    }
+                    break;
+                case 2:
+                    UI.printHistoricoEncomendas();
+                    String codigoUtilizador = e.getLogin().getCod();
+                    e.getUtilizador(codigoUtilizador).getEncomendasConcluidas();
+                    break;
+                case 3:
+                    String worker = "";
+                    int clas = 0;
+                    UI.printTrabalhadores(e.getTrabalhadores()); //("Voluntário/Utilizador ");
+                    UI.print("Indique o códido do estafeta que deseja avaliar: ");
+                    worker = sc.nextLine();
+                    UI.print("Indique a classificação que deseja dar: ");
+                    clas = sc.nextInt();
+                    e.getEstafeta(worker).classifica(clas);
+                    break;
+                case 0:
+                    bool = false ;
+                    break;
+                default:
+                    UI.printIncorrectInput();
+                    break;
+            }
         }
         return bool;
     }
