@@ -245,4 +245,42 @@ public class  Estado implements Serializable {
         return this.lojas.get(cod).getPedidos().size()!=0;
     }
 
+    public List<Encomenda> encomendasDisponiveis(String cod) {
+        Estafeta u = this.trabalhadores.get(cod);
+        GPS v = this.trabalhadores.get(cod).getLocalizacao();
+        List<Encomenda> res = new ArrayList<>();
+
+        for (Loja l : this.lojas.values()) {
+            if (l.getLocalizacao().distancia(v) < u.getRaio()) {
+                for (Encomenda e : l.getPedidos()) {
+                    res.add(e.clone());
+                }
+            }
+        }
+        return res;
+    }
+
+    public double precoDaEncomenda(String cod,String transp) {
+        Loja lj = new Loja();
+        Encomenda enc = new Encomenda();
+        boolean stop = false;
+
+        for (Loja l : this.lojas.values()) {
+            for (Encomenda e : l.getPedidos()) {
+                if (e.getCod().equals(cod)) {
+                    lj = new Loja(l);
+                    enc = new Encomenda(e);
+                    stop = true;
+                    break;
+                }
+            }
+            if (stop) break;
+        }
+
+        Transportadora t = (Transportadora) this.trabalhadores.get(transp);
+        double dist = lj.getLocalizacao().distancia(t.getLocalizacao());
+        return t.precoEncomenda(enc.getPeso(),dist);
+    }
+
+
 }
