@@ -79,14 +79,12 @@ public class Menu {
                     break;
                 case "Transportadora":
                     while (this.exec) {
-                        UI.printMenuTransportadora();
                         menuTransportadora();
                     }
                     break;
                 case "Voluntario":
                     while (this.exec) {
-                        UI.printMenuVoluntario();
-                        if(!menuVoluntario()) stopExec();
+                        menuVoluntario();
                     }
                     break;
                 case "Loja":
@@ -241,7 +239,7 @@ public class Menu {
         return bool;
     }
 
-    public boolean menuVoluntario() {
+    public void menuVoluntario() {
         int opcao;
         Scanner sc = new Scanner(System.in);
         opcao = sc.nextInt();
@@ -268,10 +266,9 @@ public class Menu {
             default:
                 break;
         }
-        return true;
     }
 
-    public boolean menuTransportadora() {
+    public void menuTransportadora() {
         int opcao;
         Scanner sc = new Scanner(System.in);
         opcao = sc.nextInt();
@@ -326,7 +323,6 @@ public class Menu {
             default:
                 break;
         }
-        return true;
     }
 
     public void menuLoja() {
