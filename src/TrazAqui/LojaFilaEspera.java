@@ -1,24 +1,18 @@
 package TrazAqui;
 
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Queue;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class LojaFilaEspera extends Loja implements Entrada {
-    private Queue<Entrada> listaEspera;
+    private int filaEspera;
     private double tempoEspera;
 
-    public Queue<Entrada> getListaEspera() {
-        Queue<Entrada> ret = new LinkedList<>();
-        for(Entrada e: listaEspera)
-            ret.add(e.clone());
-        return ret;
+    public int getListaEspera() {
+        return filaEspera;
     }
 
-    public void setListaEspera(Queue<Entrada> listaEspera) {
-        this.listaEspera = new LinkedList<>();
-        for(Entrada e: listaEspera)
-            this.listaEspera.add(e.clone());
+    public void setListaEspera(int filaEspera) {
+        this.filaEspera = filaEspera;
     }
 
     public double getTempoEspera() {
@@ -31,11 +25,11 @@ public class LojaFilaEspera extends Loja implements Entrada {
 
     public LojaFilaEspera() {
         super();
-        this.listaEspera = new LinkedList<>();
-        this.tempoEspera = 10;
+        this.filaEspera = ThreadLocalRandom.current().nextInt(11);
+        this.tempoEspera = ThreadLocalRandom.current().nextDouble(5.0,30.0);
     }
 
-    public LojaFilaEspera(String cod, String nome, GPS localizacao, List<Encomenda> l, Queue<Entrada> lis, double tempo) {
+    public LojaFilaEspera(String cod, String nome, GPS localizacao, List<Encomenda> l, int lis, double tempo) {
         super(cod,nome,localizacao,l);
         this.setListaEspera(lis);
         this.tempoEspera = tempo;
@@ -43,7 +37,7 @@ public class LojaFilaEspera extends Loja implements Entrada {
 
     public LojaFilaEspera(LojaFilaEspera j) {
         super(j);
-        this.listaEspera = j.getListaEspera();
+        this.filaEspera = j.getListaEspera();
         this.tempoEspera = j.getTempoEspera();
     }
 
@@ -57,7 +51,7 @@ public class LojaFilaEspera extends Loja implements Entrada {
         sb.append("cod = ").append(this.getCod());
         sb.append(", nome = ").append(this.getNome());
         sb.append(", localizacao = ").append(this.getLocalizacao().toString());
-        sb.append(", lista de espera = ").append(this.listaEspera.toString());
+        sb.append(", lista de espera = ").append(this.filaEspera);
         sb.append(", tempo de espera = ").append(this.tempoEspera);
         sb.append('}');
         return sb.toString();
@@ -70,11 +64,11 @@ public class LojaFilaEspera extends Loja implements Entrada {
         if (!super.equals(o)) return false;
         LojaFilaEspera that = (LojaFilaEspera) o;
         return Double.compare(that.getTempoEspera(), getTempoEspera()) == 0 &&
-                this.listaEspera.equals(that.getListaEspera());
+                this.filaEspera == that.getListaEspera();
     }
 
     public int getTamanhoListaEspera() {
-        return this.listaEspera.size();
+        return this.filaEspera;
     }
 
     public String toStringNome() {

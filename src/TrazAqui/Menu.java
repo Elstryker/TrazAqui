@@ -91,6 +91,7 @@ public class Menu {
                     }
                     break;
                 case "Loja":
+                case "LojaFilaEspera":
                     while (this.exec) {
                         menuLoja();
                     }
@@ -135,7 +136,7 @@ public class Menu {
     public void novoRegisto() throws IOException, LoginException {
         Scanner sc = new Scanner(System.in);
 
-        System.out.print("Regista-se como Utilizador, Loja, Transportadora ou Voluntario?: ");
+        System.out.print("Regista-se como Utilizador, Loja, LojaFilaEspera, Transportadora ou Voluntario?: ");
         String tipo = sc.nextLine();
         System.out.print("Email: ");
         String email = sc.nextLine();
@@ -260,13 +261,8 @@ public class Menu {
                 sc.nextLine();
                 String codEncomenda = sc.nextLine();
                 try {
-                    this.e.getLojas().get(codEncomenda).removePedido(codEncomenda);
-                    for (Encomenda e : enc) {
-                        if (e.getCod().equals(codEncomenda)) {
-                            this.e.getTrabalhadores().get(cod).addEncomendaEntregue(e);
-                            break;
-                        }
-                    }
+                    Encomenda e = this.e.removeEncomendaLoja(codEncomenda);
+                    this.e.addEncomendaTransportar(cod,e);
                 } catch (Exception e) {
                     UI.print("Encomenda inexistente!");
                 }
