@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Utilizador implements Entrada, Serializable {
-    //Variaveis de instancia
     private String nome;
     private String cod;
     private GPS localizacao;

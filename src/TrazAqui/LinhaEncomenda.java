@@ -3,14 +3,12 @@ package TrazAqui;
 import java.io.Serializable;
 
 public class LinhaEncomenda implements Serializable {
-    //Variaveis de instancia
     private String descricao;
     private double preco;
     private double quantidade;
     private boolean fragil;
     private String codigo;
 
-    //Construtores
     public LinhaEncomenda() {
         this.descricao = "";
         this.preco = 0;
@@ -35,7 +33,6 @@ public class LinhaEncomenda implements Serializable {
         this.codigo = linha.getCod();
     }
 
-    //Metodos de acesso
     public String getDescricao() {
         return descricao;
     }

@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Map;
 
 public class Encomenda implements Serializable {
-    //Variaveis de instancia
     private double peso;
     private String descricao;
     private String cod;
@@ -85,7 +84,6 @@ public class Encomenda implements Serializable {
                 this.data.equals(e.getData());
     }
 
-    //Metodos de acesso
     public void setProdutos(List<LinhaEncomenda> produtos) {
         this.produtos = new ArrayList<>();
         for (LinhaEncomenda e : produtos) {
