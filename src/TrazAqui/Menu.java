@@ -1,8 +1,10 @@
 package TrazAqui;
 
 import java.io.IOException;
+import java.nio.file.InvalidPathException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
@@ -21,7 +23,7 @@ public class Menu {
 
     public void run() throws IOException {
         Scanner inp = new Scanner(System.in);
-        int opcao;
+        int opcao = -1;
         try {
             e = f.readObjectStream();
         }
@@ -29,9 +31,17 @@ public class Menu {
             f.loadFromFile(e);
         }
         while (e.getLogin() == null && this.exec) {
+            boolean f = true;
             UI.printMenuInicial();
-            while ((opcao = inp.nextInt()) < 0 || opcao > 2) {
-                UI.printIncorrectInput();
+            while (f) {
+                try {
+                    opcao = inp.nextInt();
+                }
+                catch (InputMismatchException ex) {
+                    System.out.println("Opcao inválida!");
+                    inp.nextLine();
+                }
+                if(opcao >= 0 && opcao <= 2) f = false;
             }
             switch (opcao) {
                 case 0:
@@ -44,7 +54,7 @@ public class Menu {
                     catch (IOException e) {
                         e.printStackTrace();
                     }
-                    catch (LoginException e) {
+                    catch (InvalidInputException e) {
                         System.out.println(e.getMessage());
                     }
 
@@ -57,16 +67,10 @@ public class Menu {
                     catch (IOException e) {
                         e.printStackTrace();
                     }
-                    catch (LoginException l) {
+                    catch (InvalidInputException | InputMismatchException l) {
                         System.out.println(l.getMessage());
                     }
                     break;
-                case 3:
-                    try {
-                        this.e = f.readObjectStream();
-                    } catch (Exception e) {
-                        System.out.println(e.getMessage());
-                    }
                 default:
                     throw new IllegalStateException("Unexpected value: " + opcao);
             }
@@ -111,36 +115,37 @@ public class Menu {
         e.logoff();
     }
 
-    public void loginUtilizador() throws IOException , LoginException{
+    public void loginUtilizador() throws IOException , InvalidInputException {
         Scanner sc = new Scanner(System.in);
         System.out.print("Email: ");
         String email = sc.nextLine();
-        if (verifica(email)) throw new LoginException("Email invalido!");
-
+        if (verificaEmail(email)) throw new InvalidInputException("Email invalido!");
         System.out.print("Password: ");
         String password = sc.nextLine();
         this.e.login(email, password, this.f);
     }
 
-    private boolean verifica(String mail) {
+    private boolean verificaEmail(String mail) {
         String[] tokens;
         String temp;
         tokens = mail.split("@");
-        if (tokens[0].equals(mail)) return true;
+        if (tokens.length != 2 || tokens[0].equals("")) return true;
         temp = tokens[1];
-        tokens = tokens[1].split("\\.");
-        return tokens[1].equals(temp);
+        tokens = temp.split("\\.");
+        return (tokens.length != 2 || tokens[0].equals(""));
     }
 
-    public void novoRegisto() throws IOException, LoginException {
+    public void novoRegisto() throws IOException, InvalidInputException, InputMismatchException {
         Scanner sc = new Scanner(System.in);
 
         System.out.print("Regista-se como Utilizador, Loja, LojaFilaEspera, Transportadora ou Voluntario?: ");
         String tipo = sc.nextLine();
+        if(!tipo.equals("Utilizador") && !tipo.equals("Loja") && !tipo.equals("LojaFilaEspera") && !tipo.equals("Transportadora") && !tipo.equals("Voluntario"))
+            throw new InvalidInputException("Tipo de registo inválido!");
         System.out.print("Email: ");
         String email = sc.nextLine();
-        if (verifica(email)) {
-            throw new LoginException("Email invalido!");
+        if (verificaEmail(email)) {
+            throw new InvalidInputException("Email invalido!");
         }
         System.out.print("Password: ");
         String password = sc.nextLine();
@@ -344,7 +349,6 @@ public class Menu {
                 break;
             case 1:
                 UI.printEncomendas(e.getLoja(e.getLogin().getCod()).getPedidos());
-
                 break;
             case 2:
                 if(e.getLogin() instanceof LojaFilaEspera) {
@@ -360,7 +364,6 @@ public class Menu {
                 break;
             case 4:
                 UI.printTop10(e.getTop10Trans().stream().map(Estafeta::getNome).collect(Collectors.toList()));
-
                 break;
             default:
                 break;
