@@ -160,17 +160,31 @@ public class Menu {
         boolean bool = true;
         int opcao =-1;
         Scanner sc = new Scanner(System.in);
-        while(opcao!=0) {
             UI.printMenuUtilizador();
             opcao = sc.nextInt();
             sc.nextLine();
             switch (opcao) {
                 case 1:
                     Encomenda enc = new Encomenda();
-                    double preco, quantidade;
-                    boolean fragil, conti = true;
-                    String loja,cod, descricao;
+                    double peso,preco, quantidade;
+                    boolean fragil, conti = true,med;
+                    String descEnc,codEnc,loja,cod, descricao;
                     while (conti) {
+                        enc.setData(LocalDateTime.now());
+                        UI.print("Adicione um codigo a encomenda");
+                        codEnc = sc.nextLine();
+                        enc.setCod(codEnc);
+                        UI.print("Transporta medicamentos");
+                        med = sc.nextBoolean();
+                        enc.setMedicamentos(med);
+                        UI.print("Indique peso");
+                        peso=sc.nextDouble();
+                        enc.setPeso(peso);
+                        enc.setUtilizador(e.getLogin().getCod());
+                        sc.nextLine();
+                        UI.print("Faca descricao da encomenda");
+                        descEnc = sc.nextLine();
+                        enc.setDescricao(descEnc);
                         System.out.println(e.getLojas());
                         UI.print("Insira o codigo da loja");
                         loja = sc.nextLine();
@@ -190,6 +204,8 @@ public class Menu {
                         enc.addProduto(new LinhaEncomenda(descricao, preco, quantidade, fragil, cod));
                         UI.printDesejaMaisProd();
                         conti = sc.nextBoolean();
+                        e.addEncomendaLoja(loja,enc);
+                        e.addEncomendaUtilizador(e.getLogin().getCod(),enc);
                     }
                     break;
                 case 2:
@@ -230,7 +246,14 @@ public class Menu {
                     else UI.print("Nao existem encomendas para serem aceites.");
                     break;
                 case 0:
-                    bool = false;
+                    stopExec();
+                    try {
+                        f.saveObjectStream(e);
+                    }
+                    catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    bool = false ;
                     break;
                 case 4:
                     UI.printUtilizadores(this.e.getTop10Util());
@@ -238,7 +261,6 @@ public class Menu {
                     UI.printIncorrectInput();
                     break;
             }
-        }
         return bool;
     }
 
