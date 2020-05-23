@@ -128,6 +128,23 @@ public class  Estado implements Serializable {
         return this.utilizadores.get(user).getLocalizacao();
     }
 
+    public Encomenda removeEncomendaLoja(String codEnc) {
+        Encomenda enc = new Encomenda();
+        for (Loja l : this.lojas.values()) {
+            for (Encomenda e : l.getPedidos()) {
+                if (e.getCod().equals(codEnc)) {
+                    l.removePedido(codEnc);
+                    return new Encomenda(e);
+                }
+            }
+        }
+        return enc;
+    }
+
+    public void addEncomendaTransportar(String cod, Encomenda e) {
+        this.trabalhadores.get(cod).addEncomendaEntregue(e);
+    }
+
     public double totalFaturado(Transportadora t, LocalDateTime min, LocalDateTime max) {
         double total=0;
         for (Encomenda e : t.getEncomendasEntregues()) {
@@ -276,7 +293,9 @@ public class  Estado implements Serializable {
             }
             if (stop) break;
         }
-
+        if (!stop) {
+            return 0;
+        }
         Transportadora t = (Transportadora) this.trabalhadores.get(transp);
         double dist = lj.getLocalizacao().distancia(t.getLocalizacao());
         return t.precoEncomenda(enc.getPeso(),dist);
