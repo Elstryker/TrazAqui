@@ -1,7 +1,5 @@
 package TrazAqui;
 
-import jdk.swing.interop.SwingInterOpUtils;
-
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -311,6 +309,7 @@ public class Menu {
         String cod = this.e.getLogin().getCod();
         switch(opcao){
             case 0:
+                stopExec();
                 try {
                     f.saveObjectStream(e);
                 }
@@ -334,6 +333,7 @@ public class Menu {
                 sc.nextLine();
                 String codEnc = sc.nextLine();
                 Encomenda encomenda = this.e.removeEncomendaLoja(codEnc);
+                encomenda.setEstafeta(cod);
                 this.e.addPedidoDeTransporte(cod,encomenda);
                 break;
             case 4:
@@ -367,7 +367,7 @@ public class Menu {
         UI.printMenuLoja();
         opcao = sc.nextInt();
         String cod = this.e.getLogin().getCod();
-        switch(opcao){
+        switch(opcao) {
             case 0:
                 stopExec();
                 try {
