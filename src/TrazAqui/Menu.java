@@ -302,6 +302,7 @@ public class Menu {
         String cod = this.e.getLogin().getCod();
         switch(opcao){
             case 0:
+                stopExec();
                 try {
                     f.saveObjectStream(e);
                 }
@@ -325,6 +326,11 @@ public class Menu {
                 String codEnc = sc.nextLine();
                 this.e.removeEncomendaLoja(codEnc);
                 this.e.removeEncomendaTransportadora(codEnc,cod);
+                for(Map.Entry<String,Loja> map : e.getLojas().entrySet()){
+                    for(Encomenda enc :map.getValue().getPedidos()){
+                        if(enc.getCod().equals(codEnc)) e.addEncomendaUtilizador(enc.getUtilizador(),enc);
+                    }
+                }
                 break;
             case 4:
                 UI.printTop10(e.getTop10Util().stream().map(Utilizador::getNome).collect(Collectors.toList()));
