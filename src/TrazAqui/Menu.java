@@ -230,7 +230,7 @@ public class Menu {
                     else UI.print("Nao existem encomendas para serem aceites.");
                     break;
                 case 0:
-                    bool = false ;
+                    bool = false;
                     break;
                 case 4:
                     UI.printUtilizadores(this.e.getTop10Util());
