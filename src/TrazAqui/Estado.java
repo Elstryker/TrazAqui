@@ -289,11 +289,16 @@ public class  Estado implements Serializable {
         Loja lj = new Loja();
         Encomenda enc = new Encomenda();
         boolean stop = false;
+        boolean temFila = false;
+        double taxa = 0;
 
         for (Loja l : this.lojas.values()) {
             for (Encomenda e : l.getPedidos()) {
                 if (e.getCod().equals(cod)) {
-                    lj = new Loja(l);
+                    if (l instanceof LojaFilaEspera) {
+                        temFila = true;
+                        lj = new LojaFilaEspera((LojaFilaEspera) l);
+                    } else lj = new Loja(l);
                     enc = new Encomenda(e);
                     stop = true;
                     break;
@@ -304,8 +309,13 @@ public class  Estado implements Serializable {
         if (!stop) {
             return 0;
         }
+        if (temFila) {
+            LojaFilaEspera ljfe = (LojaFilaEspera) lj;
+            taxa = ljfe.getTempoEspera()*ljfe.getListaEspera()*0.30;
+        }
         Transportadora t = (Transportadora) this.trabalhadores.get(transp);
         double dist = lj.getLocalizacao().distancia(t.getLocalizacao());
-        return t.precoEncomenda(enc.getPeso(),dist);
+        double preco = t.precoEncomenda(enc.getPeso(),dist);
+        return (preco+preco*taxa);
     }
 }
