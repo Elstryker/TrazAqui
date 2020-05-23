@@ -1,9 +1,6 @@
 package TrazAqui;
 
-import jdk.swing.interop.SwingInterOpUtils;
-
 import java.io.IOException;
-import java.nio.file.InvalidPathException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.InputMismatchException;
@@ -363,7 +360,7 @@ public class Menu {
         UI.printMenuLoja();
         opcao = sc.nextInt();
         String cod = this.e.getLogin().getCod();
-        switch(opcao){
+        switch(opcao) {
             case 0:
                 stopExec();
                 try {
