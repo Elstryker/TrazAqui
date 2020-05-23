@@ -1,7 +1,10 @@
 package TrazAqui;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Utilizador implements Entrada, Serializable {
@@ -100,5 +103,12 @@ public class Utilizador implements Entrada, Serializable {
         return "Utilizador";
     }
 
+    public List<Encomenda> procuraPor(LocalDateTime inicio, LocalDateTime fim){
+        List<Encomenda> aux=new ArrayList<>();
+        for(Map.Entry<String,Encomenda> map : this.getEncomendasConcluidas().entrySet()){
+            if(map.getValue().getData().isAfter(inicio) && map.getValue().getData().isBefore(fim)) aux.add(map.getValue());
+        }
+        return aux;
+    }
 
 }

@@ -2,6 +2,7 @@ package TrazAqui;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
@@ -167,10 +168,15 @@ public class Menu {
                     Encomenda enc = new Encomenda();
                     double preco, quantidade;
                     boolean fragil, conti = true;
-                    String cod, descricao;
+                    String loja,cod, descricao;
                     while (conti) {
+                        System.out.println(e.getLojas());
+                        UI.print("Insira o codigo da loja");
+                        loja = sc.nextLine();
+                        enc.setLoja(loja);
                         UI.printFazerDescricao();
                         descricao = sc.nextLine();
+                        sc.nextLine();
                         UI.printIndicarPreco();
                         preco = sc.nextDouble();
                         UI.printIndicarQuant();
@@ -186,46 +192,41 @@ public class Menu {
                     }
                     break;
                 case 2:
-                    UI.printHistoricoEncomendas();
+                    //UI.printHistoricoEncomendas();
                     String codigoUtilizador = e.getLogin().getCod();
                     Map<String,Encomenda> lstEnc = e.getUtilizador(codigoUtilizador).getEncomendasConcluidas();
-                    UI.print("Indique o periodo em que quer procurar");
-                    UI.print("Indique os anos iniciais e finais");
-                    int anoi = sc.nextInt();
-                    int anof = sc.nextInt();
-                    UI.print("Indique os meses inicial e final");
-                    int mesi = sc.nextInt();
-                    int mesf = sc.nextInt();
-                    UI.print("Indique o dia do mes inicial e final");
-                    int diamesi = sc.nextInt();
-                    int diamesf = sc.nextInt();
-                    UI.print("Indique a hora inicial e final");
-                    int horai = sc.nextInt();
-                    int horaf = sc.nextInt();
-                    UI.print("Indique os minutos iniciais e finais");
-                    int minutosi = sc.nextInt();
-                    int minutosf = sc.nextInt();
-                    sc.nextLine();
-                    LocalDateTime inicio = LocalDateTime.of(anoi,mesi,diamesi,horai,minutosi);
-                    LocalDateTime fim = LocalDateTime.of(anof,mesf,diamesf,horaf,minutosf);
-                    UI.print("Indique o estafeta que deseja procurar: ");
-                    String codEst = sc.nextLine();
-                    UI.printEncomendas(e.getEstafeta(codEst).procuraPor(inicio,fim));
+                    UI.printHistoricoEncomendas(lstEnc);
+                    if(lstEnc.size() > 0) {
+                        UI.print("Insira a data inicial da procura ( formato yyyy-mm-dd HH:mm)");
+                        String inicio = sc.nextLine();
+                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+                        LocalDateTime dataInicial = LocalDateTime.parse(inicio, formatter);
+                        UI.print("Insira a data final da procura ( formato yyyy-mm-dd HH:mm)");
+                        String fim = sc.nextLine();
+                        LocalDateTime dataFinal = LocalDateTime.parse(fim, formatter);
+                        UI.printEncomendas(e.getUtilizador(codigoUtilizador).procuraPor(dataInicial, dataFinal));
+                    }
                     break;
                 case 3:
-                    int clas = 0;
+                    int clas = 0,i=0;
                     for(Map.Entry<String,Estafeta> a : e.getTrabalhadores().entrySet()){
-                        System.out.println(a.getValue().getPedidosEncomenda());
+                        if(a.getValue().getPedidosEncomenda().size()>0) {
+                            System.out.println(a.getValue().getPedidosEncomenda());
+                            i++;
+                        }
                     }
-                    UI.print("Indique o codigo do estafeta cuja encomenda deseja aceitar:");
-                    String codEsta = sc.nextLine();
-                    UI.print("Indique o indice da encomenda que deseja aceitar: ");
-                    int index = sc.nextInt();
-                    Encomenda encomenda = e.getEstafeta(codEsta).getPedidosEncomenda().get(index);
-                    e.getEstafeta(codEsta).addEncomendaEntregue(encomenda);
-                    UI.print("Indique a classificação que deseja dar: ");
-                    clas = sc.nextInt();
-                    e.getEstafeta(codEsta).classifica(clas);
+                    if(i>0) {
+                        UI.print("Indique o codigo do estafeta cuja encomenda deseja aceitar:");
+                        String codEsta = sc.nextLine();
+                        UI.print("Indique o indice da encomenda que deseja aceitar: ");
+                        int index = sc.nextInt();
+                        Encomenda encomenda = e.getEstafeta(codEsta).getPedidosEncomenda().get(index);
+                        e.getEstafeta(codEsta).addEncomendaEntregue(encomenda);
+                        UI.print("Indique a classificação que deseja dar: ");
+                        clas = sc.nextInt();
+                        e.getEstafeta(codEsta).classifica(clas);
+                    }
+                    else UI.print("Nao existem encomendas para serem aceites.");
                     break;
                 case 0:
                     bool = false ;

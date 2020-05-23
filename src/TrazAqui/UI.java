@@ -1,7 +1,9 @@
 package TrazAqui;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.HashMap;
+import java.util.Map;
 
 public class UI {
 
@@ -64,8 +66,10 @@ public class UI {
         System.out.print("Deseja encomendar mais produtos? ");
     }
 
-    public static void printHistoricoEncomendas() {
-        System.out.println("Histórico de encomendas");
+    public static void printHistoricoEncomendas(Map<String,Encomenda> enc) {
+        for(Map.Entry<String,Encomenda> map : enc.entrySet()){
+            System.out.println(map.getKey() + ":" + map.getValue());
+        }
     }
 
     public static void printMenuVoluntario() {
@@ -107,10 +111,20 @@ public class UI {
         StringBuilder sb;
         for (Encomenda e : enc) {
             sb = new StringBuilder();
-            sb.append("Codigo: ").append(e.getCod()).append(" Conteudo: ").append(e.getDescricao());
+            sb.append("Codigo: ").append(e.getCod()).append(" Conteudo: ").append(e.getProdutos());
             System.out.println(sb.toString());
         }
     }
+
+   /* public static void printLinhaEncomenda(ArrayList<LinhaEncomenda> produtos) {
+        for(LinhaEncomenda enc : produtos){
+            System.out.println("Codigo produto: " + enc.getCod());
+            System.out.println("Descricao produto: " + enc.getDescricao());
+            System.out.println("Preco do produto: " + enc.getPreco());
+            System.out.println("Quantidade do produto: " + enc.getQuantidade());
+            System.out.println("O produto e fragil? " + enc.getFragil());
+        }
+    }*/
 
     public static void printUtilizadores(List<Utilizador> l) {
         l.forEach(t -> System.out.println(t.toString()));

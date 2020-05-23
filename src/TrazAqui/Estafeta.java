@@ -213,11 +213,4 @@ public abstract class Estafeta implements Entrada, Serializable {
 
     public abstract String toStringNome();
 
-    public List<Encomenda> procuraPor(LocalDateTime inicio, LocalDateTime fim){
-       List<Encomenda> aux = new ArrayList<>();
-       for(Encomenda a : this.getEncomendasEntregues()){
-           if(a.getData().isAfter(inicio) && a.getData().isBefore(fim)) aux.add(a);
-       }
-       return aux;
-    }
 }
