@@ -270,8 +270,6 @@ public class Menu {
                 } catch (Exception e) {
                     UI.print("Encomenda inexistente!");
                 }
-
-
                 break;
             default:
                 break;
