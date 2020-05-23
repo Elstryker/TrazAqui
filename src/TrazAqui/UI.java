@@ -108,22 +108,15 @@ public class UI {
 
     public static void printEncomendas(List<Encomenda> enc) {
         StringBuilder sb;
-        for (Encomenda e : enc) {
-            sb = new StringBuilder();
-            sb.append("Codigo: ").append(e.getCod()).append(" Conteudo: ").append(e.getProdutos());
-            System.out.println(sb.toString());
+        if(enc.size() != 0) {
+            for (Encomenda e : enc) {
+                sb = new StringBuilder();
+                sb.append("Codigo: ").append(e.getCod()).append(" Conteudo: ").append(e.getProdutos());
+                System.out.println(sb.toString());
+            }
         }
+        else System.out.println("Sem encomendas a apresentar!");
     }
-
-   /* public static void printLinhaEncomenda(ArrayList<LinhaEncomenda> produtos) {
-        for(LinhaEncomenda enc : produtos){
-            System.out.println("Codigo produto: " + enc.getCod());
-            System.out.println("Descricao produto: " + enc.getDescricao());
-            System.out.println("Preco do produto: " + enc.getPreco());
-            System.out.println("Quantidade do produto: " + enc.getQuantidade());
-            System.out.println("O produto e fragil? " + enc.getFragil());
-        }
-    }*/
 
     public static void printUtilizadores(List<Utilizador> l) {
         l.forEach(t -> System.out.println(t.toString()));
