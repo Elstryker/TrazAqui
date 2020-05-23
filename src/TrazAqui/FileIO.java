@@ -218,6 +218,7 @@ public class FileIO {
                     e.setLogin(e.getUtilizador(cod));
                     break;
                 case "Loja":
+                case "LojaFilaEspera":
                     e.setLogin(e.getLoja(cod));
                     break;
                 case "Voluntario":

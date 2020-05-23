@@ -88,6 +88,7 @@ public class Menu {
                     }
                     break;
                 case "Loja":
+                case "LojaFilaEspera":
                     while (this.exec) {
                         UI.printMenuLoja();
                         menuLoja();
@@ -133,7 +134,7 @@ public class Menu {
     public void novoRegisto() throws IOException, LoginException {
         Scanner sc = new Scanner(System.in);
 
-        System.out.print("Regista-se como Utilizador, Loja, Transportadora ou Voluntario?: ");
+        System.out.print("Regista-se como Utilizador, Loja, LojaFilaEspera, Transportadora ou Voluntario?: ");
         String tipo = sc.nextLine();
         System.out.print("Email: ");
         String email = sc.nextLine();

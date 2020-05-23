@@ -214,6 +214,7 @@ public class  Estado implements Serializable {
         if(a instanceof Transportadora) addTrabalhador((Transportadora) a);
         if(a instanceof Voluntario) addTrabalhador((Voluntario) a);
         if(a instanceof Loja) addLoja((Loja) a);
+        if(a instanceof LojaFilaEspera) addLoja((LojaFilaEspera) a);
     }
 
     public void addEncomendaUtilizador(String cod,Encomenda e) {
@@ -280,6 +281,4 @@ public class  Estado implements Serializable {
         double dist = lj.getLocalizacao().distancia(t.getLocalizacao());
         return t.precoEncomenda(enc.getPeso(),dist);
     }
-
-
 }

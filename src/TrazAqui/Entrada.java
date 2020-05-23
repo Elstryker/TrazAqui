@@ -26,6 +26,9 @@ public interface Entrada {
             case "Loja":
                 a = new Loja();
                 break;
+            case "LojaFilaEspera":
+                a = new LojaFilaEspera();
+                break;
             default:
                 break;
         }
