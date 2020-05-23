@@ -82,16 +82,19 @@ public class  Estado implements Serializable {
         }
     }
 
-    public void addTrabalhador(Estafeta e) {
-        this.trabalhadores.put(e.getCod(),e.clone());
+    public void addTrabalhador(Estafeta e) throws ExistingCodeException {
+        if(this.trabalhadores.putIfAbsent(e.getCod(),e.clone()) != null)
+            throw new ExistingCodeException("Código inválido!");
     }
 
-    public void addUtilizador(Utilizador u) {
-        this.utilizadores.put(u.getCod(),u.clone());
+    public void addUtilizador(Utilizador u) throws ExistingCodeException {
+        if(this.utilizadores.putIfAbsent(u.getCod(),u.clone())!=null)
+            throw new ExistingCodeException("Código inválido!");
     }
 
-    public void addLoja(Loja l) {
-        this.lojas.put(l.getCod(),l.clone());
+    public void addLoja(Loja l) throws ExistingCodeException {
+        if(this.lojas.putIfAbsent(l.getCod(),l.clone())!=null)
+            throw new ExistingCodeException("Código inválido!");
     }
 
     public HashMap<String, Utilizador> getUtilizadores() {
@@ -216,14 +219,13 @@ public class  Estado implements Serializable {
         return res;
     }
 
-    public void registar(String email, String pass, String cod, String nome, GPS loc, FileIO f, String tipo) throws IOException {
+    public void registar(String email, String pass, String cod, String nome, GPS loc, FileIO f, String tipo) throws IOException, ExistingCodeException {
         Entrada a = new Utilizador();
         a = a.newEntrada(tipo);
         a.setCod(cod);
         a.setNome(nome);
         a.setLocalizacao(loc);
         f.registaConta(email,pass,a,this);
-
     }
 
     public void login(String email, String pass, FileIO f) throws IOException {
@@ -234,7 +236,7 @@ public class  Estado implements Serializable {
         this.login = null;
     }
 
-    public void add(Entrada a) {
+    public void add(Entrada a) throws ExistingCodeException {
         if(a instanceof Utilizador) addUtilizador((Utilizador) a);
         if(a instanceof Transportadora) addTrabalhador((Transportadora) a);
         if(a instanceof Voluntario) addTrabalhador((Voluntario) a);

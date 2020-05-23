@@ -69,7 +69,11 @@ public class FileIO {
                     case "Utilizador":
                         gps = new GPS(Double.parseDouble(tokens[2]),Double.parseDouble(tokens[3]));
                         Utilizador u = new Utilizador(tokens[1],tokens[0],gps,new HashMap<>());
-                        e.addUtilizador(u);
+                        try {
+                            e.addUtilizador(u);
+                        } catch (ExistingCodeException ex) {
+                            System.out.println(ex.getMessage());
+                        }
                         break;
                     case "Voluntario":
                         gps = new GPS(Double.parseDouble(tokens[2]),Double.parseDouble(tokens[3]));
@@ -78,7 +82,12 @@ public class FileIO {
                         v.setNome(tokens[1]);
                         v.setCod(tokens[0]);
                         v.setLocalizacao(gps);
-                        e.addTrabalhador(v);
+                        try {
+                            e.addTrabalhador(v);
+                        }
+                        catch (ExistingCodeException ex) {
+                            System.out.println(ex.getMessage());
+                        }
                         break;
                     case "Transportadora":
                         gps = new GPS(Double.parseDouble(tokens[2]),Double.parseDouble(tokens[3]));
@@ -88,7 +97,11 @@ public class FileIO {
                         t.setLocalizacao(gps);
                         t.setRaio(Double.parseDouble(tokens[5]));
                         t.setPrecoKM(Double.parseDouble(tokens[6]));
-                        e.addTrabalhador(t);
+                        try {
+                            e.addTrabalhador(t);
+                        } catch (ExistingCodeException ex) {
+                            System.out.println(ex.getMessage());
+                        }
                         break;
                     case "Loja":
                         gps = new GPS(Double.parseDouble(tokens[2]),Double.parseDouble(tokens[3]));
@@ -96,7 +109,11 @@ public class FileIO {
                         j.setCod(tokens[0]);
                         j.setNome(tokens[1]);
                         j.setLocalizacao(gps);
-                        e.addLoja(j);
+                        try {
+                            e.addLoja(j);
+                        } catch (ExistingCodeException ex) {
+                            System.out.println(ex.getMessage());
+                        }
                         break;
                     case "Encomenda":
                         Encomenda s = new Encomenda();
@@ -188,7 +205,7 @@ public class FileIO {
         file.newLine();
     }
 
-    public void registaConta(String email, String password, Entrada ent, Estado e) throws IOException {
+    public void registaConta(String email, String password, Entrada ent, Estado e) throws IOException, ExistingCodeException {
         FileWriter fw = new FileWriter(this.accPath,true);
         BufferedWriter writer = new BufferedWriter(fw);
         writer.write(email + "," + password + "," + ent.getCod() + "," + ent.toStringNome() + "\n");

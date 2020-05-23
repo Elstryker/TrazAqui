@@ -66,7 +66,7 @@ public class Menu {
                     catch (IOException e) {
                         e.printStackTrace();
                     }
-                    catch (InvalidInputException | InputMismatchException l) {
+                    catch (InvalidInputException | InputMismatchException | ExistingCodeException l) {
                         System.out.println(l.getMessage());
                     }
                     break;
@@ -133,7 +133,7 @@ public class Menu {
         return (tokens.length != 2 || tokens[0].equals(""));
     }
 
-    public void novoRegisto() throws IOException, InvalidInputException, InputMismatchException {
+    public void novoRegisto() throws IOException, InvalidInputException, InputMismatchException, ExistingCodeException {
         Scanner sc = new Scanner(System.in);
 
         System.out.print("Regista-se como Utilizador, Loja, LojaFilaEspera, Transportadora ou Voluntario?: ");
@@ -149,6 +149,11 @@ public class Menu {
         String password = sc.nextLine();
         System.out.print("Código: ");
         String cod = sc.nextLine();
+        if((tipo.equals("Utilizador") && cod.charAt(0) == 'u')
+        || (tipo.equals("Loja") || tipo.equals("LojaFilaEspera") && cod.charAt(0) == 'l')
+        || (tipo.equals("Transportadora") && cod.charAt(0) == 't')
+        || (tipo.equals("Voluntario") && cod.charAt(0) == 'v'))
+            throw new InvalidInputException("Código inválido!");
         System.out.print("Nome: ");
         String nome = sc.nextLine();
         System.out.print("Latitude: ");
@@ -304,6 +309,7 @@ public class Menu {
         String cod = this.e.getLogin().getCod();
         switch(opcao){
             case 0:
+                stopExec();
                 try {
                     f.saveObjectStream(e);
                 }
@@ -327,6 +333,7 @@ public class Menu {
                 sc.nextLine();
                 String codEnc = sc.nextLine();
                 Encomenda encomenda = this.e.removeEncomendaLoja(codEnc);
+                encomenda.setEstafeta(cod);
                 this.e.addPedidoDeTransporte(cod,encomenda);
                 break;
             case 4:
