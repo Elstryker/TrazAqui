@@ -301,19 +301,16 @@ public class Menu {
                 UI.print("Codigo da encomenda: ");
                 sc.nextLine();
                 String codEnc = sc.nextLine();
-                for (Loja lj : this.e.getLojas().values()){
-                    for (Encomenda e : lj.getPedidos()) {
-                        if (e.getCod().equals(codEnc)) {
-                            lj.removePedido(codEnc);
-                        }
-                    }
-                }
-                this.e.getTrabalhadores().get(cod).removerEncomenda(codEnc);
+                this.e.removeEncomendaLoja(codEnc);
+                this.e.removeEncomendaTransportadora(codEnc,cod);
                 break;
             case 4:
-                UI.printTransportadoras(this.e.getTop10Trans());
+                UI.printTop10(e.getTop10Util().stream().map(Utilizador::getNome).collect(Collectors.toList()));
                 break;
             case 5:
+                UI.printTop10(e.getTop10Trans().stream().map(Estafeta::getNome).collect(Collectors.toList()));
+                break;
+            case 6:
                 int i=0;
                 LocalDateTime[] data = new LocalDateTime[2];
                 while (i<2) {
@@ -335,6 +332,7 @@ public class Menu {
     public void menuLoja() {
         int opcao;
         Scanner sc = new Scanner(System.in);
+        UI.printMenuLoja();
         opcao = sc.nextInt();
         String cod = this.e.getLogin().getCod();
         switch(opcao){

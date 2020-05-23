@@ -141,6 +141,10 @@ public class  Estado implements Serializable {
         return enc;
     }
 
+    public void removeEncomendaTransportadora(String codEnc, String cod) {
+        this.trabalhadores.get(cod).removerEncomenda(codEnc);
+    }
+
     public void addEncomendaTransportar(String cod, Encomenda e) {
         this.trabalhadores.get(cod).addEncomendaEntregue(e);
     }

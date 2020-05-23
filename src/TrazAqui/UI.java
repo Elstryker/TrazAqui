@@ -86,8 +86,9 @@ public class UI {
         System.out.println("1 - Indicar que esta disponivel");
         System.out.println("2 - Determinar preço da encomenda");
         System.out.println("3 - Transportar encomenda");
-        System.out.println("4 - Lista das 10 transportadoras com mais kms");
-        System.out.println("5 - Indicar o total faturado");
+        System.out.println("4 - Top 10 utilizadores");
+        System.out.println("5 - Top 10 Transportadoras");
+        System.out.println("6 - Indicar o total faturado");
         System.out.print("Opcao: ");
     }
 
