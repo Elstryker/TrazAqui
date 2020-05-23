@@ -51,13 +51,10 @@ public class Transportadora extends Estafeta {
         this.precoKM = precoKM;
     }
 
-    // Métodos
     public double precoEncomenda(double peso, double dist) {
         double total;
-
         if (peso > 10) total = this.precoKM*dist;
         else total = this.precoKM*dist+2.5;
-
         return total;
     }
 
@@ -68,8 +65,4 @@ public class Transportadora extends Estafeta {
     public String toStringNome() {
         return "Transportadora";
     }
-
-
-
-
 }

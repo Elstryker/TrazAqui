@@ -275,11 +275,11 @@ public class  Estado implements Serializable {
             }
             if (stop) break;
         }
-
+        if (!stop) {
+            return 0;
+        }
         Transportadora t = (Transportadora) this.trabalhadores.get(transp);
         double dist = lj.getLocalizacao().distancia(t.getLocalizacao());
         return t.precoEncomenda(enc.getPeso(),dist);
     }
-
-
 }

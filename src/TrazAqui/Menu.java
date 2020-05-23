@@ -1,5 +1,7 @@
 package TrazAqui;
 
+import jdk.swing.interop.SwingInterOpUtils;
+
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -89,7 +91,6 @@ public class Menu {
                     break;
                 case "Loja":
                     while (this.exec) {
-                        UI.printMenuLoja();
                         menuLoja();
                     }
                 default:
@@ -242,6 +243,7 @@ public class Menu {
     public void menuVoluntario() {
         int opcao;
         Scanner sc = new Scanner(System.in);
+        UI.printMenuVoluntario();
         opcao = sc.nextInt();
         String cod = this.e.getLogin().getCod();
         switch (opcao) {
@@ -254,14 +256,21 @@ public class Menu {
                 List<Encomenda> enc = this.e.encomendasDisponiveis(cod);
                 UI.printEncomendas(enc);
                 UI.print("Codigo da encomenda: ");
+                sc.nextLine();
                 String codEncomenda = sc.nextLine();
-                this.e.getLojas().get(codEncomenda).removePedido(codEncomenda);
-                for (Encomenda e : enc) {
-                    if (e.getCod().equals(codEncomenda)) {
-                        this.e.getTrabalhadores().get(cod).addEncomendaEntregue(e);
-                        break;
+                try {
+                    this.e.getLojas().get(codEncomenda).removePedido(codEncomenda);
+                    for (Encomenda e : enc) {
+                        if (e.getCod().equals(codEncomenda)) {
+                            this.e.getTrabalhadores().get(cod).addEncomendaEntregue(e);
+                            break;
+                        }
                     }
+                } catch (Exception e) {
+                    UI.print("Encomenda inexistente!");
                 }
+
+
                 break;
             default:
                 break;
@@ -271,6 +280,7 @@ public class Menu {
     public void menuTransportadora() {
         int opcao;
         Scanner sc = new Scanner(System.in);
+        UI.printMenuTransportadora();
         opcao = sc.nextInt();
         String cod = this.e.getLogin().getCod();
         switch(opcao){
@@ -287,12 +297,14 @@ public class Menu {
                 break;
             case 2:
                 UI.print("Codigo de encomenda: ");
+                sc.nextLine();
                 String codEncomenda = sc.nextLine();
                 double p = this.e.precoDaEncomenda(codEncomenda,cod);
                 UI.printPreco(p);
                 break;
             case 3:
                 UI.print("Codigo da encomenda: ");
+                sc.nextLine();
                 String codEnc = sc.nextLine();
                 for (Loja lj : this.e.getLojas().values()){
                     for (Encomenda e : lj.getPedidos()) {
@@ -342,7 +354,6 @@ public class Menu {
                 break;
             case 1:
                 UI.printEncomendas(e.getLoja(e.getLogin().getCod()).getPedidos());
-
                 break;
             case 2:
                 if(e.getLogin() instanceof LojaFilaEspera) {
@@ -358,7 +369,6 @@ public class Menu {
                 break;
             case 4:
                 UI.printTop10(e.getTop10Trans().stream().map(Estafeta::getNome).collect(Collectors.toList()));
-
                 break;
             default:
                 break;
