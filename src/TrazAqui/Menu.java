@@ -284,7 +284,7 @@ public class Menu {
                 String codEncomenda = sc.nextLine();
                 try {
                     Encomenda e = this.e.removeEncomendaLoja(codEncomenda);
-                    this.e.addEncomendaTransportar(cod,e);
+                    this.e.addEncomendaEntregue(cod,e);
                 } catch (Exception e) {
                     UI.print("Encomenda inexistente!");
                 }
@@ -320,11 +320,12 @@ public class Menu {
                 UI.printPreco(p);
                 break;
             case 3:
+                this.e.getLojas().values().forEach(l -> UI.printEncomendas(l.getPedidos()));
                 UI.print("Codigo da encomenda: ");
                 sc.nextLine();
                 String codEnc = sc.nextLine();
-                this.e.removeEncomendaLoja(codEnc);
-                this.e.removeEncomendaTransportadora(codEnc,cod);
+                Encomenda encomenda = this.e.removeEncomendaLoja(codEnc);
+                this.e.addPedidoDeTransporte(cod,encomenda);
                 break;
             case 4:
                 UI.printTop10(e.getTop10Util().stream().map(Utilizador::getNome).collect(Collectors.toList()));
