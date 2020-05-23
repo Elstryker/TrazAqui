@@ -328,6 +328,7 @@ public class Menu {
                 sc.nextLine();
                 String codEnc = sc.nextLine();
                 Encomenda encomenda = this.e.removeEncomendaLoja(codEnc);
+                encomenda.setEstafeta(cod);
                 this.e.addPedidoDeTransporte(cod,encomenda);
                 break;
             case 4:

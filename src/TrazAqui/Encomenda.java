@@ -13,9 +13,10 @@ public class Encomenda implements Serializable {
     private String utilizador;
     private String loja;
     private boolean medicamentos;
+    private String estafeta;
     private List<LinhaEncomenda> produtos;
 
-    public Encomenda(double peso, boolean med, String descricao, String cod, String utilizador, String loja,ArrayList<LinhaEncomenda> produtos,LocalDateTime l) {
+    public Encomenda(double peso, boolean med, String descricao, String cod, String utilizador, String loja,ArrayList<LinhaEncomenda> produtos,LocalDateTime l,String estafeta) {
         this.peso = peso;
         this.descricao = descricao;
         this.cod = cod;
@@ -24,6 +25,7 @@ public class Encomenda implements Serializable {
         this.produtos = produtos;
         this.data = l;
         this.medicamentos = med;
+        this.estafeta =estafeta;
     }
 
     public Encomenda() {
@@ -35,6 +37,7 @@ public class Encomenda implements Serializable {
         this.medicamentos = false;
         this.produtos = new ArrayList<>();
         this.data = LocalDateTime.now();
+        this.estafeta="";
     }
 
     public Encomenda(Encomenda e) {
@@ -46,6 +49,7 @@ public class Encomenda implements Serializable {
         this.cod = e.getCod();
         this.medicamentos = e.getMedicamentos();
         this.descricao = e.getDescricao();
+        this.estafeta= e.getEstafeta();
     }
 
     public Encomenda clone() {
@@ -55,7 +59,8 @@ public class Encomenda implements Serializable {
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("Encomenda{");
-        sb.append("peso=").append(peso);
+        sb.append("Transportador= ").append(estafeta).append('\'');
+        sb.append("peso=").append(peso).append('\'');
         sb.append(", descricao='").append(descricao).append('\'');
         sb.append(", cod='").append(cod).append('\'');
         sb.append(", data=").append(data);
@@ -80,7 +85,8 @@ public class Encomenda implements Serializable {
                 this.loja.equals(e.getLoja()) &&
                 this.produtos.equals(e.getProdutos()) &&
                 this.medicamentos==e.getMedicamentos() &&
-                this.data.equals(e.getData());
+                this.data.equals(e.getData())  &&
+                this.estafeta.equals(e.getEstafeta());
     }
 
     public void setProdutos(List<LinhaEncomenda> produtos) {
@@ -159,6 +165,14 @@ public class Encomenda implements Serializable {
         for (LinhaEncomenda l : produtos) {
             this.produtos.add(l.clone());
         }
+    }
+
+    public String getEstafeta() {
+        return estafeta;
+    }
+
+    public void setEstafeta(String estafeta) {
+        this.estafeta = estafeta;
     }
 
     public void addProduto(LinhaEncomenda l) {
