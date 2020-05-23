@@ -290,7 +290,7 @@ public class Menu {
                 sc.nextLine();
                 String codEncomenda = sc.nextLine();
                 try {
-                    Encomenda e = this.e.removeEncomendaLoja(codEncomenda);
+                    Encomenda e = this.e.removeEncomendaLoja(codEncomenda,cod);
                     this.e.addEncomendaEntregue(cod,e);
                 } catch (Exception e) {
                     UI.print("Encomenda inexistente!");
@@ -332,7 +332,7 @@ public class Menu {
                 UI.print("Codigo da encomenda: ");
                 sc.nextLine();
                 String codEnc = sc.nextLine();
-                Encomenda encomenda = this.e.removeEncomendaLoja(codEnc);
+                Encomenda encomenda = this.e.removeEncomendaLoja(codEnc,cod);
                 encomenda.setEstafeta(cod);
                 this.e.addPedidoDeTransporte(cod,encomenda);
                 break;

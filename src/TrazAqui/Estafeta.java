@@ -1,9 +1,7 @@
 package TrazAqui;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 import java.util.*;
-import java.util.stream.Collectors;
 
 public abstract class Estafeta implements Entrada, Serializable {
     private String cod;
