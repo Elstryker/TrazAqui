@@ -21,7 +21,7 @@ public class Menu {
         this.e = new Estado();
     }
 
-    public void run() throws IOException {
+    public void run() throws IOException,LojaInexistenteException {
         Scanner inp = new Scanner(System.in);
         int opcao = -1;
         try {
@@ -217,27 +217,31 @@ public class Menu {
                         }
                     break;
                 case 2:
+                    LocalDateTime dataInicial = LocalDateTime.now();
+                    LocalDateTime dataFinal = LocalDateTime.now();
+                    String inicio = "",fim = "";
                     String codigoUtilizador = e.getLogin().getCod();
                     Map<String,Encomenda> lstEnc = e.getUtilizador(codigoUtilizador).getEncomendasConcluidas();
-                    UI.printDesejaTransOuVol();
+                    UI.printDesejaTransVolTempo();
                     int option = sc.nextInt();
                     sc.nextLine();
-                    UI.printHistoricoEncomendas(lstEnc,option);
-                    if(lstEnc.size() > 0) {
-                        try {
-                            UI.print("Insira a data inicial da procura ( formato yyyy-mm-dd HH:mm)");
-                            String inicio = sc.nextLine();
-                            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-                            LocalDateTime dataInicial = LocalDateTime.parse(inicio, formatter);
-                            UI.print("Insira a data final da procura ( formato yyyy-mm-dd HH:mm)");
-                            String fim = sc.nextLine();
-                            LocalDateTime dataFinal = LocalDateTime.parse(fim, formatter);
-                            UI.printEncomendas(e.getUtilizador(codigoUtilizador).procuraPor(dataInicial, dataFinal));
-                        }
-                        catch(DateTimeParseException ex) {
-                            System.out.println("Formato inválido!");
+                    if(option==3) {
+                        if (lstEnc.size() > 0) {
+                            try {
+                                UI.print("Insira a data inicial da procura ( formato yyyy-mm-dd HH:mm)");
+                                inicio = sc.nextLine();
+                                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+                                dataInicial = LocalDateTime.parse(inicio, formatter);
+                                UI.print("Insira a data final da procura ( formato yyyy-mm-dd HH:mm)");
+                                fim = sc.nextLine();
+                                dataFinal = LocalDateTime.parse(fim, formatter);
+                            } catch (DateTimeParseException ex) {
+                                System.out.println("Formato inválido!");
+                            }
                         }
                     }
+                    Utilizador u = e.getUtilizador(codigoUtilizador);
+                    UI.printHistoricoEncomendas(lstEnc,option,u,dataInicial,dataFinal);
                     break;
                 case 3:
                     int clas,i=0;
