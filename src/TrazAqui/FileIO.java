@@ -72,7 +72,7 @@ public class FileIO {
                         try {
                             e.addUtilizador(u);
                         } catch (ExistingCodeException ex) {
-                            System.out.println(ex.getMessage());
+                            UI.print(ex.getMessage());
                         }
                         break;
                     case "Voluntario":
@@ -86,7 +86,7 @@ public class FileIO {
                             e.addTrabalhador(v);
                         }
                         catch (ExistingCodeException ex) {
-                            System.out.println(ex.getMessage());
+                            UI.print(ex.getMessage());
                         }
                         break;
                     case "Transportadora":
@@ -100,7 +100,7 @@ public class FileIO {
                         try {
                             e.addTrabalhador(t);
                         } catch (ExistingCodeException ex) {
-                            System.out.println(ex.getMessage());
+                            UI.print(ex.getMessage());
                         }
                         break;
                     case "Loja":
@@ -112,7 +112,7 @@ public class FileIO {
                         try {
                             e.addLoja(j);
                         } catch (ExistingCodeException ex) {
-                            System.out.println(ex.getMessage());
+                            UI.print(ex.getMessage());
                         }
                         break;
                     case "Encomenda":
