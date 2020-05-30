@@ -3,6 +3,7 @@ package TrazAqui;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Map;
@@ -228,14 +229,19 @@ public class Menu {
                     Map<String,Encomenda> lstEnc = e.getUtilizador(codigoUtilizador).getEncomendasConcluidas();
                     UI.printHistoricoEncomendas(lstEnc);
                     if(lstEnc.size() > 0) {
-                        UI.print("Insira a data inicial da procura ( formato yyyy-mm-dd HH:mm)");
-                        String inicio = sc.nextLine();
-                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-                        LocalDateTime dataInicial = LocalDateTime.parse(inicio, formatter);
-                        UI.print("Insira a data final da procura ( formato yyyy-mm-dd HH:mm)");
-                        String fim = sc.nextLine();
-                        LocalDateTime dataFinal = LocalDateTime.parse(fim, formatter);
-                        UI.printEncomendas(e.getUtilizador(codigoUtilizador).procuraPor(dataInicial, dataFinal));
+                        try {
+                            UI.print("Insira a data inicial da procura ( formato yyyy-mm-dd HH:mm)");
+                            String inicio = sc.nextLine();
+                            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+                            LocalDateTime dataInicial = LocalDateTime.parse(inicio, formatter);
+                            UI.print("Insira a data final da procura ( formato yyyy-mm-dd HH:mm)");
+                            String fim = sc.nextLine();
+                            LocalDateTime dataFinal = LocalDateTime.parse(fim, formatter);
+                            UI.printEncomendas(e.getUtilizador(codigoUtilizador).procuraPor(dataInicial, dataFinal));
+                        }
+                        catch(DateTimeParseException ex) {
+                            System.out.println("Formato inválido!");
+                        }
                     }
                     break;
                 case 3:
@@ -300,9 +306,11 @@ public class Menu {
             case 2:
                 List<Encomenda> enc = this.e.encomendasDisponiveis(cod);
                 UI.printEncomendas(enc);
+                UI.print("Insira 0 caso nao exista encomendas.");
                 UI.print("Codigo da encomenda: ");
                 sc.nextLine();
                 String codEncomenda = sc.nextLine();
+                if (codEncomenda.equals("0")) break;
                 if(enc.size()>0) {
                     try {
                         Encomenda e = this.e.removeEncomendaLoja(codEncomenda, cod);
@@ -344,22 +352,33 @@ public class Menu {
                 UI.print(" -> Disponibilidade alterada.");
                 break;
             case 2:
+                this.e.getLojas().values().forEach(l -> UI.printEncomendas(l.getPedidos()));
+                UI.print("Insira 0 caso nao existam encomendas.");
                 UI.print("Codigo de encomenda: ");
                 sc.nextLine();
                 String codEncomenda = sc.nextLine();
+                if (codEncomenda.equals("0")) break;
                 try {
                     double p = this.e.precoDaEncomenda(codEncomenda, cod);
-                    UI.printPreco(p);
+                    if (p!=-1) UI.printPreco(p);
+                    else UI.print("Encomenda inexistente.");
                 } catch (Exception e) {UI.print(" -> Encomenda inexistente.");}
                 break;
             case 3:
                 this.e.getLojas().values().forEach(l -> UI.printEncomendas(l.getPedidos()));
+                UI.print("Insira 0 caso nao existam encomendas.");
                 UI.print("Codigo da encomenda: ");
                 sc.nextLine();
                 String codEnc = sc.nextLine();
-                Encomenda encomenda = this.e.removeEncomendaLoja(codEnc,cod);
-                encomenda.setEstafeta(cod);
-                this.e.addPedidoDeTransporte(cod,encomenda);
+                if (codEnc.equals("0")) break;
+                try {
+                    Encomenda encomenda = this.e.removeEncomendaLoja(codEnc,cod);
+                    encomenda.setEstafeta(cod);
+                    this.e.addPedidoDeTransporte(cod,encomenda);
+                    UI.print(" -> Encomenda em transporte.");
+                } catch (Exception e) {
+                    UI.print("Encomenda inexistente.");
+                }
                 break;
             case 4:
                 UI.printTop10(e.getTop10Util().stream().map(Utilizador::getNome).collect(Collectors.toList()));
@@ -368,17 +387,25 @@ public class Menu {
                 UI.printTop10(e.getTop10Trans().stream().map(Estafeta::getNome).collect(Collectors.toList()));
                 break;
             case 6:
-                int i=0;
+                int i=0, ano, mes, dia;
+                boolean stop=false;
                 LocalDateTime[] data = new LocalDateTime[2];
                 while (i<2) {
-                    UI.print("Indique o ano: ");
-                    int ano = sc.nextInt();
-                    UI.print("Indique o mes: ");
-                    int mes = sc.nextInt();
-                    UI.print("Indique o dia: ");
-                    int dia = sc.nextInt();
-                    data[i++] = LocalDateTime.of(ano,mes,dia,0,0);
+                    try {
+                        UI.print("Indique o ano: ");
+                        ano = sc.nextInt();
+                        UI.print("Indique o mes: ");
+                        mes = sc.nextInt();
+                        UI.print("Indique o dia: ");
+                        dia = sc.nextInt();
+                        data[i++] = LocalDateTime.of(ano,mes,dia,0,0);
+                    } catch (Exception e) {
+                        UI.print("Data invalida!");
+                        stop = true;
+                        break;
+                    }
                 }
+                if (stop) break;
                 Transportadora t = (Transportadora) this.e.getTrabalhadores().get(cod);
                 UI.printTotFat(this.e.totalFaturado(t,data[0],data[1]));
             default:

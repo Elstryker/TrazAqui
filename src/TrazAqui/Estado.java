@@ -144,7 +144,6 @@ public class  Estado implements Serializable {
                         return new Encomenda(e);
                     } else if (!e.getMedicamentos()) {
                         this.lojas.get(l.getCod()).removePedido(codEnc);
-                        l.getPedidos().forEach(System.out::print);
                         return new Encomenda(e);
                     }
                 }
@@ -318,7 +317,7 @@ public class  Estado implements Serializable {
             if (stop) break;
         }
         if (!stop) {
-            return 0;
+            return -1;
         }
         if (temFila) {
             LojaFilaEspera ljfe = (LojaFilaEspera) lj;
