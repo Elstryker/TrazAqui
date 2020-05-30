@@ -248,7 +248,7 @@ public class Menu {
                     UI.printHistoricoEncomendas(lstEnc,option,u,dataInicial,dataFinal);
                     break;
                 case 3:
-                    int clas,i=0;
+                    int i=0;
                     for(Map.Entry<String,Estafeta> a : e.getTrabalhadores().entrySet()){
                         if(a.getValue().getPedidosEncomenda().size()>0) {
                             UI.printPedidosEncomenda(a.getValue().getPedidosEncomenda());
@@ -287,7 +287,7 @@ public class Menu {
                     }
                     break;
                 case 4:
-                    UI.printUtilizadores(this.e.getTop10Util());
+                    UI.printTop10(e.getTop10Util().stream().map(Utilizador::getNome).collect(Collectors.toList()));
                     break;
                 case 5:
                     e.logoff();
