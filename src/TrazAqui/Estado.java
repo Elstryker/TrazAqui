@@ -144,7 +144,6 @@ public class  Estado implements Serializable {
                         return new Encomenda(e);
                     } else if (!e.getMedicamentos()) {
                         this.lojas.get(l.getCod()).removePedido(codEnc);
-                        l.getPedidos().forEach(System.out::print);
                         return new Encomenda(e);
                     }
                 }
