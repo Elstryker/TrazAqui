@@ -341,9 +341,12 @@ public class Menu {
                 UI.print(" -> Disponibilidade alterada.");
                 break;
             case 2:
+                this.e.getLojas().values().forEach(l -> UI.printEncomendas(l.getPedidos()));
+                UI.print("Insira 0 caso nao existam encomendas.");
                 UI.print("Codigo de encomenda: ");
                 sc.nextLine();
                 String codEncomenda = sc.nextLine();
+                if (codEncomenda.equals("0")) break;
                 try {
                     double p = this.e.precoDaEncomenda(codEncomenda, cod);
                     UI.printPreco(p);
@@ -351,12 +354,15 @@ public class Menu {
                 break;
             case 3:
                 this.e.getLojas().values().forEach(l -> UI.printEncomendas(l.getPedidos()));
+                UI.print("Insira 0 caso nao existam encomendas.");
                 UI.print("Codigo da encomenda: ");
                 sc.nextLine();
                 String codEnc = sc.nextLine();
+                if (codEnc.equals("0")) break;
                 Encomenda encomenda = this.e.removeEncomendaLoja(codEnc,cod);
                 encomenda.setEstafeta(cod);
                 this.e.addPedidoDeTransporte(cod,encomenda);
+                UI.print(" -> Encomenda em transporte.");
                 break;
             case 4:
                 UI.printTop10(e.getTop10Util().stream().map(Utilizador::getNome).collect(Collectors.toList()));
@@ -366,6 +372,7 @@ public class Menu {
                 break;
             case 6:
                 int i=0;
+                boolean stop=false;
                 LocalDateTime[] data = new LocalDateTime[2];
                 while (i<2) {
                     UI.print("Indique o ano: ");
@@ -374,8 +381,15 @@ public class Menu {
                     int mes = sc.nextInt();
                     UI.print("Indique o dia: ");
                     int dia = sc.nextInt();
-                    data[i++] = LocalDateTime.of(ano,mes,dia,0,0);
+                    try {
+                        data[i++] = LocalDateTime.of(ano,mes,dia,0,0);
+                    } catch (Exception e) {
+                        UI.print("Data invalida!");
+                        stop = true;
+                        break;
+                    }
                 }
+                if (stop) break;
                 Transportadora t = (Transportadora) this.e.getTrabalhadores().get(cod);
                 UI.printTotFat(this.e.totalFaturado(t,data[0],data[1]));
             default:
