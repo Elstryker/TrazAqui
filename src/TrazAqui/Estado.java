@@ -131,17 +131,25 @@ public class  Estado implements Serializable {
         return this.utilizadores.get(user).getLocalizacao();
     }
 
-    public Encomenda removeEncomendaLoja(String codEnc) {
-        Encomenda enc = new Encomenda();
+    public Encomenda removeEncomendaLoja(String codEnc,String cod) {
+        boolean medicamentos = false;
+        if (this.trabalhadores.get(cod) instanceof Transportadora) {
+            medicamentos = this.trabalhadores.get(cod).aceitoTransportesMedicamentos();
+        }
         for (Loja l : this.lojas.values()) {
             for (Encomenda e : l.getPedidos()) {
                 if (e.getCod().equals(codEnc)) {
-                    l.removePedido(codEnc);
-                    return new Encomenda(e);
+                    if (e.getMedicamentos() && medicamentos) {
+                        l.removePedido(codEnc);
+                        return new Encomenda(e);
+                    } else if (!e.getMedicamentos()) {
+                        l.removePedido(codEnc);
+                        return new Encomenda(e);
+                    }
                 }
             }
         }
-        return enc;
+        return null;
     }
 
     public void removeEncomendaTransportadora(String codEnc, String cod) {

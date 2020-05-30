@@ -289,7 +289,7 @@ public class Menu {
                 sc.nextLine();
                 String codEncomenda = sc.nextLine();
                 try {
-                    Encomenda e = this.e.removeEncomendaLoja(codEncomenda);
+                    Encomenda e = this.e.removeEncomendaLoja(codEncomenda,cod);
                     this.e.addEncomendaEntregue(cod,e);
                 } catch (Exception e) {
                     UI.print("Encomenda inexistente!");
@@ -329,15 +329,11 @@ public class Menu {
             case 3:
                 this.e.getLojas().values().forEach(l -> UI.printEncomendas(l.getPedidos()));
                 UI.print("Codigo da encomenda: ");
+                sc.nextLine();
                 String codEnc = sc.nextLine();
-                Encomenda encomenda = this.e.removeEncomendaLoja(codEnc);
-                if(!encomenda.getMedicamentos() || e.getEstafeta(cod).aceitoTransportesMedicamentos()){
-                    encomenda.setEstafeta(cod);
-                    e.addPedidoDeTransporte(cod, encomenda);
-                }
-                else if(encomenda.getMedicamentos() && !e.getEstafeta(cod).aceitoTransportesMedicamentos()){
-                    e.addEncomendaLoja(encomenda.getLoja(),encomenda);
-                }
+                Encomenda encomenda = this.e.removeEncomendaLoja(codEnc,cod);
+                encomenda.setEstafeta(cod);
+                this.e.addPedidoDeTransporte(cod,encomenda);
                 break;
             case 4:
                 UI.printTop10(e.getTop10Util().stream().map(Utilizador::getNome).collect(Collectors.toList()));
