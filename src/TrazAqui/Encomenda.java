@@ -59,8 +59,8 @@ public class Encomenda implements Serializable {
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("Encomenda{");
-        sb.append("Transportador= ").append(estafeta).append('\'');
-        sb.append("peso=").append(peso).append('\'');
+        sb.append("Transportador='").append(estafeta).append('\'');
+        sb.append(", peso='").append(peso).append('\'');
         sb.append(", descricao='").append(descricao).append('\'');
         sb.append(", cod='").append(cod).append('\'');
         sb.append(", data=").append(data);

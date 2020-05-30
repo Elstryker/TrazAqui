@@ -216,7 +216,6 @@ public class Menu {
                     }
                     break;
                 case 2:
-                    //UI.printHistoricoEncomendas();
                     String codigoUtilizador = e.getLogin().getCod();
                     Map<String,Encomenda> lstEnc = e.getUtilizador(codigoUtilizador).getEncomendasConcluidas();
                     UI.printHistoricoEncomendas(lstEnc);
@@ -330,11 +329,15 @@ public class Menu {
             case 3:
                 this.e.getLojas().values().forEach(l -> UI.printEncomendas(l.getPedidos()));
                 UI.print("Codigo da encomenda: ");
-                sc.nextLine();
                 String codEnc = sc.nextLine();
                 Encomenda encomenda = this.e.removeEncomendaLoja(codEnc);
-                encomenda.setEstafeta(cod);
-                this.e.addPedidoDeTransporte(cod,encomenda);
+                if(!encomenda.getMedicamentos() || e.getEstafeta(cod).aceitoTransportesMedicamentos()){
+                    encomenda.setEstafeta(cod);
+                    e.addPedidoDeTransporte(cod, encomenda);
+                }
+                else if(encomenda.getMedicamentos() && !e.getEstafeta(cod).aceitoTransportesMedicamentos()){
+                    e.addEncomendaLoja(encomenda.getLoja(),encomenda);
+                }
                 break;
             case 4:
                 UI.printTop10(e.getTop10Util().stream().map(Utilizador::getNome).collect(Collectors.toList()));
