@@ -179,40 +179,49 @@ public class Menu {
                         UI.print("Adicione um codigo a encomenda");
                         codEnc = sc.nextLine();
                         enc.setCod(codEnc);
-                        UI.print("Transporta medicamentos");
-                        med = sc.nextBoolean();
-                        enc.setMedicamentos(med);
-                        UI.print("Indique peso");
-                        peso = sc.nextDouble();
-                        enc.setPeso(peso);
-                        enc.setUtilizador(e.getLogin().getCod());
-                        sc.nextLine();
-                        UI.print("Faca descricao da encomenda");
-                        descEnc = sc.nextLine();
-                        enc.setDescricao(descEnc);
-                        UI.printLojas(e.getLojas());
-                        UI.print("Insira o codigo da loja");
-                        loja = sc.nextLine();
-                        enc.setLoja(loja);
-                        while (conti) {
+                        UI.print("Transporta medicamentos(escreva true se sim, false se nao)");
+                        try{
+                            med = sc.nextBoolean();
+                            enc.setMedicamentos(med);
+                            UI.print("Indique peso");
+                            peso = sc.nextDouble();
+                            enc.setPeso(peso);
+                            enc.setUtilizador(e.getLogin().getCod());
                             sc.nextLine();
-                            UI.printFazerDescricao();
-                            descricao = sc.nextLine();
-                            UI.printIndicarPreco();
-                            preco = sc.nextDouble();
-                            UI.printIndicarQuant();
-                            quantidade = sc.nextDouble();
-                            UI.printIndicarFragil();
-                            fragil = sc.nextBoolean();
-                            sc.nextLine();
-                            UI.printIndiqueCodProd();
-                            cod = sc.nextLine();
-                            enc.addProduto(new LinhaEncomenda(descricao, preco, quantidade, fragil, cod));
-                            UI.printDesejaMaisProd();
-                            conti = sc.nextBoolean();
+                            UI.print("Faca descricao da encomenda");
+                            descEnc = sc.nextLine();
+                            enc.setDescricao(descEnc);
+                            UI.printLojas(e.getLojas());
+                            UI.print("Insira o codigo da loja");
+                            loja = sc.nextLine();
+                            enc.setLoja(loja);
+                            while (conti) {
+                                try {
+                                    sc.nextLine();
+                                    UI.printFazerDescricao();
+                                    descricao = sc.nextLine();
+                                    UI.printIndicarPreco();
+                                    preco = sc.nextDouble();
+                                    UI.printIndicarQuant();
+                                    quantidade = sc.nextDouble();
+                                    UI.printIndicarFragil();
+                                    fragil = sc.nextBoolean();
+                                    sc.nextLine();
+                                    UI.printIndiqueCodProd();
+                                    cod = sc.nextLine();
+                                    enc.addProduto(new LinhaEncomenda(descricao, preco, quantidade, fragil, cod));
+                                    UI.printDesejaMaisProd();
+                                    conti = sc.nextBoolean();
+                                } catch (InputMismatchException e) {
+                                    UI.printTipoIncorreto();
+                                }
+                            }
+                            e.addEncomendaLoja(loja, enc);
+                            e.addEncomendaUtilizador(e.getLogin().getCod(), enc);
                         }
-                        e.addEncomendaLoja(loja, enc);
-                        e.addEncomendaUtilizador(e.getLogin().getCod(), enc);
+                        catch (InputMismatchException e){
+                            UI.printTipoIncorreto();
+                        }
                     break;
                 case 2:
                     String codigoUtilizador = e.getLogin().getCod();
