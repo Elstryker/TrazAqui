@@ -21,11 +21,8 @@ public class Menu {
         this.e = new Estado();
     }
 
-<<<<<<< HEAD
-    public void run() throws IOException, LojaInexistenteException {
-=======
+
     public void run() throws IOException,LojaInexistenteException {
->>>>>>> f1415033349e79152cd63c014876b3e22d592c84
         Scanner inp = new Scanner(System.in);
         int opcao = -1;
         try {
