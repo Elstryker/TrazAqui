@@ -143,6 +143,14 @@ public class UI {
     public static void goodbye() {
         System.out.println("A sair..\nObrigado por usar a nossa aplicação! :)");
     }
+
+
+    public static void printLojas(Map<String,Loja> lojas){
+        for(Map.Entry<String,Loja> map: lojas.entrySet()){
+            System.out.println("Codigo da loja: " + map.getKey());
+            System.out.println("Nome da loja: " + map.getValue().getNome() + "  Localizaçao: " + map.getValue().getLocalizacao());
+        }
+    }
 }
 
 

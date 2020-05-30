@@ -163,8 +163,7 @@ public class Menu {
         this.e.registar(email, password, cod, nome, new GPS(lat, longi), this.f, tipo);
     }
 
-    public boolean menuUtilizador() {
-        boolean bool = true;
+    public void menuUtilizador() {
         int opcao =-1;
         Scanner sc = new Scanner(System.in);
             UI.printMenuUtilizador();
@@ -192,13 +191,12 @@ public class Menu {
                         UI.print("Faca descricao da encomenda");
                         descEnc = sc.nextLine();
                         enc.setDescricao(descEnc);
-                        System.out.println(e.getLojas());
+                        UI.printLojas(e.getLojas());
                         UI.print("Insira o codigo da loja");
                         loja = sc.nextLine();
                         enc.setLoja(loja);
                         UI.printFazerDescricao();
                         descricao = sc.nextLine();
-                        sc.nextLine();
                         UI.printIndicarPreco();
                         preco = sc.nextDouble();
                         UI.printIndicarQuant();
@@ -259,7 +257,6 @@ public class Menu {
                     catch (IOException e) {
                         e.printStackTrace();
                     }
-                    bool = false ;
                     break;
                 case 4:
                     UI.printUtilizadores(this.e.getTop10Util());
@@ -267,7 +264,6 @@ public class Menu {
                     UI.printIncorrectInput();
                     break;
             }
-        return bool;
     }
 
        public void menuVoluntario() {
@@ -289,7 +285,7 @@ public class Menu {
                 break;
             case 1:
                 this.e.mudaDisponibilidade(cod);
-                UI.print("Disponibilidade alterada.");
+                UI.print(" -> Disponibilidade alterada.");
                 break;
             case 2:
                 List<Encomenda> enc = this.e.encomendasDisponiveis(cod);
@@ -300,9 +296,14 @@ public class Menu {
                     String codEncomenda = sc.nextLine();
                     try {
                         Encomenda e = this.e.removeEncomendaLoja(codEncomenda, cod);
+                        if (e==null) {
+                            UI.print("Nao pode transportar medicamentos!");
+                            break;
+                        }
                         this.e.addEncomendaEntregue(cod, e);
+                        UI.print(" -> Encomenda em transporte.");
                     } catch (Exception e) {
-                        UI.print("Encomenda inexistente!");
+                        UI.print(" -> Encomenda inexistente!");
                     }
                 }
                 break;
@@ -330,7 +331,7 @@ public class Menu {
                 break;
             case 1:
                 this.e.mudaDisponibilidade(cod);
-                UI.print("Disponibilidade alterada.");
+                UI.print(" -> Disponibilidade alterada.");
                 break;
             case 2:
                 UI.print("Codigo de encomenda: ");
@@ -339,7 +340,7 @@ public class Menu {
                 try {
                     double p = this.e.precoDaEncomenda(codEncomenda, cod);
                     UI.printPreco(p);
-                } catch (Exception e) {UI.print("Encomenda inexistente.");}
+                } catch (Exception e) {UI.print(" -> Encomenda inexistente.");}
                 break;
             case 3:
                 this.e.getLojas().values().forEach(l -> UI.printEncomendas(l.getPedidos()));
