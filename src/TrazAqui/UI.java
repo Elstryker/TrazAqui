@@ -37,7 +37,7 @@ public class UI {
         System.out.println("1 - Efetuar uma encomenda: ");
         System.out.println("2 - Ver historico de encomendas: ");
         System.out.println("3 - Aceitar pedidos: ");
-        System.out.println("4 - Top 100 utilizadores");
+        System.out.println("4 - Top 10 utilizadores");
         System.out.println("5 - Log off");
         System.out.println("0 - Sair");
     }
@@ -67,11 +67,19 @@ public class UI {
         System.out.print("Deseja encomendar mais produtos? (escreva true se sim, false se nao)");
     }
 
-    public static void printHistoricoEncomendas(Map<String,Encomenda> enc) {
-        for(Map.Entry<String,Encomenda> map : enc.entrySet()){
-            System.out.println(map.getKey() + ":" + map.getValue());
+    public static void printHistoricoEncomendas(Map<String,Encomenda> enc, int opcao) {
+        if(opcao==1) {
+            for (Map.Entry<String, Encomenda> map : enc.entrySet()) {
+                if(map.getValue().getEstafeta().contains("t"))System.out.println(map.getKey() + ":" + map.getValue());
+            }
+        }
+        else {
+            for (Map.Entry<String, Encomenda> map : enc.entrySet()) {
+                if(map.getValue().getEstafeta().contains("v"))System.out.println(map.getKey() + ":" + map.getValue());
+            }
         }
     }
+
 
     public static void printMenuVoluntario() {
         System.out.println("1 - Mudar disponibilidade");
@@ -164,6 +172,11 @@ public class UI {
 
     public static void printTipoIncorreto(){
         System.out.println("Input incorreto");
+    }
+
+    public static void printDesejaTransOuVol(){
+        System.out.println("1- Ver encomendas transportadas por transportadoras");
+        System.out.println("2- Ver encomendas transportadas por voluntarios");
     }
 
 }

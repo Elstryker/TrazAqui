@@ -171,7 +171,7 @@ public class Menu {
                     Encomenda enc = new Encomenda();
                     double peso,preco, quantidade;
                     boolean fragil, conti = true,med;
-                    String descEnc,codEnc,loja,cod, descricao;
+                    String codEnc,loja,cod, descricao;
                         enc.setData(LocalDateTime.now());
                         UI.print("Adicione um codigo a encomenda");
                         codEnc = sc.nextLine();
@@ -186,11 +186,11 @@ public class Menu {
                             enc.setUtilizador(e.getLogin().getCod());
                             UI.printLojas(e.getLojas());
                             UI.print("Insira o codigo da loja");
+                            sc.nextLine();
                             loja = sc.nextLine();
                             enc.setLoja(loja);
                             while (conti) {
                                 try {
-                                    sc.nextLine();
                                     UI.printFazerDescricao();
                                     descricao = sc.nextLine();
                                     UI.printIndicarPreco();
@@ -205,12 +205,12 @@ public class Menu {
                                     enc.addProduto(new LinhaEncomenda(descricao, preco, quantidade, fragil, cod));
                                     UI.printDesejaMaisProd();
                                     conti = sc.nextBoolean();
+                                    sc.nextLine();
                                 } catch (InputMismatchException e) {
                                     UI.printTipoIncorreto();
                                 }
                             }
                             e.addEncomendaLoja(loja, enc);
-                            e.addEncomendaUtilizador(e.getLogin().getCod(), enc);
                         }
                         catch (InputMismatchException e){
                             UI.printTipoIncorreto();
@@ -219,7 +219,10 @@ public class Menu {
                 case 2:
                     String codigoUtilizador = e.getLogin().getCod();
                     Map<String,Encomenda> lstEnc = e.getUtilizador(codigoUtilizador).getEncomendasConcluidas();
-                    UI.printHistoricoEncomendas(lstEnc);
+                    UI.printDesejaTransOuVol();
+                    int option = sc.nextInt();
+                    sc.nextLine();
+                    UI.printHistoricoEncomendas(lstEnc,option);
                     if(lstEnc.size() > 0) {
                         try {
                             UI.print("Insira a data inicial da procura ( formato yyyy-mm-dd HH:mm)");
@@ -251,6 +254,7 @@ public class Menu {
                         int index = sc.nextInt();
                         Encomenda encomenda = e.getEstafeta(codEsta).getPedidosEncomenda().get(index);
                         e.getEstafeta(codEsta).addEncomendaEntregue(encomenda);
+                        e.addEncomendaUtilizador(e.getLogin().getCod(), encomenda);
                         UI.print("Indique a classificação que deseja dar: ");
                         clas = sc.nextInt();
                         e.getEstafeta(codEsta).classifica(clas);
@@ -396,27 +400,23 @@ public class Menu {
                 UI.printTop10(e.getTop10Trans().stream().map(Estafeta::getNome).collect(Collectors.toList()));
                 break;
             case 6:
-                int i=0, ano, mes, dia;
-                boolean stop=false;
-                LocalDateTime[] data = new LocalDateTime[2];
-                while (i<2) {
-                    try {
-                        UI.print("Indique o ano: ");
-                        ano = sc.nextInt();
-                        UI.print("Indique o mes: ");
-                        mes = sc.nextInt();
-                        UI.print("Indique o dia: ");
-                        dia = sc.nextInt();
-                        data[i++] = LocalDateTime.of(ano,mes,dia,0,0);
-                    } catch (Exception e) {
-                        UI.print("Data invalida!");
-                        stop = true;
-                        break;
-                    }
+                LocalDateTime dataInicial, dataFinal;
+                try {
+                    UI.print("Insira a data inicial da procura ( formato yyyy-mm-dd HH:mm)");
+                    String inicio = sc.nextLine();
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+                    dataInicial = LocalDateTime.parse(inicio, formatter);
+                    UI.print("Insira a data final da procura ( formato yyyy-mm-dd HH:mm)");
+                    String fim = sc.nextLine();
+                    dataFinal = LocalDateTime.parse(fim, formatter);
                 }
-                if (stop) break;
+                catch(DateTimeParseException ex) {
+                    System.out.println("Formato inválido!");
+                    break;
+                }
                 Transportadora t = (Transportadora) this.e.getTrabalhadores().get(cod);
-                UI.printTotFat(this.e.totalFaturado(t,data[0],data[1]));
+                UI.printTotFat(this.e.totalFaturado(t,dataInicial,dataFinal));
+                break;
             case 7:
                 this.e.logoff();
                 break;
