@@ -256,8 +256,9 @@ public class  Estado implements Serializable {
         this.utilizadores.get(cod).addEncomenda(e);
     }
 
-    public void addEncomendaLoja(String cod,Encomenda e) {
-        this.lojas.get(cod).addPedido(e);
+    public void addEncomendaLoja(String cod,Encomenda e) throws LojaInexistenteException {
+        if(this.getLojas().get(cod) != null) this.lojas.get(cod).addPedido(e);
+        else throw new LojaInexistenteException("A loja " + cod + " nao existe");
     }
 
     public Utilizador getUtilizador(String cod) {

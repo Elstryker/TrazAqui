@@ -212,7 +212,7 @@ public class Menu {
                             }
                             e.addEncomendaLoja(loja, enc);
                         }
-                        catch (InputMismatchException e){
+                        catch (InputMismatchException | LojaInexistenteException e){
                             UI.printTipoIncorreto();
                         }
                     break;
@@ -248,11 +248,9 @@ public class Menu {
                         }
                     }
                     if(i>0) {
-                        UI.print("Indique o codigo do estafeta cuja encomenda deseja aceitar:");
+                        UI.print("Indique o codigo da encomenda que deseja aceitar:");
                         String codEsta = sc.nextLine();
-                        UI.print("Indique o indice da encomenda que deseja aceitar: ");
-                        int index = sc.nextInt();
-                        Encomenda encomenda = e.getEstafeta(codEsta).getPedidosEncomenda().get(index);
+                        Encomenda encomenda = e.getUtilizador(e.getLogin().getCod()).;
                         e.getEstafeta(codEsta).addEncomendaEntregue(encomenda);
                         e.addEncomendaUtilizador(e.getLogin().getCod(), encomenda);
                         UI.print("Indique a classificação que deseja dar: ");
