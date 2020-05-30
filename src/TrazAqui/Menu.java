@@ -176,7 +176,6 @@ public class Menu {
                     double peso,preco, quantidade;
                     boolean fragil, conti = true,med;
                     String descEnc,codEnc,loja,cod, descricao;
-                    while (conti) {
                         enc.setData(LocalDateTime.now());
                         UI.print("Adicione um codigo a encomenda");
                         codEnc = sc.nextLine();
@@ -185,7 +184,7 @@ public class Menu {
                         med = sc.nextBoolean();
                         enc.setMedicamentos(med);
                         UI.print("Indique peso");
-                        peso=sc.nextDouble();
+                        peso = sc.nextDouble();
                         enc.setPeso(peso);
                         enc.setUtilizador(e.getLogin().getCod());
                         sc.nextLine();
@@ -196,23 +195,25 @@ public class Menu {
                         UI.print("Insira o codigo da loja");
                         loja = sc.nextLine();
                         enc.setLoja(loja);
-                        UI.printFazerDescricao();
-                        descricao = sc.nextLine();
-                        UI.printIndicarPreco();
-                        preco = sc.nextDouble();
-                        UI.printIndicarQuant();
-                        quantidade = sc.nextDouble();
-                        UI.printIndicarFragil();
-                        fragil = sc.nextBoolean();
-                        sc.nextLine();
-                        UI.printIndiqueCodProd();
-                        cod = sc.nextLine();
-                        enc.addProduto(new LinhaEncomenda(descricao, preco, quantidade, fragil, cod));
-                        UI.printDesejaMaisProd();
-                        conti = sc.nextBoolean();
-                        e.addEncomendaLoja(loja,enc);
-                        e.addEncomendaUtilizador(e.getLogin().getCod(),enc);
-                    }
+                        while (conti) {
+                            sc.nextLine();
+                            UI.printFazerDescricao();
+                            descricao = sc.nextLine();
+                            UI.printIndicarPreco();
+                            preco = sc.nextDouble();
+                            UI.printIndicarQuant();
+                            quantidade = sc.nextDouble();
+                            UI.printIndicarFragil();
+                            fragil = sc.nextBoolean();
+                            sc.nextLine();
+                            UI.printIndiqueCodProd();
+                            cod = sc.nextLine();
+                            enc.addProduto(new LinhaEncomenda(descricao, preco, quantidade, fragil, cod));
+                            UI.printDesejaMaisProd();
+                            conti = sc.nextBoolean();
+                        }
+                        e.addEncomendaLoja(loja, enc);
+                        e.addEncomendaUtilizador(e.getLogin().getCod(), enc);
                     break;
                 case 2:
                     String codigoUtilizador = e.getLogin().getCod();
@@ -235,7 +236,7 @@ public class Menu {
                     }
                     break;
                 case 3:
-                    int clas = 0,i=0;
+                    int clas,i=0;
                     for(Map.Entry<String,Estafeta> a : e.getTrabalhadores().entrySet()){
                         if(a.getValue().getPedidosEncomenda().size()>0) {
                             UI.printPedidosEncomenda(a.getValue().getPedidosEncomenda());
