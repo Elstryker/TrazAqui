@@ -321,6 +321,9 @@ public class Menu {
                     }
                 }
                 break;
+            case 3:
+                this.e.logoff();
+                break;
             default:
                 break;
         }
@@ -404,6 +407,9 @@ public class Menu {
                 if (stop) break;
                 Transportadora t = (Transportadora) this.e.getTrabalhadores().get(cod);
                 UI.printTotFat(this.e.totalFaturado(t,data[0],data[1]));
+            case 7:
+                this.e.logoff();
+                break;
             default:
                 break;
         }
