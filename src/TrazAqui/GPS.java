@@ -66,7 +66,7 @@ public class GPS implements Serializable {
             dist = Math.toDegrees(Math.acos(dist));
             dist = dist * 60 * 1.1515 * 1.609344;
         }
-        return dist;
+        return dist/1000;
     }
 
     public boolean pertenceAoRaio(GPS a, double raio) {

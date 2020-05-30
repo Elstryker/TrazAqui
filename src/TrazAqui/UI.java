@@ -151,6 +151,13 @@ public class UI {
             System.out.println("Nome da loja: " + map.getValue().getNome() + "  Localizaçao: " + map.getValue().getLocalizacao());
         }
     }
+
+    public static void printPedidosEncomenda(List<Encomenda> e){
+        for(Encomenda enc: e){
+            System.out.println(enc);
+        }
+
+    }
 }
 
 
