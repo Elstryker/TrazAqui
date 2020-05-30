@@ -73,7 +73,7 @@ public class Menu {
             if (this.exec)
                 switch (e.getLogin().getClass().getSimpleName()) {
                     case "Utilizador":
-                        while (this.exec) {
+                        while (this.exec && e.getLogin() != null) {
                             menuUtilizador();
                         }
                         break;
@@ -418,6 +418,7 @@ public class Menu {
                 if (stop) break;
                 Transportadora t = (Transportadora) this.e.getTrabalhadores().get(cod);
                 UI.printTotFat(this.e.totalFaturado(t,data[0],data[1]));
+                break;
             case 7:
                 this.e.logoff();
                 break;
