@@ -442,8 +442,7 @@ public class Menu {
                     System.out.println("Formato inválido!");
                     break;
                 }
-                Transportadora t = (Transportadora) this.e.getTrabalhadores().get(cod);
-                UI.printTotFat(this.e.totalFaturado(t,dataInicial,dataFinal));
+                UI.printTotFat(this.e.totalFaturado(cod,dataInicial,dataFinal));
                 break;
             case 7:
                 this.e.logoff();

@@ -180,12 +180,12 @@ public class  Estado implements Serializable {
         return (preco+preco*taxa);
     }
 
-    public double totalFaturado(Transportadora t, LocalDateTime min, LocalDateTime max) {
+    public double totalFaturado(String cod, LocalDateTime min, LocalDateTime max) {
         double total=0;
-        for (Encomenda e : t.getEncomendasEntregues()) {
+        for (Encomenda e : this.trabalhadores.get(cod).getEncomendasEntregues()) {
             System.out.println(e.toString());
             if (e.getData().isAfter(min) && e.getData().isBefore(max)) {
-                    total += calculaPreco(e,t.getCod(),e.getLoja());
+                    total += calculaPreco(e,cod,e.getLoja());
             }
         }
         return total;
