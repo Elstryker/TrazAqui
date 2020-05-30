@@ -216,7 +216,6 @@ public class Menu {
                     }
                     break;
                 case 2:
-                    //UI.printHistoricoEncomendas();
                     String codigoUtilizador = e.getLogin().getCod();
                     Map<String,Encomenda> lstEnc = e.getUtilizador(codigoUtilizador).getEncomendasConcluidas();
                     UI.printHistoricoEncomendas(lstEnc);
