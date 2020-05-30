@@ -221,6 +221,7 @@ public class Menu {
                     Map<String,Encomenda> lstEnc = e.getUtilizador(codigoUtilizador).getEncomendasConcluidas();
                     UI.printDesejaTransOuVol();
                     int option = sc.nextInt();
+                    sc.nextLine();
                     UI.printHistoricoEncomendas(lstEnc,option);
                     if(lstEnc.size() > 0) {
                         try {
