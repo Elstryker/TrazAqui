@@ -163,8 +163,7 @@ public class Menu {
         this.e.registar(email, password, cod, nome, new GPS(lat, longi), this.f, tipo);
     }
 
-    public boolean menuUtilizador() {
-        boolean bool = true;
+    public void menuUtilizador() {
         int opcao =-1;
         Scanner sc = new Scanner(System.in);
             UI.printMenuUtilizador();
@@ -192,13 +191,12 @@ public class Menu {
                         UI.print("Faca descricao da encomenda");
                         descEnc = sc.nextLine();
                         enc.setDescricao(descEnc);
-                        System.out.println(e.getLojas());
+                        UI.printLojas(e.getLojas());
                         UI.print("Insira o codigo da loja");
                         loja = sc.nextLine();
                         enc.setLoja(loja);
                         UI.printFazerDescricao();
                         descricao = sc.nextLine();
-                        sc.nextLine();
                         UI.printIndicarPreco();
                         preco = sc.nextDouble();
                         UI.printIndicarQuant();
@@ -234,7 +232,7 @@ public class Menu {
                     int clas = 0,i=0;
                     for(Map.Entry<String,Estafeta> a : e.getTrabalhadores().entrySet()){
                         if(a.getValue().getPedidosEncomenda().size()>0) {
-                            System.out.println(a.getValue().getPedidosEncomenda());
+                            UI.printPedidosEncomenda(a.getValue().getPedidosEncomenda());
                             i++;
                         }
                     }
@@ -259,7 +257,6 @@ public class Menu {
                     catch (IOException e) {
                         e.printStackTrace();
                     }
-                    bool = false ;
                     break;
                 case 4:
                     UI.printUtilizadores(this.e.getTop10Util());
@@ -267,7 +264,6 @@ public class Menu {
                     UI.printIncorrectInput();
                     break;
             }
-        return bool;
     }
 
        public void menuVoluntario() {
@@ -278,7 +274,13 @@ public class Menu {
         String cod = this.e.getLogin().getCod();
         switch (opcao) {
             case 0:
-                exec = false;
+                stopExec();
+                try {
+                    f.saveObjectStream(e);
+                }
+                catch (IOException e) {
+                    e.printStackTrace();
+                }
                 break;
             case 1:
                 this.e.mudaDisponibilidade(cod);
@@ -287,10 +289,10 @@ public class Menu {
             case 2:
                 List<Encomenda> enc = this.e.encomendasDisponiveis(cod);
                 UI.printEncomendas(enc);
-                if (enc.size()>0) {
-                    UI.print("Codigo da encomenda: ");
-                    sc.nextLine();
-                    String codEncomenda = sc.nextLine();
+                UI.print("Codigo da encomenda: ");
+                sc.nextLine();
+                String codEncomenda = sc.nextLine();
+                if(enc.size()>0) {
                     try {
                         Encomenda e = this.e.removeEncomendaLoja(codEncomenda, cod);
                         this.e.addEncomendaEntregue(cod, e);
