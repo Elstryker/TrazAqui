@@ -183,7 +183,6 @@ public class  Estado implements Serializable {
     public double totalFaturado(String cod, LocalDateTime min, LocalDateTime max) {
         double total=0;
         for (Encomenda e : this.trabalhadores.get(cod).getEncomendasEntregues()) {
-            System.out.println(e.toString());
             if (e.getData().isAfter(min) && e.getData().isBefore(max)) {
                     total += calculaPreco(e,cod,e.getLoja());
             }
