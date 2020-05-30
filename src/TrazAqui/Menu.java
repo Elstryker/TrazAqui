@@ -21,7 +21,7 @@ public class Menu {
         this.e = new Estado();
     }
 
-    public void run() throws IOException {
+    public void run() throws IOException, LojaInexistenteException {
         Scanner inp = new Scanner(System.in);
         int opcao = -1;
         try {
@@ -263,6 +263,7 @@ public class Menu {
                         }
                         assert encomenda != null;
                         e.getEstafeta(codEsta).addEncomendaEntregue(encomenda);
+                        e.getEstafeta(codEsta).removerEncomenda(encomenda.getCod());
                         e.addEncomendaUtilizador(e.getLogin().getCod(), encomenda);
                         UI.print("Indique a classificação que deseja dar: ");
                         e.getEstafeta(codEsta).classifica(sc.nextInt());
@@ -419,7 +420,7 @@ public class Menu {
                 LocalDateTime dataInicial, dataFinal;
                 try {
                     sc.nextLine();
-                    UI.print("Insira a data inicial da procura ( formato yyyy-mm-dd HH:mm)");
+                    UI.print("Insira a data inicial da procura (formato yyyy-mm-dd HH:mm)");
                     String inicio = sc.nextLine();
                     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
                     dataInicial = LocalDateTime.parse(inicio, formatter);
