@@ -276,6 +276,10 @@ public class  Estado implements Serializable {
         return this.trabalhadores.get(cod).mudaDisponibilidade();
     }
 
+    public boolean disponivel(String cod) {
+        return this.trabalhadores.get(cod).isDisponivel();
+    }
+
     public boolean existeEncomenda(String cod) {
         return this.lojas.get(cod).getPedidos().size()!=0;
     }
