@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class  Estado implements Serializable {
     private HashMap<String,Utilizador> utilizadores;
@@ -164,17 +165,26 @@ public class  Estado implements Serializable {
         this.trabalhadores.get(cod).addEncomendaEntregue(e);
     }
 
+    public double calculaPreco(Encomenda enc,String trans,String loja) {
+        Loja l = this.lojas.get(loja);
+        Transportadora t = (Transportadora) this.trabalhadores.get(trans);
+        double taxa = 0;
+
+        if (l instanceof LojaFilaEspera) {
+            LojaFilaEspera ljfe = (LojaFilaEspera) l;
+            taxa = ljfe.getTempoEspera()*ljfe.getListaEspera()*0.30;
+        }
+
+        double dist = l.getLocalizacao().distancia(t.getLocalizacao());
+        double preco = t.precoEncomenda(enc.getPeso(),dist);
+        return (preco+preco*taxa);
+    }
+
     public double totalFaturado(Transportadora t, LocalDateTime min, LocalDateTime max) {
         double total=0;
         for (Encomenda e : t.getEncomendasEntregues()) {
             if (e.getData().isAfter(min) && e.getData().isBefore(max)) {
-                if (this.lojas.containsKey(e.getLoja()) && this.utilizadores.containsKey(e.getUtilizador())) {
-                    Loja l = this.lojas.get(e.getLoja());
-                    Utilizador u = this.utilizadores.get(e.getUtilizador());
-                    double dist = l.getLocalizacao().distancia(u.getLocalizacao());
-                    System.out.println(dist);
-                    total += t.precoEncomenda(e.getPeso(),dist);
-                }
+                    total += calculaPreco(e,t.getCod(),e.getLoja());
             }
         }
         return total;
@@ -227,12 +237,17 @@ public class  Estado implements Serializable {
         return res;
     }
 
-    public void registar(String email, String pass, String cod, String nome, GPS loc, FileIO f, String tipo) throws IOException, ExistingCodeException {
+    public void registar(String email, String pass, String cod, String nome, GPS loc, FileIO f, String tipo, String nif) throws IOException, ExistingCodeException {
         Entrada a = new Utilizador();
         a = a.newEntrada(tipo);
         a.setCod(cod);
         a.setNome(nome);
         a.setLocalizacao(loc);
+        if(a instanceof Transportadora) {
+            ((Transportadora) a).setRaio(ThreadLocalRandom.current().nextDouble(60, 151));
+            ((Transportadora) a).setPrecoKM(ThreadLocalRandom.current().nextDouble(1,6));
+            ((Transportadora) a).setNIF(nif);
+        }
         f.registaConta(email,pass,a,this);
     }
 

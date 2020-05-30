@@ -21,7 +21,8 @@ public class Menu {
         this.e = new Estado();
     }
 
-    public void run() throws IOException,LojaInexistenteException {
+
+    public void run() throws IOException, LojaInexistenteException {
         Scanner inp = new Scanner(System.in);
         int opcao = -1;
         try {
@@ -157,7 +158,13 @@ public class Menu {
         double lat = sc.nextDouble();
         UI.printInsiraLongitude();
         double longi = sc.nextDouble();
-        this.e.registar(email, password, cod, nome, new GPS(lat, longi), this.f, tipo);
+        if(tipo.equals("Transportadora")) {
+            System.out.print("NIF: ");
+            String nif = sc.nextLine();
+            this.e.registar(email, password, cod, nome, new GPS(lat, longi), this.f, tipo,nif);
+        }
+        else
+            this.e.registar(email, password, cod, nome, new GPS(lat, longi), this.f, tipo,"");
     }
 
     public void menuUtilizador() {
@@ -267,6 +274,7 @@ public class Menu {
                         }
                         assert encomenda != null;
                         e.getEstafeta(codEsta).addEncomendaEntregue(encomenda);
+                        e.getEstafeta(codEsta).removerEncomenda(encomenda.getCod());
                         e.addEncomendaUtilizador(e.getLogin().getCod(), encomenda);
                         UI.printInsiraClass();
                         e.getEstafeta(codEsta).classifica(sc.nextInt());
