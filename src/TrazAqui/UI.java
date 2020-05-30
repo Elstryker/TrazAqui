@@ -105,7 +105,7 @@ public class UI {
     }
 
     public static void printTop10(List<String> r) {
-        System.out.println("Top 10 Utilizadores:");
+        System.out.println("Top 10:");
         for(String nome: r)
             System.out.println(nome);
     }
