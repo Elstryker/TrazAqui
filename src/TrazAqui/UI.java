@@ -105,7 +105,8 @@ public class UI {
     public static void printMenuVoluntario() {
         System.out.println("1 - Mudar disponibilidade");
         System.out.println("2 - Escolher encomenda para ir buscar");
-        System.out.println("3 - Terminar sessao");
+        System.out.println("3 - Alterar o raio de ação");
+        System.out.println("4 - Terminar sessao");
         System.out.println("0 - Sair");
         System.out.print("Opcao: ");
     }
