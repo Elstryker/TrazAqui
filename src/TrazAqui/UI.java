@@ -35,11 +35,11 @@ public class UI {
     }
 
     public static void printMenuUtilizador() {
-        System.out.println("1 - Efetuar uma encomenda: ");
-        System.out.println("2 - Ver historico de encomendas: ");
-        System.out.println("3 - Aceitar pedidos: ");
+        System.out.println("1 - Efetuar uma encomenda ");
+        System.out.println("2 - Ver historico de encomendas ");
+        System.out.println("3 - Aceitar pedidos ");
         System.out.println("4 - Top 10 utilizadores");
-        System.out.println("5 - Log off");
+        System.out.println("5 - Terminar sessao");
         System.out.println("0 - Sair");
     }
 
@@ -70,21 +70,31 @@ public class UI {
 
     public static void printHistoricoEncomendas(Map<String,Encomenda> enc, int opcao,Utilizador u, LocalDateTime inicio,LocalDateTime fim) {
         if(opcao==1 || opcao ==2 || opcao == 3) {
-            if (opcao == 1) {
-                for (Map.Entry<String, Encomenda> map : enc.entrySet()) {
-                    if (map.getValue().getEstafeta().contains("t"))
-                        System.out.println(map.getKey() + ":" + map.getValue());
+            if(enc.size()>0) {
+                int i=0;
+                if (opcao == 1) {
+                    for (Map.Entry<String, Encomenda> map : enc.entrySet()) {
+                        if (map.getValue().getEstafeta().contains("t")) {
+                            System.out.println(map.getKey() + ":" + map.getValue());
+                            i++;
+                        }
+                        if(i==0) UI.print("Nao existe nenhuma encomenda para apresentar");
+                    }
+                }
+                if (opcao == 2) {
+                    for (Map.Entry<String, Encomenda> map : enc.entrySet()) {
+                        if (map.getValue().getEstafeta().contains("v")) {
+                            System.out.println(map.getKey() + ":" + map.getValue());
+                            i++;
+                        }
+                        if(i==0) UI.print("Nao existe nenhuma encomenda para apresentar");
+                    }
+                }
+                if (opcao == 3) {
+                    UI.printEncomendas(u.procuraPor(inicio, fim));
                 }
             }
-            if (opcao == 2) {
-                for (Map.Entry<String, Encomenda> map : enc.entrySet()) {
-                    if (map.getValue().getEstafeta().contains("v"))
-                        System.out.println(map.getKey() + ":" + map.getValue());
-                }
-            }
-            if(opcao== 3){
-                UI.printEncomendas(u.procuraPor(inicio, fim));
-            }
+            else UI.print("Nao existe nenhuma encomenda para apresentar");
         }
         else UI.print("Opcao invalida");
     }
