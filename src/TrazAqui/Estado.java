@@ -167,14 +167,11 @@ public class  Estado implements Serializable {
     public double totalFaturado(Transportadora t, LocalDateTime min, LocalDateTime max) {
         double total=0;
         for (Encomenda e : t.getEncomendasEntregues()) {
+
+            System.out.println(e.getData());
+
             if (e.getData().isAfter(min) && e.getData().isBefore(max)) {
-                if (this.lojas.containsKey(e.getLoja()) && this.utilizadores.containsKey(e.getUtilizador())) {
-                    Loja l = this.lojas.get(e.getLoja());
-                    Utilizador u = this.utilizadores.get(e.getUtilizador());
-                    double dist = l.getLocalizacao().distancia(u.getLocalizacao());
-                    System.out.println(dist);
-                    total += t.precoEncomenda(e.getPeso(),dist);
-                }
+                    total += precoDaEncomenda(e.getCod(),t.getCod());
             }
         }
         return total;
