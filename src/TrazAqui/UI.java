@@ -83,6 +83,7 @@ public class UI {
         System.out.println("Trabalhadores");
         System.out.println(trab.toString());
     }
+    
     public static void printMenuTransportadora() {
         System.out.println("1 - Indicar que esta disponivel");
         System.out.println("2 - Determinar preço da encomenda");
@@ -93,6 +94,7 @@ public class UI {
         System.out.println("0 - Sair");
         System.out.print("Opcao: ");
     }
+
 
     public static void printMenuLoja() {
         System.out.println("0) Sair");

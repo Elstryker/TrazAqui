@@ -270,7 +270,7 @@ public class Menu {
         return bool;
     }
 
-    public void menuVoluntario() {
+       public void menuVoluntario() {
         int opcao;
         Scanner sc = new Scanner(System.in);
         UI.printMenuVoluntario();
