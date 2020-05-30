@@ -215,7 +215,7 @@ public class FileIO {
         e.add(ent);
     }
 
-    public void validaLogin(String email, String pass, Estado e) throws IOException {
+    public void validaLogin(String email, String pass, Estado e) throws IOException, InvalidInputException {
         boolean found = false;
         String cod = "";
         FileReader file = new FileReader(this.accPath);
@@ -246,6 +246,7 @@ public class FileIO {
                     break;
             }
         }
+        else throw new InvalidInputException("Email ou password inválido");
         file.close();
         reader.close();
     }

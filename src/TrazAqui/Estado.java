@@ -93,7 +93,7 @@ public class  Estado implements Serializable {
     }
 
     public void addLoja(Loja l) throws ExistingCodeException {
-        if(this.lojas.putIfAbsent(l.getCod(),l.clone())!=null)
+        if(this.lojas.putIfAbsent(l.getCod(),l.clone()) != null)
             throw new ExistingCodeException("Código inválido!");
     }
 
@@ -187,7 +187,7 @@ public class  Estado implements Serializable {
         int cont=0;
         for (Map.Entry<String,Utilizador> aux : this.utilizadores.entrySet()) {
             int numPedidos = aux.getValue().getEncomendasConcluidas().size();
-            vezes.putIfAbsent(numPedidos,new HashSet<>());
+            vezes.putIfAbsent(numPedidos,new TreeSet<>(Comparator.comparing(Utilizador::getNome)));
             vezes.get(numPedidos).add(aux.getValue());
         }
         for (Map.Entry<Integer,Set<Utilizador>> aux : vezes.entrySet()) {
@@ -203,19 +203,19 @@ public class  Estado implements Serializable {
 
     public List<Transportadora> getTop10Trans() {
         Comparator<Double> comp = Double::compareTo;
-        TreeMap<Double,Set<Estafeta>> vezes = new TreeMap<>(comp);
+        TreeMap<Double,List<Estafeta>> vezes = new TreeMap<>(comp);
         List<Transportadora> res = new ArrayList<>();
         int cont=0;
-
         for (Map.Entry<String,Estafeta> aux : this.trabalhadores.entrySet()) {
             if (aux.getValue() instanceof Transportadora) {
                 Transportadora t = (Transportadora) aux.getValue();
                 double numKms = t.getNumKms();
-                vezes.putIfAbsent(numKms,new HashSet<>());
+                vezes.putIfAbsent(numKms,new ArrayList<>());
                 vezes.get(numKms).add(t);
             }
         }
-        for (Map.Entry<Double,Set<Estafeta>> aux : vezes.entrySet()) {
+        for (Map.Entry<Double,List<Estafeta>> aux : vezes.entrySet()) {
+            aux.getValue().sort(Comparator.comparing(Estafeta::getNome));
             if (cont==10) break;
             for (Estafeta e : aux.getValue()) {
                 res.add((Transportadora) e);
@@ -236,7 +236,7 @@ public class  Estado implements Serializable {
         f.registaConta(email,pass,a,this);
     }
 
-    public void login(String email, String pass, FileIO f) throws IOException {
+    public void login(String email, String pass, FileIO f) throws IOException, InvalidInputException {
         f.validaLogin(email,pass, this);
     }
 
@@ -246,10 +246,10 @@ public class  Estado implements Serializable {
 
     public void add(Entrada a) throws ExistingCodeException {
         if(a instanceof Utilizador) addUtilizador((Utilizador) a);
-        if(a instanceof Transportadora) addTrabalhador((Transportadora) a);
-        if(a instanceof Voluntario) addTrabalhador((Voluntario) a);
-        if(a instanceof Loja) addLoja((Loja) a);
-        if(a instanceof LojaFilaEspera) addLoja((LojaFilaEspera) a);
+        else if(a instanceof Transportadora) addTrabalhador((Transportadora) a);
+        else if(a instanceof Voluntario) addTrabalhador((Voluntario) a);
+        else if(a instanceof LojaFilaEspera) addLoja((LojaFilaEspera) a);
+        else if(a instanceof Loja) addLoja((Loja) a);
     }
 
     public void addEncomendaUtilizador(String cod,Encomenda e) {
