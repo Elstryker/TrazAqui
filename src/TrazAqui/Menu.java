@@ -171,7 +171,7 @@ public class Menu {
                     Encomenda enc = new Encomenda();
                     double peso,preco, quantidade;
                     boolean fragil, conti = true,med;
-                    String descEnc,codEnc,loja,cod, descricao;
+                    String codEnc,loja,cod, descricao;
                         enc.setData(LocalDateTime.now());
                         UI.print("Adicione um codigo a encomenda");
                         codEnc = sc.nextLine();
@@ -210,7 +210,6 @@ public class Menu {
                                 }
                             }
                             e.addEncomendaLoja(loja, enc);
-                            e.addEncomendaUtilizador(e.getLogin().getCod(), enc);
                         }
                         catch (InputMismatchException e){
                             UI.printTipoIncorreto();
@@ -219,7 +218,9 @@ public class Menu {
                 case 2:
                     String codigoUtilizador = e.getLogin().getCod();
                     Map<String,Encomenda> lstEnc = e.getUtilizador(codigoUtilizador).getEncomendasConcluidas();
-                    UI.printHistoricoEncomendas(lstEnc);
+                    UI.printDesejaTransOuVol();
+                    int option = sc.nextInt();
+                    UI.printHistoricoEncomendas(lstEnc,option);
                     if(lstEnc.size() > 0) {
                         try {
                             UI.print("Insira a data inicial da procura ( formato yyyy-mm-dd HH:mm)");
@@ -251,6 +252,7 @@ public class Menu {
                         int index = sc.nextInt();
                         Encomenda encomenda = e.getEstafeta(codEsta).getPedidosEncomenda().get(index);
                         e.getEstafeta(codEsta).addEncomendaEntregue(encomenda);
+                        e.addEncomendaUtilizador(e.getLogin().getCod(), encomenda);
                         UI.print("Indique a classificação que deseja dar: ");
                         clas = sc.nextInt();
                         e.getEstafeta(codEsta).classifica(clas);
