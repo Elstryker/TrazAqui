@@ -73,7 +73,7 @@ public class Menu {
             if (this.exec)
                 switch (e.getLogin().getClass().getSimpleName()) {
                     case "Utilizador":
-                        while (this.exec) {
+                        while (this.exec && e.getLogin() != null) {
                             menuUtilizador();
                         }
                         break;
@@ -248,14 +248,24 @@ public class Menu {
                         }
                     }
                     if(i>0) {
-                        UI.print("Indique o codigo da encomenda que deseja aceitar:");
-                        String codEsta = sc.nextLine();
-                        Encomenda encomenda = e.getUtilizador(e.getLogin().getCod()).;
+                        UI.print("Indique o codigo da encomenda cuja encomenda deseja aceitar:");
+                        String codEncomenda = sc.nextLine();
+                        String codEsta = "";
+                        Encomenda encomenda = null;
+                        for(Map.Entry<String,Estafeta> a : e.getTrabalhadores().entrySet()) {
+                            for(Encomenda x : a.getValue().getPedidosEncomenda()) {
+                                if(x.getUtilizador().equals(e.getLogin().getNome()) && x.getCod().equals(codEncomenda)) {
+                                    codEsta = x.getEstafeta();
+                                    encomenda = x;
+                                    break;
+                                }
+                            }
+                        }
+                        assert encomenda != null;
                         e.getEstafeta(codEsta).addEncomendaEntregue(encomenda);
                         e.addEncomendaUtilizador(e.getLogin().getCod(), encomenda);
                         UI.print("Indique a classificação que deseja dar: ");
-                        clas = sc.nextInt();
-                        e.getEstafeta(codEsta).classifica(clas);
+                        e.getEstafeta(codEsta).classifica(sc.nextInt());
                     }
                     else UI.print("Nao existem encomendas para serem aceites.");
                     break;
@@ -398,27 +408,23 @@ public class Menu {
                 UI.printTop10(e.getTop10Trans().stream().map(Estafeta::getNome).collect(Collectors.toList()));
                 break;
             case 6:
-                int i=0, ano, mes, dia;
-                boolean stop=false;
-                LocalDateTime[] data = new LocalDateTime[2];
-                while (i<2) {
-                    try {
-                        UI.print("Indique o ano: ");
-                        ano = sc.nextInt();
-                        UI.print("Indique o mes: ");
-                        mes = sc.nextInt();
-                        UI.print("Indique o dia: ");
-                        dia = sc.nextInt();
-                        data[i++] = LocalDateTime.of(ano,mes,dia,0,0);
-                    } catch (Exception e) {
-                        UI.print("Data invalida!");
-                        stop = true;
-                        break;
-                    }
+                LocalDateTime dataInicial, dataFinal;
+                try {
+                    UI.print("Insira a data inicial da procura ( formato yyyy-mm-dd HH:mm)");
+                    String inicio = sc.nextLine();
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+                    dataInicial = LocalDateTime.parse(inicio, formatter);
+                    UI.print("Insira a data final da procura ( formato yyyy-mm-dd HH:mm)");
+                    String fim = sc.nextLine();
+                    dataFinal = LocalDateTime.parse(fim, formatter);
                 }
-                if (stop) break;
+                catch(DateTimeParseException ex) {
+                    System.out.println("Formato inválido!");
+                    break;
+                }
                 Transportadora t = (Transportadora) this.e.getTrabalhadores().get(cod);
-                UI.printTotFat(this.e.totalFaturado(t,data[0],data[1]));
+                UI.printTotFat(this.e.totalFaturado(t,dataInicial,dataFinal));
+                break;
             case 7:
                 this.e.logoff();
                 break;
