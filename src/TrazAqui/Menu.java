@@ -278,6 +278,13 @@ public class Menu {
         String cod = this.e.getLogin().getCod();
         switch (opcao) {
             case 0:
+                stopExec();
+                try {
+                    f.saveObjectStream(e);
+                }
+                catch (IOException e) {
+                    e.printStackTrace();
+                }
                 exec = false;
                 break;
             case 1:
@@ -329,8 +336,10 @@ public class Menu {
                 UI.print("Codigo de encomenda: ");
                 sc.nextLine();
                 String codEncomenda = sc.nextLine();
-                double p = this.e.precoDaEncomenda(codEncomenda,cod);
-                UI.printPreco(p);
+                try {
+                    double p = this.e.precoDaEncomenda(codEncomenda, cod);
+                    UI.printPreco(p);
+                } catch (Exception e) {UI.print("Encomenda inexistente.");}
                 break;
             case 3:
                 this.e.getLojas().values().forEach(l -> UI.printEncomendas(l.getPedidos()));
