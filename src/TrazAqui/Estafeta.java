@@ -132,7 +132,7 @@ public abstract class Estafeta implements Entrada, Serializable {
     public void classifica(int x) {
         if (x >=1 && x<=5) {
             this.classificacao[x - 1]++;
-        } else System.out.println("Classificacao invalida");
+        } else UI.print("Classificacao invalida");
     }
 
     public double getClassMedia(){

@@ -289,6 +289,15 @@ public class  Estado implements Serializable {
         return this.trabalhadores.get(cod).clone();
     }
 
+    public void setRaio(String cod, double raio) {
+        this.trabalhadores.get(cod).setRaio(raio);
+    }
+
+    public void setPrecokms(String cod, double preco) {
+        Transportadora a = (Transportadora) this.trabalhadores.get(cod);
+        a.setPrecoKM(preco);
+    }
+
     public boolean mudaDisponibilidade(String cod) {
         return this.trabalhadores.get(cod).mudaDisponibilidade();
     }
@@ -348,5 +357,9 @@ public class  Estado implements Serializable {
         double dist = lj.getLocalizacao().distancia(t.getLocalizacao());
         double preco = t.precoEncomenda(enc.getPeso(),dist);
         return (preco+preco*taxa);
+    }
+
+    public Estafeta daEstafeta(String codEsta){
+        return this.trabalhadores.get(codEsta);
     }
 }
