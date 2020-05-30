@@ -38,7 +38,7 @@ public class Menu {
                     try {
                         opcao = inp.nextInt();
                     } catch (InputMismatchException ex) {
-                        System.out.println("Opcao inválida!");
+                        UI.print("Opcao inválida!");
                         inp.nextLine();
                     }
                     if (opcao >= 0 && opcao <= 2) f = false;
@@ -53,7 +53,7 @@ public class Menu {
                         } catch (IOException e) {
                             e.printStackTrace();
                         } catch (InvalidInputException e) {
-                            System.out.println(e.getMessage());
+                            UI.print(e.getMessage());
                         }
 
                         break;
@@ -63,7 +63,7 @@ public class Menu {
                         } catch (IOException e) {
                             e.printStackTrace();
                         } catch (InvalidInputException | InputMismatchException | ExistingCodeException l) {
-                            System.out.println(l.getMessage());
+                            UI.print(l.getMessage());
                         }
                         break;
                     default:
@@ -112,10 +112,10 @@ public class Menu {
 
     public void loginUtilizador() throws IOException , InvalidInputException {
         Scanner sc = new Scanner(System.in);
-        System.out.print("Email: ");
+        UI.printInsiraEmail();
         String email = sc.nextLine();
         if (verificaEmail(email)) throw new InvalidInputException("Email invalido!");
-        System.out.print("Password: ");
+        UI.printInsiraPassword();
         String password = sc.nextLine();
         this.e.login(email, password, this.f);
     }
@@ -133,29 +133,29 @@ public class Menu {
     public void novoRegisto() throws IOException, InvalidInputException, InputMismatchException, ExistingCodeException {
         Scanner sc = new Scanner(System.in);
 
-        System.out.print("Regista-se como Utilizador, Loja, LojaFilaEspera, Transportadora ou Voluntario?: ");
+        UI.printTipoRegisto();
         String tipo = sc.nextLine();
         if(!tipo.equals("Utilizador") && !tipo.equals("Loja") && !tipo.equals("LojaFilaEspera") && !tipo.equals("Transportadora") && !tipo.equals("Voluntario"))
             throw new InvalidInputException("Tipo de registo inválido!");
-        System.out.print("Email: ");
+        UI.printInsiraEmail();
         String email = sc.nextLine();
         if (verificaEmail(email)) {
             throw new InvalidInputException("Email invalido!");
         }
-        System.out.print("Password: ");
+        UI.printInsiraEmail();
         String password = sc.nextLine();
-        System.out.print("Código: ");
+        UI.printInsiraCod();
         String cod = sc.nextLine();
         if(!((tipo.equals("Utilizador") && cod.charAt(0) == 'u')
         || (tipo.equals("Loja") || tipo.equals("LojaFilaEspera") && cod.charAt(0) == 'l')
         || (tipo.equals("Transportadora") && cod.charAt(0) == 't')
         || (tipo.equals("Voluntario") && cod.charAt(0) == 'v')))
             throw new InvalidInputException("Código inválido!");
-        System.out.print("Nome: ");
+        UI.printInsiraNome();
         String nome = sc.nextLine();
-        System.out.print("Latitude: ");
+        UI.printInsiraLatitude();
         double lat = sc.nextDouble();
-        System.out.print("Longitude: ");
+        UI.printInsiraLongitude();
         double longi = sc.nextDouble();
         this.e.registar(email, password, cod, nome, new GPS(lat, longi), this.f, tipo);
     }
@@ -173,19 +173,19 @@ public class Menu {
                     boolean fragil, conti = true,med;
                     String codEnc,loja,cod, descricao;
                         enc.setData(LocalDateTime.now());
-                        UI.print("Adicione um codigo a encomenda");
+                        UI.printInsiraCodEnc();
                         codEnc = sc.nextLine();
                         enc.setCod(codEnc);
-                        UI.print("Transporta medicamentos(escreva true se sim, false se nao)");
+                        UI.printTransMedica();
                         try{
                             med = sc.nextBoolean();
                             enc.setMedicamentos(med);
-                            UI.print("Indique peso");
+                            UI.printInsiraPeso();
                             peso = sc.nextDouble();
                             enc.setPeso(peso);
                             enc.setUtilizador(e.getLogin().getCod());
                             UI.printLojas(e.getLojas());
-                            UI.print("Insira o codigo da loja");
+                            UI.printInsiraCodLoja();
                             sc.nextLine();
                             loja = sc.nextLine();
                             enc.setLoja(loja);
@@ -228,15 +228,15 @@ public class Menu {
                     if(option==3) {
                         if (lstEnc.size() > 0) {
                             try {
-                                UI.print("Insira a data inicial da procura ( formato yyyy-mm-dd HH:mm)");
+                                UI.printDataInicial();
                                 inicio = sc.nextLine();
                                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
                                 dataInicial = LocalDateTime.parse(inicio, formatter);
-                                UI.print("Insira a data final da procura ( formato yyyy-mm-dd HH:mm)");
+                                UI.printDataFinal();
                                 fim = sc.nextLine();
                                 dataFinal = LocalDateTime.parse(fim, formatter);
                             } catch (DateTimeParseException ex) {
-                                System.out.println("Formato inválido!");
+                                UI.printFormatoInvalido();
                             }
                         }
                     }
@@ -252,7 +252,7 @@ public class Menu {
                         }
                     }
                     if(i>0) {
-                        UI.print("Indique o codigo da encomenda cuja encomenda deseja aceitar:");
+                        UI.printCodEncAceitar();
                         String codEncomenda = sc.nextLine();
                         String codEsta = "";
                         Encomenda encomenda = null;
@@ -268,10 +268,10 @@ public class Menu {
                         assert encomenda != null;
                         e.getEstafeta(codEsta).addEncomendaEntregue(encomenda);
                         e.addEncomendaUtilizador(e.getLogin().getCod(), encomenda);
-                        UI.print("Indique a classificação que deseja dar: ");
+                        UI.printInsiraClass();
                         e.getEstafeta(codEsta).classifica(sc.nextInt());
                     }
-                    else UI.print("Nao existem encomendas para serem aceites.");
+                    else UI.print0encParaAceitar();
                     break;
                 case 0:
                     stopExec();
@@ -313,18 +313,18 @@ public class Menu {
                 break;
             case 1:
                 boolean b = this.e.mudaDisponibilidade(cod);
-                if (b) UI.print(" -> Disponivel");
-                else UI.print(" -> Indisponivel");
+                if (b) UI.printDisponivel();
+                else UI.printIndisponivel();
                 break;
             case 2:
                 if (!this.e.disponivel(cod)) {
-                    UI.print("Altere a sua disponibilidade.");
+                    UI.printMudeDisp();
                     break;
                 }
                 List<Encomenda> enc = this.e.encomendasDisponiveis(cod);
                 UI.printEncomendas(enc);
-                UI.print("Insira 0 caso nao exista encomendas.");
-                UI.print("Codigo da encomenda: ");
+                UI.print0NEncomendas();
+                UI.printInsiraCodEnc();
                 sc.nextLine();
                 String codEncomenda = sc.nextLine();
                 if (codEncomenda.equals("0")) break;
@@ -332,13 +332,13 @@ public class Menu {
                     try {
                         Encomenda e = this.e.removeEncomendaLoja(codEncomenda, cod);
                         if (e==null) {
-                            UI.print("Nao pode transportar medicamentos!");
+                            UI.printNoMedica();
                             break;
                         }
                         this.e.addEncomendaEntregue(cod, e);
-                        UI.print(" -> Encomenda em transporte.");
+                        UI.printEncomendaEmTrans();
                     } catch (Exception e) {
-                        UI.print(" -> Encomenda inexistente!");
+                        UI.printEncomendaInex();
                     }
                 }
                 break;
@@ -369,8 +369,8 @@ public class Menu {
                 break;
             case 1:
                 boolean b = this.e.mudaDisponibilidade(cod);
-                if (b) UI.print(" -> Disponivel");
-                else UI.print(" -> Indisponivel");
+                if (b) UI.printDisponivel();
+                else UI.printIndisponivel();
                 break;
             case 2:
                 for (Loja l : this.e.getLojas().values()) {
@@ -378,20 +378,20 @@ public class Menu {
                         UI.printEncomendas(l.getPedidos());
                     }
                 }
-                UI.print("Insira 0 caso nao existam encomendas.");
-                UI.print("Codigo de encomenda: ");
+                UI.print0NEncomendas();
+                UI.printInsiraCodEnc();
                 sc.nextLine();
                 String codEncomenda = sc.nextLine();
                 if (codEncomenda.equals("0")) break;
                 try {
                     double p = this.e.precoDaEncomenda(codEncomenda, cod);
                     if (p!=-1) UI.printPreco(p);
-                    else UI.print("Encomenda inexistente.");
-                } catch (Exception e) {UI.print(" -> Encomenda inexistente.");}
+                    else UI.printEncomendaInex();
+                } catch (Exception e) {UI.printEncomendaInex();}
                 break;
             case 3:
                 if (!this.e.disponivel(cod)) {
-                    UI.print("Altere a sua disponibilidade.");
+                    UI.printMudeDisp();
                     break;
                 }
                 for (Loja l : this.e.getLojas().values()) {
@@ -399,8 +399,8 @@ public class Menu {
                         UI.printEncomendas(l.getPedidos());
                     }
                 }
-                UI.print("Insira 0 caso nao existam encomendas.");
-                UI.print("Codigo da encomenda: ");
+                UI.print0NEncomendas();
+                UI.printInsiraCodEnc();
                 sc.nextLine();
                 String codEnc = sc.nextLine();
                 if (codEnc.equals("0")) break;
@@ -408,9 +408,9 @@ public class Menu {
                     Encomenda encomenda = this.e.removeEncomendaLoja(codEnc,cod);
                     encomenda.setEstafeta(cod);
                     this.e.addPedidoDeTransporte(cod,encomenda);
-                    UI.print(" -> Encomenda em transporte.");
+                    UI.printEncomendaEmTrans();
                 } catch (Exception e) {
-                    UI.print("Encomenda inexistente.");
+                    UI.printEncomendaInex();
                 }
                 break;
             case 4:
@@ -423,15 +423,15 @@ public class Menu {
                 LocalDateTime dataInicial, dataFinal;
                 try {
                     sc.nextLine();
-                    UI.print("Insira a data inicial da procura ( formato yyyy-mm-dd HH:mm)");
+                    UI.printDataInicial();
                     String inicio = sc.nextLine();
                     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
                     dataInicial = LocalDateTime.parse(inicio, formatter);
-                    UI.print("Insira a data final da procura ( formato yyyy-mm-dd HH:mm)");
+                    UI.printDataFinal();
                     String fim = sc.nextLine();
                     dataFinal = LocalDateTime.parse(fim, formatter);
                 } catch (DateTimeParseException ex) {
-                    System.out.println("Formato inválido!");
+                    UI.printFormatoInvalido();
                     break;
                 }
                 Transportadora t = (Transportadora) this.e.getTrabalhadores().get(cod);
@@ -467,10 +467,10 @@ public class Menu {
             case 2:
                 if(e.getLogin() instanceof LojaFilaEspera) {
                     LojaFilaEspera l = (LojaFilaEspera) e.getLogin();
-                    UI.print("Tamanho da lista de espera: "+l.getTamanhoListaEspera());
+                    UI.printTamanhoFilaEspera(l.getTamanhoListaEspera());
                 }
                 else {
-                    UI.print("Esta loja não tem lista de espera");
+                    UI.printNtemFilaEspera();
                 }
                 break;
             case 3:

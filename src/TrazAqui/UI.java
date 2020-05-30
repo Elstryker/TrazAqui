@@ -1,5 +1,7 @@
 package TrazAqui;
 
+import org.w3c.dom.ls.LSOutput;
+
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.HashMap;
@@ -198,7 +200,98 @@ public class UI {
         System.out.println("2 - Ver encomendas transportadas por voluntarios");
         System.out.println("3 - Ver encomendas transportadas num intervalo de tempo");
     }
+    public static void printInsiraCod(){
+        System.out.println("Codigo: ");
+    }
 
+    public static void printTipoRegisto(){
+        System.out.println("Regista-se como Utilizador, Loja, LojaFilaEspera, Transportadora ou Voluntario?: ");
+    }
+
+    public static void printInsiraNome(){
+        System.out.println("Nome: ");
+    }
+
+    public static void printInsiraLatitude(){
+        System.out.println("Latitude: ");
+    }
+
+    public static void printInsiraLongitude(){
+        System.out.println("Longitude: ");
+    }
+
+    public static void printFormatoInvalido(){
+        System.out.println("Formato invalido!");
+    }
+
+    public static void printDataInicial(){
+        System.out.println("Insira a data inicial da procura ( formato yyyy-mm-dd HH:mm)");
+    }
+
+    public static void printDataFinal(){
+        System.out.println("Insira a data final da procura ( formato yyyy-mm-dd HH:mm)");
+    }
+
+    public static void printTamanhoFilaEspera(int tam){
+        System.out.println("Tamanho da lista de espera: " + tam);
+    }
+
+    public static void printNtemFilaEspera(){
+        System.out.println("Esta loja nao tem fila de espera.");
+    }
+
+    public static void printEncomendaInex(){
+        System.out.println("Encomenda inexistente.");
+    }
+
+    public static void printEncomendaEmTrans(){
+        System.out.println(" -> Encomenda em transporte.");
+    }
+
+    public static void printInsiraCodEnc(){
+        System.out.println("Codigo da encomenda: ");
+    }
+    public static void print0NEncomendas(){
+        System.out.println("Insira 0 caso nao existam encomendas.");
+    }
+
+    public static void printMudeDisp(){
+        System.out.println("Altere a sua disponibilidade.");
+    }
+
+    public static void printDisponivel(){
+        System.out.println(" -> Disponivel");
+    }
+
+    public static void printIndisponivel(){
+        System.out.println(" -> Indisponivel");
+    }
+    public static void printNoMedica(){
+        System.out.println("Nao pode transportar medicamentos!");
+    }
+
+    public static void print0encParaAceitar(){
+        System.out.println("Nao existem encomendas para serem aceites.");
+    }
+
+    public static void printInsiraClass(){
+        System.out.println("Indique a classificação que deseja dar: ");
+    }
+
+    public static void printCodEncAceitar(){
+        System.out.println("Indique o codigo da encomenda cuja encomenda deseja aceitar:");
+    }
+
+    public static void printInsiraCodLoja(){
+        System.out.println("Insira o codigo da loja: ");
+    }
+    public static void printInsiraPeso(){
+        System.out.println("Indique o peso: ");
+    }
+
+    public static void printTransMedica(){
+        System.out.println("Transporta medicamentos(escreva true se sim, false se nao)");
+    }
 }
 
 
