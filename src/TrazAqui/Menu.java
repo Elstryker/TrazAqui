@@ -353,6 +353,10 @@ public class Menu {
                 }
                 break;
             case 3:
+                UI.printSelectRaio();
+                e.setRaio(cod,sc.nextDouble());
+                break;
+            case 4:
                 this.e.logoff();
                 break;
             default:
