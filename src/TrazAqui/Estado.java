@@ -348,4 +348,8 @@ public class  Estado implements Serializable {
         double preco = t.precoEncomenda(enc.getPeso(),dist);
         return (preco+preco*taxa);
     }
+
+    public Estafeta daEstafeta(String codEsta){
+        return this.trabalhadores.get(codEsta);
+    }
 }

@@ -273,11 +273,12 @@ public class Menu {
                             }
                         }
                         assert encomenda != null;
-                        e.getEstafeta(codEsta).addEncomendaEntregue(encomenda);
-                        e.getEstafeta(codEsta).removerEncomenda(encomenda.getCod());
+                        Estafeta est = e.daEstafeta(codEsta);
+                        est.addEncomendaEntregue(encomenda);
+                        est.removerEncomenda(encomenda.getCod());
                         e.addEncomendaUtilizador(e.getLogin().getCod(), encomenda);
                         UI.printInsiraClass();
-                        e.getEstafeta(codEsta).classifica(sc.nextInt());
+                        est.classifica(sc.nextInt());
                     }
                     else UI.print0encParaAceitar();
                     break;
