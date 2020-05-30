@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class  Estado implements Serializable {
     private HashMap<String,Utilizador> utilizadores;
@@ -237,12 +238,17 @@ public class  Estado implements Serializable {
         return res;
     }
 
-    public void registar(String email, String pass, String cod, String nome, GPS loc, FileIO f, String tipo) throws IOException, ExistingCodeException {
+    public void registar(String email, String pass, String cod, String nome, GPS loc, FileIO f, String tipo, String nif) throws IOException, ExistingCodeException {
         Entrada a = new Utilizador();
         a = a.newEntrada(tipo);
         a.setCod(cod);
         a.setNome(nome);
         a.setLocalizacao(loc);
+        if(a instanceof Transportadora) {
+            ((Transportadora) a).setRaio(ThreadLocalRandom.current().nextDouble(60, 151));
+            ((Transportadora) a).setPrecoKM(ThreadLocalRandom.current().nextDouble(1,6));
+            ((Transportadora) a).setNIF(nif);
+        }
         f.registaConta(email,pass,a,this);
     }
 

@@ -158,7 +158,13 @@ public class Menu {
         double lat = sc.nextDouble();
         System.out.print("Longitude: ");
         double longi = sc.nextDouble();
-        this.e.registar(email, password, cod, nome, new GPS(lat, longi), this.f, tipo);
+        if(tipo.equals("Transportadora")) {
+            System.out.print("NIF: ");
+            String nif = sc.nextLine();
+            this.e.registar(email, password, cod, nome, new GPS(lat, longi), this.f, tipo,nif);
+        }
+        else
+            this.e.registar(email, password, cod, nome, new GPS(lat, longi), this.f, tipo,"");
     }
 
     public void menuUtilizador() {
