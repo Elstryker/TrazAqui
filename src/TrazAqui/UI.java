@@ -1,6 +1,5 @@
 package TrazAqui;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.HashMap;
 import java.util.Map;
@@ -54,7 +53,7 @@ public class UI {
     }
 
     public static void printIndicarFragil() {
-        System.out.print("Indique se o produto é frágil ou não: ");
+        System.out.print("Indique se o produto é frágil? (true se sim, false se não): ");
     }
 
     public static void printIndiqueCodProd() {
@@ -63,7 +62,7 @@ public class UI {
 
 
     public static void printDesejaMaisProd() {
-        System.out.print("Deseja encomendar mais produtos? ");
+        System.out.print("Deseja encomendar mais produtos? (true se sim, false se não): ");
     }
 
     public static void printHistoricoEncomendas(Map<String,Encomenda> enc) {

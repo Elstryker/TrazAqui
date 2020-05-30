@@ -180,7 +180,7 @@ public class Menu {
                         UI.print("Adicione um codigo a encomenda");
                         codEnc = sc.nextLine();
                         enc.setCod(codEnc);
-                        UI.print("Transporta medicamentos (true se sim, false se não");
+                        UI.print("Transporta medicamentos (true se sim, false se não)");
                         med = sc.nextBoolean();
                         enc.setMedicamentos(med);
                         UI.print("Indique peso");
