@@ -344,7 +344,8 @@ public class Menu {
                 if (codEncomenda.equals("0")) break;
                 try {
                     double p = this.e.precoDaEncomenda(codEncomenda, cod);
-                    UI.printPreco(p);
+                    if (p!=-1) UI.printPreco(p);
+                    else UI.print("Encomenda inexistente.");
                 } catch (Exception e) {UI.print(" -> Encomenda inexistente.");}
                 break;
             case 3:
@@ -354,10 +355,14 @@ public class Menu {
                 sc.nextLine();
                 String codEnc = sc.nextLine();
                 if (codEnc.equals("0")) break;
-                Encomenda encomenda = this.e.removeEncomendaLoja(codEnc,cod);
-                encomenda.setEstafeta(cod);
-                this.e.addPedidoDeTransporte(cod,encomenda);
-                UI.print(" -> Encomenda em transporte.");
+                try {
+                    Encomenda encomenda = this.e.removeEncomendaLoja(codEnc,cod);
+                    encomenda.setEstafeta(cod);
+                    this.e.addPedidoDeTransporte(cod,encomenda);
+                    UI.print(" -> Encomenda em transporte.");
+                } catch (Exception e) {
+                    UI.print("Encomenda inexistente.");
+                }
                 break;
             case 4:
                 UI.printTop10(e.getTop10Util().stream().map(Utilizador::getNome).collect(Collectors.toList()));
@@ -366,17 +371,17 @@ public class Menu {
                 UI.printTop10(e.getTop10Trans().stream().map(Estafeta::getNome).collect(Collectors.toList()));
                 break;
             case 6:
-                int i=0;
+                int i=0, ano, mes, dia;
                 boolean stop=false;
                 LocalDateTime[] data = new LocalDateTime[2];
                 while (i<2) {
-                    UI.print("Indique o ano: ");
-                    int ano = sc.nextInt();
-                    UI.print("Indique o mes: ");
-                    int mes = sc.nextInt();
-                    UI.print("Indique o dia: ");
-                    int dia = sc.nextInt();
                     try {
+                        UI.print("Indique o ano: ");
+                        ano = sc.nextInt();
+                        UI.print("Indique o mes: ");
+                        mes = sc.nextInt();
+                        UI.print("Indique o dia: ");
+                        dia = sc.nextInt();
                         data[i++] = LocalDateTime.of(ano,mes,dia,0,0);
                     } catch (Exception e) {
                         UI.print("Data invalida!");
