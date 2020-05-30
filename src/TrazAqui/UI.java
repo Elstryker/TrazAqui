@@ -120,7 +120,9 @@ public class UI {
         System.out.println("4 - Top 10 utilizadores");
         System.out.println("5 - Top 10 Transportadoras");
         System.out.println("6 - Indicar o total faturado");
-        System.out.println("7 - Terminar sessao");
+        System.out.println("7 - Alterar raio de ação");
+        System.out.println("8 - Alterar preço por kilometro");
+        System.out.println("9 - Terminar sessao");
         System.out.println("0 - Sair");
         System.out.print("Opcao: ");
     }
@@ -199,6 +201,13 @@ public class UI {
         System.out.println("3 - Ver encomendas transportadas num intervalo de tempo");
     }
 
+    public static void printSelectRaio() {
+        System.out.print("Selecione o raio: ");
+    }
+
+    public static void printSelectPrecoKM() {
+        System.out.print("Selecione o preço por km: ");
+    }
 }
 
 

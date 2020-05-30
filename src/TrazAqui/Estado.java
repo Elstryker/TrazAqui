@@ -288,6 +288,15 @@ public class  Estado implements Serializable {
         return this.trabalhadores.get(cod).clone();
     }
 
+    public void setRaio(String cod, double raio) {
+        this.trabalhadores.get(cod).setRaio(raio);
+    }
+
+    public void setPrecokms(String cod, double preco) {
+        Transportadora a = (Transportadora) this.trabalhadores.get(cod);
+        a.setPrecoKM(preco);
+    }
+
     public boolean mudaDisponibilidade(String cod) {
         return this.trabalhadores.get(cod).mudaDisponibilidade();
     }

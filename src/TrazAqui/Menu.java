@@ -158,6 +158,7 @@ public class Menu {
         double lat = sc.nextDouble();
         System.out.print("Longitude: ");
         double longi = sc.nextDouble();
+        sc.nextLine();
         if(tipo.equals("Transportadora")) {
             System.out.print("NIF: ");
             String nif = sc.nextLine();
@@ -446,6 +447,14 @@ public class Menu {
                 UI.printTotFat(this.e.totalFaturado(t,dataInicial,dataFinal));
                 break;
             case 7:
+                UI.printSelectRaio();
+                e.setRaio(cod,sc.nextDouble());
+                break;
+            case 8:
+                UI.printSelectPrecoKM();
+                e.setPrecokms(cod,sc.nextDouble());
+                break;
+            case 9:
                 this.e.logoff();
                 break;
             default:
