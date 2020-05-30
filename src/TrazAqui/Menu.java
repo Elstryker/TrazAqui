@@ -402,6 +402,7 @@ public class Menu {
             case 6:
                 LocalDateTime dataInicial, dataFinal;
                 try {
+                    sc.nextLine();
                     UI.print("Insira a data inicial da procura ( formato yyyy-mm-dd HH:mm)");
                     String inicio = sc.nextLine();
                     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
@@ -409,8 +410,7 @@ public class Menu {
                     UI.print("Insira a data final da procura ( formato yyyy-mm-dd HH:mm)");
                     String fim = sc.nextLine();
                     dataFinal = LocalDateTime.parse(fim, formatter);
-                }
-                catch(DateTimeParseException ex) {
+                } catch (DateTimeParseException ex) {
                     System.out.println("Formato inválido!");
                     break;
                 }
