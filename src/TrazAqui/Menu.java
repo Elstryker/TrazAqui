@@ -254,8 +254,8 @@ public class Menu {
                         Encomenda encomenda = null;
                         for(Map.Entry<String,Estafeta> a : e.getTrabalhadores().entrySet()) {
                             for(Encomenda x : a.getValue().getPedidosEncomenda()) {
-                                if(x.getUtilizador().equals(e.getLogin().getNome()) && x.getCod().equals(codEncomenda)) {
-                                    codEsta = x.getEstafeta();
+                                if(x.getUtilizador().equals(e.getLogin().getCod()) && x.getCod().equals(codEncomenda)) {
+                                    codEsta = a.getKey();
                                     encomenda = x;
                                     break;
                                 }
