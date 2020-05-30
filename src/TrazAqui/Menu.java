@@ -34,7 +34,7 @@ public class Menu {
             UI.printMenuInicial();
             while (f) {
                 try {
-                    opcao = inp.nextInt();
+0                    opcao = inp.nextInt();
                 }
                 catch (InputMismatchException ex) {
                     System.out.println("Opcao inválida!");
@@ -149,10 +149,10 @@ public class Menu {
         String password = sc.nextLine();
         System.out.print("Código: ");
         String cod = sc.nextLine();
-        if((tipo.equals("Utilizador") && cod.charAt(0) == 'u')
+        if(!((tipo.equals("Utilizador") && cod.charAt(0) == 'u')
         || (tipo.equals("Loja") || tipo.equals("LojaFilaEspera") && cod.charAt(0) == 'l')
         || (tipo.equals("Transportadora") && cod.charAt(0) == 't')
-        || (tipo.equals("Voluntario") && cod.charAt(0) == 'v'))
+        || (tipo.equals("Voluntario") && cod.charAt(0) == 'v')))
             throw new InvalidInputException("Código inválido!");
         System.out.print("Nome: ");
         String nome = sc.nextLine();
