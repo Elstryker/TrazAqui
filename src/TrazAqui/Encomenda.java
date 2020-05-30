@@ -7,7 +7,6 @@ import java.util.List;
 
 public class Encomenda implements Serializable {
     private double peso;
-    private String descricao;
     private String cod;
     private LocalDateTime data;
     private String utilizador;
@@ -16,9 +15,8 @@ public class Encomenda implements Serializable {
     private String estafeta;
     private List<LinhaEncomenda> produtos;
 
-    public Encomenda(double peso, boolean med, String descricao, String cod, String utilizador, String loja,ArrayList<LinhaEncomenda> produtos,LocalDateTime l,String estafeta) {
+    public Encomenda(double peso, boolean med, String cod, String utilizador, String loja,ArrayList<LinhaEncomenda> produtos,LocalDateTime l,String estafeta) {
         this.peso = peso;
-        this.descricao = descricao;
         this.cod = cod;
         this.utilizador = utilizador;
         this.loja = loja;
@@ -30,7 +28,6 @@ public class Encomenda implements Serializable {
 
     public Encomenda() {
         this.peso = 0;
-        this.descricao = "";
         this.cod = "";
         this.utilizador = "";
         this.loja = "";
@@ -48,7 +45,6 @@ public class Encomenda implements Serializable {
         this.utilizador = e.getUtilizador();
         this.cod = e.getCod();
         this.medicamentos = e.getMedicamentos();
-        this.descricao = e.getDescricao();
         this.estafeta= e.getEstafeta();
     }
 
@@ -61,7 +57,6 @@ public class Encomenda implements Serializable {
         final StringBuilder sb = new StringBuilder("Encomenda{");
         sb.append("Transportador='").append(estafeta).append('\'');
         sb.append(", peso='").append(peso).append('\'');
-        sb.append(", descricao='").append(descricao).append('\'');
         sb.append(", cod='").append(cod).append('\'');
         sb.append(", data=").append(data);
         sb.append(", utilizador='").append(utilizador).append('\'');
@@ -80,7 +75,6 @@ public class Encomenda implements Serializable {
 
         return this.peso==e.getPeso() &&
                 this.cod.equals(e.getCod()) &&
-                this.descricao.equals(e.getCod()) &&
                 this.utilizador.equals(e.getUtilizador()) &&
                 this.loja.equals(e.getLoja()) &&
                 this.produtos.equals(e.getProdutos()) &&
@@ -118,14 +112,6 @@ public class Encomenda implements Serializable {
 
     public void setPeso(double peso) {
         this.peso = peso;
-    }
-
-    public String getDescricao() {
-        return this.descricao;
-    }
-
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
     }
 
     public String getCod() {

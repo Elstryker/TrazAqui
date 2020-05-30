@@ -30,76 +30,72 @@ public class Menu {
         catch (IOException | ClassNotFoundException ex) {
             f.loadFromFile(e);
         }
-        while (e.getLogin() == null && this.exec) {
-            boolean f = true;
-            UI.printMenuInicial();
-            while (f) {
-                try {
-                    opcao = inp.nextInt();
-                }
-                catch (InputMismatchException ex) {
-                    System.out.println("Opcao inválida!");
-                    inp.nextLine();
-                }
-                if(opcao >= 0 && opcao <= 2) f = false;
-            }
-            switch (opcao) {
-                case 0:
-                    stopExec();
-                    break;
-                case 1:
+        while(this.exec) {
+            while (e.getLogin() == null && this.exec) {
+                boolean f = true;
+                UI.printMenuInicial();
+                while (f) {
                     try {
-                        this.loginUtilizador();
+                        opcao = inp.nextInt();
+                    } catch (InputMismatchException ex) {
+                        System.out.println("Opcao inválida!");
+                        inp.nextLine();
                     }
-                    catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    catch (InvalidInputException e) {
-                        System.out.println(e.getMessage());
-                    }
+                    if (opcao >= 0 && opcao <= 2) f = false;
+                }
+                switch (opcao) {
+                    case 0:
+                        stopExec();
+                        break;
+                    case 1:
+                        try {
+                            this.loginUtilizador();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        } catch (InvalidInputException e) {
+                            System.out.println(e.getMessage());
+                        }
 
-                    break;
-                case 2:
-                    try {
-                        this.novoRegisto();
-                    }
-
-                    catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    catch (InvalidInputException | InputMismatchException | ExistingCodeException l) {
-                        System.out.println(l.getMessage());
-                    }
-                    break;
-                default:
-                    throw new IllegalStateException("Unexpected value: " + opcao);
+                        break;
+                    case 2:
+                        try {
+                            this.novoRegisto();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        } catch (InvalidInputException | InputMismatchException | ExistingCodeException l) {
+                            System.out.println(l.getMessage());
+                        }
+                        break;
+                    default:
+                        throw new IllegalStateException("Unexpected value: " + opcao);
+                }
             }
+            if (this.exec)
+                switch (e.getLogin().getClass().getSimpleName()) {
+                    case "Utilizador":
+                        while (this.exec) {
+                            menuUtilizador();
+                        }
+                        break;
+                    case "Transportadora":
+                        while (this.exec && e.getLogin() != null) {
+                            menuTransportadora();
+                        }
+                        break;
+                    case "Voluntario":
+                        while (this.exec && e.getLogin() != null) {
+                            menuVoluntario();
+                        }
+                        break;
+                    case "Loja":
+                    case "LojaFilaEspera":
+                        while (this.exec && e.getLogin() != null) {
+                            menuLoja();
+                        }
+                    default:
+                        break;
+                }
         }
-        if (this.exec)
-            switch (e.getLogin().getClass().getSimpleName()) {
-                case "Utilizador":
-                    while (this.exec) {
-                        menuUtilizador();
-                    }
-                    break;
-                case "Transportadora":
-                    while (this.exec) {
-                        menuTransportadora();
-                    }
-                    break;
-                case "Voluntario":
-                    while (this.exec) {
-                        menuVoluntario();
-                    }
-                    break;
-                case "Loja":
-                case "LojaFilaEspera":
-                    while (this.exec) {
-                        menuLoja();
-                    }
-                default:
-                    break;
-            }
         try {
             f.saveObjectStream(e);
         }
@@ -188,10 +184,6 @@ public class Menu {
                             peso = sc.nextDouble();
                             enc.setPeso(peso);
                             enc.setUtilizador(e.getLogin().getCod());
-                            sc.nextLine();
-                            UI.print("Faca descricao da encomenda");
-                            descEnc = sc.nextLine();
-                            enc.setDescricao(descEnc);
                             UI.printLojas(e.getLojas());
                             UI.print("Insira o codigo da loja");
                             loja = sc.nextLine();
@@ -276,6 +268,10 @@ public class Menu {
                     break;
                 case 4:
                     UI.printUtilizadores(this.e.getTop10Util());
+                    break;
+                case 5:
+                    e.logoff();
+                    break;
                 default:
                     UI.printIncorrectInput();
                     break;
@@ -446,6 +442,9 @@ public class Menu {
                 break;
             case 4:
                 UI.printTop10(e.getTop10Trans().stream().map(Estafeta::getNome).collect(Collectors.toList()));
+                break;
+            case 5:
+                e.logoff();
                 break;
             default:
                 break;

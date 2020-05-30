@@ -37,6 +37,8 @@ public class UI {
         System.out.println("1 - Efetuar uma encomenda: ");
         System.out.println("2 - Ver historico de encomendas: ");
         System.out.println("3 - Aceitar pedidos: ");
+        System.out.println("4 - Top 100 utilizadores");
+        System.out.println("5 - Log off");
         System.out.println("0 - Sair");
     }
 
@@ -101,6 +103,7 @@ public class UI {
         System.out.println("2) Indicar tamanho da fila");
         System.out.println("3) Top 10 utilizadores");
         System.out.println("4) Top 10 Transportadoras");
+        System.out.println("5) Terminar sessão");
     }
 
     public static void printTop10(List<String> r) {
