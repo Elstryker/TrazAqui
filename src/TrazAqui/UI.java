@@ -1,5 +1,6 @@
 package TrazAqui;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.HashMap;
 import java.util.Map;
@@ -67,17 +68,25 @@ public class UI {
         System.out.print("Deseja encomendar mais produtos? (escreva true se sim, false se nao)");
     }
 
-    public static void printHistoricoEncomendas(Map<String,Encomenda> enc, int opcao) {
-        if(opcao==1) {
-            for (Map.Entry<String, Encomenda> map : enc.entrySet()) {
-                if(map.getValue().getEstafeta().contains("t"))System.out.println(map.getKey() + ":" + map.getValue());
+    public static void printHistoricoEncomendas(Map<String,Encomenda> enc, int opcao,Utilizador u, LocalDateTime inicio,LocalDateTime fim) {
+        if(opcao==1 || opcao ==2 || opcao == 3) {
+            if (opcao == 1) {
+                for (Map.Entry<String, Encomenda> map : enc.entrySet()) {
+                    if (map.getValue().getEstafeta().contains("t"))
+                        System.out.println(map.getKey() + ":" + map.getValue());
+                }
+            }
+            if (opcao == 2) {
+                for (Map.Entry<String, Encomenda> map : enc.entrySet()) {
+                    if (map.getValue().getEstafeta().contains("v"))
+                        System.out.println(map.getKey() + ":" + map.getValue());
+                }
+            }
+            if(opcao== 3){
+                UI.printEncomendas(u.procuraPor(inicio, fim));
             }
         }
-        else {
-            for (Map.Entry<String, Encomenda> map : enc.entrySet()) {
-                if(map.getValue().getEstafeta().contains("v"))System.out.println(map.getKey() + ":" + map.getValue());
-            }
-        }
+        else UI.print("Opcao invalida");
     }
 
 
@@ -174,9 +183,10 @@ public class UI {
         System.out.println("Input incorreto");
     }
 
-    public static void printDesejaTransOuVol(){
-        System.out.println("1- Ver encomendas transportadas por transportadoras");
-        System.out.println("2- Ver encomendas transportadas por voluntarios");
+    public static void printDesejaTransVolTempo(){
+        System.out.println("1 - Ver encomendas transportadas por transportadoras");
+        System.out.println("2 - Ver encomendas transportadas por voluntarios");
+        System.out.println("3 - Ver encomendas transportadas num intervalo de tempo");
     }
 
 }
