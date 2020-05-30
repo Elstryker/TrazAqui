@@ -140,10 +140,11 @@ public class  Estado implements Serializable {
             for (Encomenda e : l.getPedidos()) {
                 if (e.getCod().equals(codEnc)) {
                     if (e.getMedicamentos() && medicamentos) {
-                        l.removePedido(codEnc);
+                        this.lojas.get(l.getCod()).removePedido(codEnc);
                         return new Encomenda(e);
                     } else if (!e.getMedicamentos()) {
-                        l.removePedido(codEnc);
+                        this.lojas.get(l.getCod()).removePedido(codEnc);
+                        l.getPedidos().forEach(System.out::print);
                         return new Encomenda(e);
                     }
                 }

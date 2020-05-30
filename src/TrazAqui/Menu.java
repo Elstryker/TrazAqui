@@ -282,10 +282,11 @@ public class Menu {
                 catch (IOException e) {
                     e.printStackTrace();
                 }
+                exec = false;
                 break;
             case 1:
                 this.e.mudaDisponibilidade(cod);
-                UI.print("Disponibilidade alterada.");
+                UI.print(" -> Disponibilidade alterada.");
                 break;
             case 2:
                 List<Encomenda> enc = this.e.encomendasDisponiveis(cod);
@@ -296,9 +297,14 @@ public class Menu {
                 if(enc.size()>0) {
                     try {
                         Encomenda e = this.e.removeEncomendaLoja(codEncomenda, cod);
+                        if (e==null) {
+                            UI.print("Nao pode transportar medicamentos!");
+                            break;
+                        }
                         this.e.addEncomendaEntregue(cod, e);
+                        UI.print(" -> Encomenda em transporte.");
                     } catch (Exception e) {
-                        UI.print("Encomenda inexistente!");
+                        UI.print(" -> Encomenda inexistente!");
                     }
                 }
                 break;
@@ -326,14 +332,16 @@ public class Menu {
                 break;
             case 1:
                 this.e.mudaDisponibilidade(cod);
-                UI.print("Disponibilidade alterada.");
+                UI.print(" -> Disponibilidade alterada.");
                 break;
             case 2:
                 UI.print("Codigo de encomenda: ");
                 sc.nextLine();
                 String codEncomenda = sc.nextLine();
-                double p = this.e.precoDaEncomenda(codEncomenda,cod);
-                UI.printPreco(p);
+                try {
+                    double p = this.e.precoDaEncomenda(codEncomenda, cod);
+                    UI.printPreco(p);
+                } catch (Exception e) {UI.print(" -> Encomenda inexistente.");}
                 break;
             case 3:
                 this.e.getLojas().values().forEach(l -> UI.printEncomendas(l.getPedidos()));
