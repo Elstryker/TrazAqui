@@ -3,6 +3,7 @@ package TrazAqui;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Map;
@@ -179,7 +180,7 @@ public class Menu {
                         UI.print("Adicione um codigo a encomenda");
                         codEnc = sc.nextLine();
                         enc.setCod(codEnc);
-                        UI.print("Transporta medicamentos");
+                        UI.print("Transporta medicamentos (true se sim, false se não");
                         med = sc.nextBoolean();
                         enc.setMedicamentos(med);
                         UI.print("Indique peso");
@@ -219,14 +220,19 @@ public class Menu {
                     Map<String,Encomenda> lstEnc = e.getUtilizador(codigoUtilizador).getEncomendasConcluidas();
                     UI.printHistoricoEncomendas(lstEnc);
                     if(lstEnc.size() > 0) {
-                        UI.print("Insira a data inicial da procura ( formato yyyy-mm-dd HH:mm)");
-                        String inicio = sc.nextLine();
-                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-                        LocalDateTime dataInicial = LocalDateTime.parse(inicio, formatter);
-                        UI.print("Insira a data final da procura ( formato yyyy-mm-dd HH:mm)");
-                        String fim = sc.nextLine();
-                        LocalDateTime dataFinal = LocalDateTime.parse(fim, formatter);
-                        UI.printEncomendas(e.getUtilizador(codigoUtilizador).procuraPor(dataInicial, dataFinal));
+                        try {
+                            UI.print("Insira a data inicial da procura ( formato yyyy-mm-dd HH:mm)");
+                            String inicio = sc.nextLine();
+                            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+                            LocalDateTime dataInicial = LocalDateTime.parse(inicio, formatter);
+                            UI.print("Insira a data final da procura ( formato yyyy-mm-dd HH:mm)");
+                            String fim = sc.nextLine();
+                            LocalDateTime dataFinal = LocalDateTime.parse(fim, formatter);
+                            UI.printEncomendas(e.getUtilizador(codigoUtilizador).procuraPor(dataInicial, dataFinal));
+                        }
+                        catch(DateTimeParseException ex) {
+                            System.out.println("Formato inválido!");
+                        }
                     }
                     break;
                 case 3:
