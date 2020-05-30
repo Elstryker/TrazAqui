@@ -317,7 +317,7 @@ public class  Estado implements Serializable {
             if (stop) break;
         }
         if (!stop) {
-            return 0;
+            return -1;
         }
         if (temFila) {
             LojaFilaEspera ljfe = (LojaFilaEspera) lj;
