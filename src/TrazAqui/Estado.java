@@ -272,8 +272,12 @@ public class  Estado implements Serializable {
         return this.trabalhadores.get(cod).clone();
     }
 
-    public void mudaDisponibilidade(String cod) {
-        this.trabalhadores.get(cod).mudaDisponibilidade();
+    public boolean mudaDisponibilidade(String cod) {
+        return this.trabalhadores.get(cod).mudaDisponibilidade();
+    }
+
+    public boolean disponivel(String cod) {
+        return this.trabalhadores.get(cod).isDisponivel();
     }
 
     public boolean existeEncomenda(String cod) {
