@@ -163,8 +163,7 @@ public class Menu {
         this.e.registar(email, password, cod, nome, new GPS(lat, longi), this.f, tipo);
     }
 
-    public boolean menuUtilizador() {
-        boolean bool = true;
+    public void menuUtilizador() {
         int opcao =-1;
         Scanner sc = new Scanner(System.in);
             UI.printMenuUtilizador();
@@ -192,13 +191,12 @@ public class Menu {
                         UI.print("Faca descricao da encomenda");
                         descEnc = sc.nextLine();
                         enc.setDescricao(descEnc);
-                        System.out.println(e.getLojas());
+                        UI.printLojas(e.getLojas());
                         UI.print("Insira o codigo da loja");
                         loja = sc.nextLine();
                         enc.setLoja(loja);
                         UI.printFazerDescricao();
                         descricao = sc.nextLine();
-                        sc.nextLine();
                         UI.printIndicarPreco();
                         preco = sc.nextDouble();
                         UI.printIndicarQuant();
@@ -259,7 +257,6 @@ public class Menu {
                     catch (IOException e) {
                         e.printStackTrace();
                     }
-                    bool = false ;
                     break;
                 case 4:
                     UI.printUtilizadores(this.e.getTop10Util());
@@ -267,7 +264,6 @@ public class Menu {
                     UI.printIncorrectInput();
                     break;
             }
-        return bool;
     }
 
     public void menuVoluntario() {
