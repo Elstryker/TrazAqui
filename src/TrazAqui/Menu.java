@@ -186,11 +186,11 @@ public class Menu {
                             enc.setUtilizador(e.getLogin().getCod());
                             UI.printLojas(e.getLojas());
                             UI.print("Insira o codigo da loja");
+                            sc.nextLine();
                             loja = sc.nextLine();
                             enc.setLoja(loja);
                             while (conti) {
                                 try {
-                                    sc.nextLine();
                                     UI.printFazerDescricao();
                                     descricao = sc.nextLine();
                                     UI.printIndicarPreco();
@@ -205,6 +205,7 @@ public class Menu {
                                     enc.addProduto(new LinhaEncomenda(descricao, preco, quantidade, fragil, cod));
                                     UI.printDesejaMaisProd();
                                     conti = sc.nextBoolean();
+                                    sc.nextLine();
                                 } catch (InputMismatchException e) {
                                     UI.printTipoIncorreto();
                                 }

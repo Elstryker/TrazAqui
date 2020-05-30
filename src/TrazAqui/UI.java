@@ -37,7 +37,7 @@ public class UI {
         System.out.println("1 - Efetuar uma encomenda: ");
         System.out.println("2 - Ver historico de encomendas: ");
         System.out.println("3 - Aceitar pedidos: ");
-        System.out.println("4 - Top 100 utilizadores");
+        System.out.println("4 - Top 10 utilizadores");
         System.out.println("5 - Log off");
         System.out.println("0 - Sair");
     }
