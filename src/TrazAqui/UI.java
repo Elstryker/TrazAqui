@@ -72,7 +72,7 @@ public class UI {
     }
 
     public static void printMenuVoluntario() {
-        System.out.println("1 - Indicar que esta disponivel");
+        System.out.println("1 - Mudar disponibilidade");
         System.out.println("2 - Escolher encomenda para ir buscar");
         System.out.println("3 - Terminar sessao");
         System.out.println("0 - Sair");
@@ -85,7 +85,7 @@ public class UI {
     }
     
     public static void printMenuTransportadora() {
-        System.out.println("1 - Indicar que esta disponivel");
+        System.out.println("1 - Mudar disponibilidade");
         System.out.println("2 - Determinar preço da encomenda");
         System.out.println("3 - Transportar encomenda");
         System.out.println("4 - Top 10 utilizadores");

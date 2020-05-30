@@ -169,8 +169,9 @@ public abstract class Estafeta implements Entrada, Serializable {
         }
     }
 
-    public void mudaDisponibilidade(){
+    public boolean mudaDisponibilidade(){
         this.disponivel= !this.disponivel;
+        return this.disponivel;
     }
 
     public void addEncomendaEntregue(Encomenda a){

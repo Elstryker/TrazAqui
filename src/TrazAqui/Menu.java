@@ -284,8 +284,9 @@ public class Menu {
                 exec = false;
                 break;
             case 1:
-                this.e.mudaDisponibilidade(cod);
-                UI.print(" -> Disponibilidade alterada.");
+                boolean b = this.e.mudaDisponibilidade(cod);
+                if (b) UI.print(" -> Disponivel");
+                else UI.print(" -> Indisponivel");
                 break;
             case 2:
                 List<Encomenda> enc = this.e.encomendasDisponiveis(cod);
@@ -335,9 +336,9 @@ public class Menu {
                 exec = false;
                 break;
             case 1:
-                this.e.mudaDisponibilidade(cod);
-                UI.print(" -> Disponibilidade alterada.");
-                break;
+                boolean b = this.e.mudaDisponibilidade(cod);
+                if (b) UI.print(" -> Disponivel");
+                else UI.print(" -> Indisponivel");
             case 2:
                 this.e.getLojas().values().forEach(l -> UI.printEncomendas(l.getPedidos()));
                 UI.print("Insira 0 caso nao existam encomendas.");
