@@ -279,20 +279,24 @@ public class Menu {
         switch (opcao) {
             case 0:
                 exec = false;
+                break;
             case 1:
                 this.e.mudaDisponibilidade(cod);
+                UI.print("Disponibilidade alterada.");
                 break;
             case 2:
                 List<Encomenda> enc = this.e.encomendasDisponiveis(cod);
                 UI.printEncomendas(enc);
-                UI.print("Codigo da encomenda: ");
-                sc.nextLine();
-                String codEncomenda = sc.nextLine();
-                try {
-                    Encomenda e = this.e.removeEncomendaLoja(codEncomenda,cod);
-                    this.e.addEncomendaEntregue(cod,e);
-                } catch (Exception e) {
-                    UI.print("Encomenda inexistente!");
+                if (enc.size()>0) {
+                    UI.print("Codigo da encomenda: ");
+                    sc.nextLine();
+                    String codEncomenda = sc.nextLine();
+                    try {
+                        Encomenda e = this.e.removeEncomendaLoja(codEncomenda, cod);
+                        this.e.addEncomendaEntregue(cod, e);
+                    } catch (Exception e) {
+                        UI.print("Encomenda inexistente!");
+                    }
                 }
                 break;
             default:
@@ -316,8 +320,10 @@ public class Menu {
                     e.printStackTrace();
                 }
                 exec = false;
+                break;
             case 1:
                 this.e.mudaDisponibilidade(cod);
+                UI.print("Disponibilidade alterada.");
                 break;
             case 2:
                 UI.print("Codigo de encomenda: ");
