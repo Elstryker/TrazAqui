@@ -232,7 +232,7 @@ public class Menu {
                     int clas = 0,i=0;
                     for(Map.Entry<String,Estafeta> a : e.getTrabalhadores().entrySet()){
                         if(a.getValue().getPedidosEncomenda().size()>0) {
-                            System.out.println(a.getValue().getPedidosEncomenda());
+                            UI.printPedidosEncomenda(a.getValue().getPedidosEncomenda());
                             i++;
                         }
                     }
@@ -290,10 +290,10 @@ public class Menu {
             case 2:
                 List<Encomenda> enc = this.e.encomendasDisponiveis(cod);
                 UI.printEncomendas(enc);
-                if (enc.size()>0) {
-                    UI.print("Codigo da encomenda: ");
-                    sc.nextLine();
-                    String codEncomenda = sc.nextLine();
+                UI.print("Codigo da encomenda: ");
+                sc.nextLine();
+                String codEncomenda = sc.nextLine();
+                if(enc.size()>0) {
                     try {
                         Encomenda e = this.e.removeEncomendaLoja(codEncomenda, cod);
                         if (e==null) {
