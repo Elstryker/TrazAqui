@@ -21,7 +21,7 @@ public class Menu {
         this.e = new Estado();
     }
 
-    public void run() throws IOException {
+    public void run() throws IOException, LojaInexistenteException {
         Scanner inp = new Scanner(System.in);
         int opcao = -1;
         try {

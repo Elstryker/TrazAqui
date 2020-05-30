@@ -51,7 +51,7 @@ public class FileIO {
         this.readLogPath = readLogPath;
     }
 
-    public void loadFromFile(Estado e) throws IOException {
+    public void loadFromFile(Estado e) throws IOException, LojaInexistenteException {
         BufferedReader file;
         GPS gps;
         file = new BufferedReader(new FileReader(this.readLogPath));

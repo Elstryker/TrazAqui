@@ -7,7 +7,7 @@ public class Main {
         Menu m = new Menu();
         try {
             m.run();
-        } catch (IOException e) {
+        } catch (IOException | LojaInexistenteException e) {
             e.printStackTrace();
         }
     }
