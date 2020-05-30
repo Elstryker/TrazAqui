@@ -103,6 +103,7 @@ public class UI {
         System.out.println("2) Indicar tamanho da fila");
         System.out.println("3) Top 10 utilizadores");
         System.out.println("4) Top 10 Transportadoras");
+        System.out.println("5) Terminar sessão");
     }
 
     public static void printTop10(List<String> r) {
