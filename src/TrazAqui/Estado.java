@@ -165,11 +165,26 @@ public class  Estado implements Serializable {
         this.trabalhadores.get(cod).addEncomendaEntregue(e);
     }
 
+    public double calculaPreco(Encomenda enc,String trans,String loja) {
+        Loja l = this.lojas.get(loja);
+        Transportadora t = (Transportadora) this.trabalhadores.get(trans);
+        double taxa = 0;
+
+        if (l instanceof LojaFilaEspera) {
+            LojaFilaEspera ljfe = (LojaFilaEspera) l;
+            taxa = ljfe.getTempoEspera()*ljfe.getListaEspera()*0.30;
+        }
+
+        double dist = l.getLocalizacao().distancia(t.getLocalizacao());
+        double preco = t.precoEncomenda(enc.getPeso(),dist);
+        return (preco+preco*taxa);
+    }
+
     public double totalFaturado(Transportadora t, LocalDateTime min, LocalDateTime max) {
         double total=0;
         for (Encomenda e : t.getEncomendasEntregues()) {
             if (e.getData().isAfter(min) && e.getData().isBefore(max)) {
-                    total += precoDaEncomenda(e.getCod(),t.getCod());
+                    total += calculaPreco(e,t.getCod(),e.getLoja());
             }
         }
         return total;
