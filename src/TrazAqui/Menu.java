@@ -297,9 +297,11 @@ public class Menu {
             case 2:
                 List<Encomenda> enc = this.e.encomendasDisponiveis(cod);
                 UI.printEncomendas(enc);
+                UI.print("Insira 0 caso nao exista encomendas.");
                 UI.print("Codigo da encomenda: ");
                 sc.nextLine();
                 String codEncomenda = sc.nextLine();
+                if (codEncomenda.equals("0")) break;
                 if(enc.size()>0) {
                     try {
                         Encomenda e = this.e.removeEncomendaLoja(codEncomenda, cod);
