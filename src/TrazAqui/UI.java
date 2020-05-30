@@ -37,6 +37,8 @@ public class UI {
         System.out.println("1 - Efetuar uma encomenda: ");
         System.out.println("2 - Ver historico de encomendas: ");
         System.out.println("3 - Aceitar pedidos: ");
+        System.out.println("4 - Top 100 utilizadores");
+        System.out.println("5 - Log off");
         System.out.println("0 - Sair");
     }
 
@@ -53,7 +55,7 @@ public class UI {
     }
 
     public static void printIndicarFragil() {
-        System.out.print("Indique se o produto é frágil? (true se sim, false se não): ");
+        System.out.print("Indique se o produto é frágil ou não (escreva true se sim, false se nao): ");
     }
 
     public static void printIndiqueCodProd() {
@@ -62,7 +64,7 @@ public class UI {
 
 
     public static void printDesejaMaisProd() {
-        System.out.print("Deseja encomendar mais produtos? (true se sim, false se não): ");
+        System.out.print("Deseja encomendar mais produtos? (escreva true se sim, false se nao)");
     }
 
     public static void printHistoricoEncomendas(Map<String,Encomenda> enc) {
@@ -158,8 +160,12 @@ public class UI {
         for(Encomenda enc: e){
             System.out.println(enc);
         }
-
     }
+
+    public static void printTipoIncorreto(){
+        System.out.println("Input incorreto");
+    }
+
 }
 
 
