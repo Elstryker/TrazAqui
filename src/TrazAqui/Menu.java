@@ -212,7 +212,7 @@ public class Menu {
                             }
                             e.addEncomendaLoja(loja, enc);
                         }
-                        catch (InputMismatchException e){
+                        catch (InputMismatchException | LojaInexistenteException e){
                             UI.printTipoIncorreto();
                         }
                     break;
