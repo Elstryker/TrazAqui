@@ -205,9 +205,9 @@ public class UI {
         }
     }
 
-    public static void printPedidosEncomenda(List<Encomenda> e){
+    public static void printPedidosEncomenda(List<Encomenda> e,Menu m, String trans){
         for(Encomenda enc: e){
-            System.out.println(enc);
+            System.out.println("Preço: " + String.format("%.2f",m.getPreco(enc,trans)) + ", Código: " + enc.getCod() + " -> " + enc);
         }
     }
 
@@ -308,8 +308,8 @@ public class UI {
         System.out.println("Indique a classificação que deseja dar: ");
     }
 
-    public static void printCodEncAceitar(){
-        System.out.println("Indique o código da encomenda cuja encomenda deseja aceitar:");
+    public static void printCodEncAceitar() {
+        System.out.println("Indique o código da encomenda que deseja tratar:");
     }
 
     public static void printInsiraCodLoja(){
@@ -325,6 +325,13 @@ public class UI {
 
     public static void printCodEncJaExiste(){
         System.out.println("Código da encomenda já existente");
+    }
+
+    public static void printAceitaOuNao() {
+        System.out.println("1 - Aceitar");
+        System.out.println("2 - Rejeitar");
+        System.out.println("0 - Sair");
+        System.out.print("Opcao: ");
     }
 }
 

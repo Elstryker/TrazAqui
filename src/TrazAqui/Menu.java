@@ -170,7 +170,11 @@ public class Menu {
             this.e.registar(email, password, cod, nome, new GPS(lat, longi), this.f, tipo,"",false);
     }
 
-    public void menuUtilizador() {
+    public double getPreco(Encomenda enc, String transp) {
+        return e.precoDaEncomendaMenu(enc,transp);
+    }
+
+    public void menuUtilizador() throws LojaInexistenteException {
         int opcao =-1;
         Scanner sc = new Scanner(System.in);
             UI.printMenuUtilizador();
@@ -257,13 +261,15 @@ public class Menu {
                     int i=0;
                     for(Map.Entry<String,Estafeta> a : e.getTrabalhadores().entrySet()){
                         if(a.getValue().getPedidosEncomenda().size()>0) {
-                            UI.printPedidosEncomenda(a.getValue().getPedidosEncomenda());
+                            UI.printPedidosEncomenda(a.getValue().getPedidosEncomenda(),this, a.getValue().getCod());
                             i++;
                         }
                     }
                     if(i>0) {
                         UI.printCodEncAceitar();
                         String codEncomenda = sc.nextLine();
+                        UI.printAceitaOuNao();
+                        int opc = sc.nextInt();
                         String codEsta = "";
                         Encomenda encomenda = null;
                         for(Map.Entry<String,Estafeta> a : e.getTrabalhadores().entrySet()) {
@@ -275,13 +281,20 @@ public class Menu {
                                 }
                             }
                         }
-                        assert encomenda != null;
-                        Estafeta est = e.daEstafeta(codEsta);
-                        est.addEncomendaEntregue(encomenda);
-                        est.removerEncomenda(encomenda.getCod());
-                        e.addEncomendaUtilizador(e.getLogin().getCod(), encomenda);
-                        UI.printInsiraClass();
-                        est.classifica(sc.nextInt());
+                        if(opc == 1) {
+                            assert encomenda != null;
+                            Estafeta est = e.daEstafeta(codEsta);
+                            est.addEncomendaEntregue(encomenda);
+                            est.removerEncomenda(encomenda.getCod());
+                            e.addEncomendaUtilizador(e.getLogin().getCod(), encomenda);
+                            UI.printInsiraClass();
+                            est.classifica(sc.nextInt());
+                        }
+                        else if(opc == 2) {
+                            assert encomenda != null;
+                            e.addEncomendaLoja(encomenda.getLoja(),encomenda);
+                            e.removeEncomendaTransportadora(encomenda.getCod(),codEsta);
+                        }
                     }
                     else UI.print0encParaAceitar();
                     break;
