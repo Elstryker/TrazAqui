@@ -1,7 +1,5 @@
 package TrazAqui;
 
-import org.w3c.dom.ls.LSOutput;
-
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.HashMap;
@@ -14,6 +12,7 @@ public class UI {
     }
 
     public static void printMenuInicial(){
+        System.out.println("----------------MENU-PRINCIPAL----------------");
         System.out.println("0 - Sair");
         System.out.println("1 - Login");
         System.out.println("2 - Criar uma nova conta");
@@ -37,6 +36,7 @@ public class UI {
     }
 
     public static void printMenuUtilizador() {
+        System.out.println("----------------MENU-UTILIZADOR----------------");
         System.out.println("1 - Efetuar uma encomenda ");
         System.out.println("2 - Ver historico de encomendas ");
         System.out.println("3 - Aceitar pedidos ");
@@ -103,6 +103,7 @@ public class UI {
 
 
     public static void printMenuVoluntario() {
+        System.out.println("----------------MENU-VOLUNTARIO----------------");
         System.out.println("1 - Mudar disponibilidade");
         System.out.println("2 - Escolher encomenda para ir buscar");
         System.out.println("3 - Alterar o raio de ação");
@@ -117,6 +118,7 @@ public class UI {
     }
     
     public static void printMenuTransportadora() {
+        System.out.println("----------------MENU-TRANSPORTADORA----------------");
         System.out.println("1 - Mudar disponibilidade");
         System.out.println("2 - Determinar preço da encomenda");
         System.out.println("3 - Transportar encomenda");
@@ -132,6 +134,7 @@ public class UI {
 
 
     public static void printMenuLoja() {
+        System.out.println("----------------MENU-LOJA----------------");
         System.out.println("0) Sair");
         System.out.println("1) Encomendas disponiveis para serem entregues");
         System.out.println("2) Indicar tamanho da fila");
