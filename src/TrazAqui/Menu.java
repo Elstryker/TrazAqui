@@ -300,6 +300,7 @@ public class Menu {
                     break;
                 case 6:
                     e.logoff();
+                    break;
                 default:
                     UI.printIncorrectInput();
                     break;
