@@ -65,4 +65,8 @@ public class Transportadora extends Estafeta {
     public String toStringNome() {
         return "Transportadora";
     }
+
+    public void aumentaKms(GPS e) {
+        this.numKms += e.distancia(this.getLocalizacao());
+    }
 }

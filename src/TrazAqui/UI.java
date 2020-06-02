@@ -166,7 +166,7 @@ public class UI {
                 }
             }
         }
-        else System.out.println("Sem encomendas a apresentar!");
+        else System.out.println(" -> Sem encomendas a apresentar!");
     }
 
 
@@ -179,7 +179,7 @@ public class UI {
                 System.out.println(sb.toString());
             }
         }
-        else System.out.println("Sem encomendas a apresentar!");
+        else System.out.println(" -> Sem encomendas a apresentar!");
     }
 
 
@@ -262,7 +262,7 @@ public class UI {
     }
 
     public static void printEncomendaInex(){
-        System.out.println("Encomenda inexistente.");
+        System.out.println(" -> Encomenda inexistente.");
     }
 
     public static void printSelectRaio() {
@@ -274,7 +274,7 @@ public class UI {
     }
 
     public static void printEncomendaEmTrans(){
-        System.out.println(" Encomenda em transporte.");
+        System.out.println(" -> Encomenda em transporte.");
     }
 
     public static void printInsiraCodEnc(){

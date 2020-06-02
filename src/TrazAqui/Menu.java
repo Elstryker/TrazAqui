@@ -278,6 +278,9 @@ public class Menu {
                         assert encomenda != null;
                         Estafeta est = e.daEstafeta(codEsta);
                         est.addEncomendaEntregue(encomenda);
+                        if (est instanceof Transportadora) {
+                            this.e.aumentaKms(est.getCod(),encomenda.getLoja());
+                        }
                         est.removerEncomenda(encomenda.getCod());
                         e.addEncomendaUtilizador(e.getLogin().getCod(), encomenda);
                         UI.printInsiraClass();

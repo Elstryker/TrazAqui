@@ -362,4 +362,9 @@ public class  Estado implements Serializable {
     public Estafeta daEstafeta(String codEsta){
         return this.trabalhadores.get(codEsta);
     }
+
+    public void aumentaKms(String cod,String loja) {
+        Transportadora t = (Transportadora) this.trabalhadores.get(cod);
+        t.aumentaKms(this.lojas.get(loja).getLocalizacao());
+    }
 }
