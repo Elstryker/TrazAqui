@@ -1,9 +1,7 @@
 package TrazAqui;
 
-
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.HashMap;
 import java.util.Map;
 
 public class UI {
@@ -13,6 +11,7 @@ public class UI {
     }
 
     public static void printMenuInicial(){
+        System.out.println("----------------MENU-PRINCIPAL----------------");
         System.out.println("0 - Sair");
         System.out.println("1 - Login");
         System.out.println("2 - Criar uma nova conta");
@@ -32,11 +31,13 @@ public class UI {
     }
 
     public static void printMenuUtilizador() {
+        System.out.println("----------------MENU-UTILIZADOR----------------");
         System.out.println("1 - Efetuar uma encomenda ");
         System.out.println("2 - Ver histórico de encomendas ");
         System.out.println("3 - Aceitar pedidos ");
         System.out.println("4 - Top 10 utilizadores");
-        System.out.println("5 - Terminar sessão");
+        System.out.println("5 - Top 10 transportadoras");
+        System.out.println("6 - Terminar sessao");
         System.out.println("0 - Sair");
     }
 
@@ -105,6 +106,7 @@ public class UI {
 
 
     public static void printMenuVoluntario() {
+        System.out.println("------------------MENU-VOLUNTARIO------------------");
         System.out.println("1 - Mudar disponibilidade");
         System.out.println("2 - Escolher encomenda para ir buscar");
         System.out.println("3 - Alterar o raio de ação");
@@ -115,6 +117,7 @@ public class UI {
 
     
     public static void printMenuTransportadora() {
+        System.out.println("----------------MENU-TRANSPORTADORA----------------");
         System.out.println("1 - Mudar disponibilidade");
         System.out.println("2 - Determinar preço da encomenda");
         System.out.println("3 - Transportar encomenda");
@@ -130,6 +133,7 @@ public class UI {
 
 
     public static void printMenuLoja() {
+        System.out.println("---------------------MENU-LOJA---------------------");
         System.out.println("0) Sair");
         System.out.println("1) Encomendas disponiveis para serem entregues");
         System.out.println("2) Indicar tamanho da fila");
@@ -260,11 +264,11 @@ public class UI {
     }
 
     public static void printMudeDisp(){
-        System.out.println("Altere a sua disponibilidade.");
+        System.out.println(" -> Altere a sua disponibilidade.");
     }
 
     public static void printDisponivel(){
-        System.out.println(" Disponível");
+        System.out.println(" -> Disponível");
     }
 
     public static void printIndisponivel(){
