@@ -155,6 +155,21 @@ public class UI {
             System.out.println(nome);
     }
 
+    public static void printEncomendasNormais(List<Encomenda> enc) {
+        StringBuilder sb;
+        if(enc.size() != 0) {
+            for (Encomenda e : enc) {
+                if (!e.getMedicamentos()) {
+                    sb = new StringBuilder();
+                    sb.append("Código: ").append(e.getCod()).append(" Conteúdo: ").append(e.getProdutos());
+                    System.out.println(sb.toString());
+                }
+            }
+        }
+        else System.out.println("Sem encomendas a apresentar!");
+    }
+
+
     public static void printEncomendas(List<Encomenda> enc) {
         StringBuilder sb;
         if(enc.size() != 0) {

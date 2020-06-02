@@ -414,7 +414,11 @@ public class Menu {
                 }
                 for (Loja l : this.e.getLojas().values()) {
                     if (l.getPedidos().size()>0) {
-                        UI.printEncomendas(l.getPedidos());
+                        if (this.e.getTrabalhadores().get(cod).isCertificada()) {
+                            UI.printEncomendas(l.getPedidos());
+                        } else {
+                            UI.printEncomendasNormais(l.getPedidos());
+                        }
                     }
                 }
                 UI.print0NEncomendas();
