@@ -296,8 +296,10 @@ public class Menu {
                     UI.printTop10(e.getTop10Util().stream().map(Utilizador::getNome).collect(Collectors.toList()));
                     break;
                 case 5:
-                    e.logoff();
+                    UI.printTop10(e.getTop10Trans().stream().map(Transportadora::getNome).collect(Collectors.toList()));
                     break;
+                case 6:
+                    e.logoff();
                 default:
                     UI.printIncorrectInput();
                     break;

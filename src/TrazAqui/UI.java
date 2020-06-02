@@ -1,7 +1,5 @@
 package TrazAqui;
 
-import org.w3c.dom.ls.LSOutput;
-
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.HashMap;
@@ -41,7 +39,8 @@ public class UI {
         System.out.println("2 - Ver historico de encomendas ");
         System.out.println("3 - Aceitar pedidos ");
         System.out.println("4 - Top 10 utilizadores");
-        System.out.println("5 - Terminar sessao");
+        System.out.println("5 - Top 10 transportadoras");
+        System.out.println("6 - Terminar sessao");
         System.out.println("0 - Sair");
     }
 
