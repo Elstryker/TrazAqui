@@ -182,49 +182,49 @@ public class Menu {
                     double peso,preco, quantidade;
                     boolean fragil, conti = true,med;
                     String codEnc,loja,cod, descricao;
-                        enc.setData(LocalDateTime.now());
-                        UI.printInsiraCodEnc();
-                        codEnc = sc.nextLine();
-                        enc.setCod(codEnc);
-                        UI.printTransMedica();
-                        try{
-                            med = sc.nextBoolean();
-                            enc.setMedicamentos(med);
-                            UI.printInsiraPeso();
-                            peso = sc.nextDouble();
-                            enc.setPeso(peso);
-                            enc.setUtilizador(e.getLogin().getCod());
-                            UI.printLojas(e.getLojas());
-                            UI.printInsiraCodLoja();
-                            sc.nextLine();
-                            loja = sc.nextLine();
-                            enc.setLoja(loja);
-                            while (conti) {
-                                try {
-                                    UI.printFazerDescricao();
-                                    descricao = sc.nextLine();
-                                    UI.printIndicarPreco();
-                                    preco = sc.nextDouble();
-                                    UI.printIndicarQuant();
-                                    quantidade = sc.nextDouble();
-                                    UI.printIndicarFragil();
-                                    fragil = sc.nextBoolean();
-                                    sc.nextLine();
-                                    UI.printIndiqueCodProd();
-                                    cod = sc.nextLine();
-                                    enc.addProduto(new LinhaEncomenda(descricao, preco, quantidade, fragil, cod));
-                                    UI.printDesejaMaisProd();
-                                    conti = sc.nextBoolean();
-                                    sc.nextLine();
-                                } catch (InputMismatchException e) {
-                                    UI.printTipoIncorreto();
-                                }
+                    enc.setData(LocalDateTime.now());
+                    UI.printInsiraCodEnc();
+                    codEnc = sc.nextLine();
+                    enc.setCod(codEnc);
+                    UI.printTransMedica();
+                    try{
+                        med = sc.nextBoolean();
+                        enc.setMedicamentos(med);
+                        UI.printInsiraPeso();
+                        peso = sc.nextDouble();
+                        enc.setPeso(peso);
+                        enc.setUtilizador(e.getLogin().getCod());
+                        UI.printLojas(e.getLojas());
+                        UI.printInsiraCodLoja();
+                        sc.nextLine();
+                        loja = sc.nextLine();
+                        enc.setLoja(loja);
+                        while (conti) {
+                            try {
+                                UI.printFazerDescricao();
+                                descricao = sc.nextLine();
+                                UI.printIndicarPreco();
+                                preco = sc.nextDouble();
+                                UI.printIndicarQuant();
+                                quantidade = sc.nextDouble();
+                                UI.printIndicarFragil();
+                                fragil = sc.nextBoolean();
+                                sc.nextLine();
+                                UI.printIndiqueCodProd();
+                                cod = sc.nextLine();
+                                enc.addProduto(new LinhaEncomenda(descricao, preco, quantidade, fragil, cod));
+                                UI.printDesejaMaisProd();
+                                conti = sc.nextBoolean();
+                                sc.nextLine();
+                            } catch (InputMismatchException e) {
+                                UI.printTipoIncorreto();
                             }
-                            e.addEncomendaLoja(loja, enc);
                         }
-                        catch (InputMismatchException | LojaInexistenteException e){
-                            UI.printTipoIncorreto();
-                        }
+                        e.addEncomendaLoja(loja, enc);
+                    }
+                    catch (InputMismatchException | LojaInexistenteException e){
+                        UI.printTipoIncorreto();
+                    }
                     break;
                 case 2:
                     LocalDateTime dataInicial = LocalDateTime.now();
@@ -305,6 +305,7 @@ public class Menu {
                     break;
                 case 6:
                     e.logoff();
+                    break;
                 default:
                     UI.printIncorrectInput();
                     break;
@@ -352,6 +353,8 @@ public class Menu {
                             UI.printNoMedica();
                             break;
                         }
+                        e.setEstafeta(cod);
+                        this.e.addEncomendaUtilizador(e.getUtilizador(),e);
                         this.e.addEncomendaEntregue(cod, e);
                         UI.printEncomendaEmTrans();
                     } catch (Exception e) {
@@ -364,6 +367,9 @@ public class Menu {
                 e.setRaio(cod,sc.nextDouble());
                 break;
             case 4:
+                UI.printClassMedia(e.getTrabalhadores().get(cod).getClassMedia());
+                break;
+            case 5:
                 this.e.logoff();
                 break;
             default:
@@ -470,6 +476,9 @@ public class Menu {
                 e.setPrecokms(cod,sc.nextDouble());
                 break;
             case 9:
+                UI.printClassMedia(e.getTrabalhadores().get(cod).getClassMedia());
+                break;
+            case 10:
                 this.e.logoff();
                 break;
             default:

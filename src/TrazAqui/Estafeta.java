@@ -29,24 +29,24 @@ public abstract class Estafeta implements Entrada, Serializable {
     public Estafeta(String cod, String nome, GPS localizacao, double raio, List<Encomenda> encomendasEntregues, List<Encomenda> pedidosEncomenda, int[] classificacao, boolean disponivel, boolean certificada) {
         this.cod = cod;
         this.nome = nome;
-        this.localizacao = localizacao;
+        setLocalizacao(localizacao);
         this.raio = raio;
-        this.encomendasEntregues = encomendasEntregues;
-        this.pedidosEncomenda = pedidosEncomenda;
-        this.classificacao = classificacao;
+        setEncomendasEntregues(encomendasEntregues);
+        setPedidosEncomenda(pedidosEncomenda);
+        setClassificacao(classificacao);
         this.disponivel = disponivel;
         this.certificada = certificada;
     }
 
     public Estafeta(Estafeta a){
-        this.cod = a.cod;
-        this.nome = a.nome;
-        this.setLocalizacao(a.localizacao);
-        this.raio= a.raio;
-        this.setEncomendasEntregues(a.encomendasEntregues);
-        this.setPedidosEncomenda(a.pedidosEncomenda);
-        this.setClassificacao(a.classificacao);
-        this.disponivel=a.disponivel;
+        this.cod = a.getCod();
+        this.nome = a.getNome();
+        this.localizacao = a.getLocalizacao();
+        this.raio = a.getRaio();
+        this.encomendasEntregues = a.getEncomendasEntregues();
+        this.pedidosEncomenda = a.getPedidosEncomenda();
+        this.classificacao = a.getClassificacao();
+        this.disponivel = a.isDisponivel();
         this.certificada = a.aceitoTransportesMedicamentos();
     }
 
@@ -126,11 +126,21 @@ public abstract class Estafeta implements Entrada, Serializable {
         pedidosEncomenda.forEach(l-> this.pedidosEncomenda.add(l.clone()));
     }
     public int[] getClassificacao() {
-        return classificacao;
+        int[] ret = new int[5];
+        int i = 0;
+        for(int x : this.classificacao) {
+            ret[i++] = x;
+        }
+        return ret;
     }
 
     public void setClassificacao(int[] classificacao) {
-        this.classificacao = classificacao;
+        int[] ret = new int[5];
+        int i = 0;
+        for(int x : classificacao) {
+            ret[i++] = x;
+        }
+        this.classificacao = ret;
     }
 
     public void classifica(int x) {
