@@ -117,7 +117,8 @@ public class UI {
         System.out.println("1 - Mudar disponibilidade");
         System.out.println("2 - Escolher encomenda para ir buscar");
         System.out.println("3 - Alterar o raio de ação");
-        System.out.println("4 - Terminar sessao");
+        System.out.println("4 - Ver classificação do estafeta");
+        System.out.println("5 - Terminar sessao");
         System.out.println("0 - Sair");
         System.out.print("Opcao: ");
     }
@@ -125,16 +126,17 @@ public class UI {
     
     public static void printMenuTransportadora() {
         System.out.println("----------------MENU-TRANSPORTADORA----------------");
-        System.out.println("1 - Mudar disponibilidade");
-        System.out.println("2 - Determinar preço da encomenda");
-        System.out.println("3 - Transportar encomenda");
-        System.out.println("4 - Top 10 utilizadores");
-        System.out.println("5 - Top 10 Transportadoras");
-        System.out.println("6 - Indicar o total faturado");
-        System.out.println("7 - Alterar raio de ação");
-        System.out.println("8 - Alterar preço por kilometro");
-        System.out.println("9 - Terminar sessao");
-        System.out.println("0 - Sair");
+        System.out.println("1  - Mudar disponibilidade");
+        System.out.println("2  - Determinar preço da encomenda");
+        System.out.println("3  - Transportar encomenda");
+        System.out.println("4  - Top 10 utilizadores");
+        System.out.println("5  - Top 10 Transportadoras");
+        System.out.println("6  - Indicar o total faturado");
+        System.out.println("7  - Alterar raio de ação");
+        System.out.println("8  - Alterar preço por kilometro");
+        System.out.println("9  - Ver classificação do estafeta");
+        System.out.println("10 - Terminar sessao");
+        System.out.println("0  - Sair");
         System.out.print("Opcao: ");
     }
 
@@ -166,7 +168,7 @@ public class UI {
                 }
             }
         }
-        else System.out.println("Sem encomendas a apresentar!");
+        else System.out.println(" -> Sem encomendas a apresentar!");
     }
 
 
@@ -179,7 +181,7 @@ public class UI {
                 System.out.println(sb.toString());
             }
         }
-        else System.out.println("Sem encomendas a apresentar!");
+        else System.out.println(" -> Sem encomendas a apresentar!");
     }
 
 
@@ -262,7 +264,7 @@ public class UI {
     }
 
     public static void printEncomendaInex(){
-        System.out.println("Encomenda inexistente.");
+        System.out.println(" -> Encomenda inexistente.");
     }
 
     public static void printSelectRaio() {
@@ -274,7 +276,7 @@ public class UI {
     }
 
     public static void printEncomendaEmTrans(){
-        System.out.println(" Encomenda em transporte.");
+        System.out.println(" -> Encomenda em transporte.");
     }
 
     public static void printInsiraCodEnc(){
@@ -332,6 +334,10 @@ public class UI {
         System.out.println("2 - Rejeitar");
         System.out.println("0 - Sair");
         System.out.print("Opcao: ");
+    }
+
+    public static void printClassMedia(Double clas){
+        System.out.println("O estafeta tem a classificação de " +clas);
     }
 }
 
