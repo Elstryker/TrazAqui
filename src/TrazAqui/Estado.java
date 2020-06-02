@@ -350,7 +350,7 @@ public class  Estado implements Serializable {
         }
         if (temFila) {
             LojaFilaEspera ljfe = (LojaFilaEspera) lj;
-            taxa = ljfe.getTempoEspera()*ljfe.getListaEspera()*0.30;
+            taxa = ljfe.getTempoEspera()*ljfe.getListaEspera()*1.30;
         }
         Transportadora t = (Transportadora) this.trabalhadores.get(transp);
         double dist = lj.getLocalizacao().distancia(t.getLocalizacao());
