@@ -24,7 +24,7 @@ public class UI {
     }
 
     public static void printIncorrectInput() {
-        System.out.print("Opcao inválida, tente novamente: ");
+        System.out.print("Opcão inválida, tente novamente: ");
     }
 
     public static void printInsiraPassword(){
@@ -32,16 +32,16 @@ public class UI {
     }
 
     public static void printDetalhesConta(){
-        System.out.print("Informaçoes da conta: ");
+        System.out.print("Informações da conta: ");
     }
 
     public static void printMenuUtilizador() {
         System.out.println("----------------MENU-UTILIZADOR----------------");
         System.out.println("1 - Efetuar uma encomenda ");
-        System.out.println("2 - Ver historico de encomendas ");
+        System.out.println("2 - Ver histórico de encomendas ");
         System.out.println("3 - Aceitar pedidos ");
         System.out.println("4 - Top 10 utilizadores");
-        System.out.println("5 - Terminar sessao");
+        System.out.println("5 - Terminar sessão");
         System.out.println("0 - Sair");
     }
 
@@ -58,7 +58,7 @@ public class UI {
     }
 
     public static void printIndicarFragil() {
-        System.out.print("Indique se o produto é frágil ou não (escreva true se sim, false se nao): ");
+        System.out.print("Indique se o produto é frágil ou não (escreva true se sim, false se não): ");
     }
 
     public static void printIndiqueCodProd() {
@@ -67,11 +67,11 @@ public class UI {
 
 
     public static void printDesejaMaisProd() {
-        System.out.print("Deseja encomendar mais produtos? (escreva true se sim, false se nao)");
+        System.out.print("Deseja encomendar mais produtos? (escreva true se sim, false se não)");
     }
 
     public static void printHistoricoEncomendas(Map<String,Encomenda> enc, int opcao,Utilizador u, LocalDateTime inicio,LocalDateTime fim) {
-        if(opcao==1 || opcao ==2 || opcao == 3) {
+        if(opcao==1 || opcao ==2 || opcao == 3 || opcao ==4) {
             if(enc.size()>0) {
                 int i=0;
                 if (opcao == 1) {
@@ -80,8 +80,8 @@ public class UI {
                             System.out.println(map.getKey() + ":" + map.getValue());
                             i++;
                         }
-                        if(i==0) UI.print("Nao existe nenhuma encomenda para apresentar");
                     }
+                    if(i==0) UI.print("Não existe nenhuma encomenda para apresentar");
                 }
                 if (opcao == 2) {
                     for (Map.Entry<String, Encomenda> map : enc.entrySet()) {
@@ -89,16 +89,23 @@ public class UI {
                             System.out.println(map.getKey() + ":" + map.getValue());
                             i++;
                         }
-                        if(i==0) UI.print("Nao existe nenhuma encomenda para apresentar");
                     }
+                    if(i==0) UI.print("Não existe nenhuma encomenda para apresentar");
                 }
                 if (opcao == 3) {
                     UI.printEncomendas(u.procuraPor(inicio, fim));
                 }
+                if(opcao == 4){
+                    for (Map.Entry<String, Encomenda> map : enc.entrySet()) {
+                            System.out.println(map.getKey() + ":" + map.getValue());
+                            i++;
+                        }
+                    if(i==0) UI.print("Não existe nenhuma encomenda para apresentar");
+                }
             }
-            else UI.print("Nao existe nenhuma encomenda para apresentar");
+            else UI.print("Não existe nenhuma encomenda para apresentar");
         }
-        else UI.print("Opcao invalida");
+        else UI.print("Opcão inválida");
     }
 
 
@@ -154,7 +161,7 @@ public class UI {
         if(enc.size() != 0) {
             for (Encomenda e : enc) {
                 sb = new StringBuilder();
-                sb.append("Codigo: ").append(e.getCod()).append(" Conteudo: ").append(e.getProdutos());
+                sb.append("Código: ").append(e.getCod()).append(" Conteúdo: ").append(e.getProdutos());
                 System.out.println(sb.toString());
             }
         }
@@ -186,8 +193,8 @@ public class UI {
 
     public static void printLojas(Map<String,Loja> lojas){
         for(Map.Entry<String,Loja> map: lojas.entrySet()){
-            System.out.println("Codigo da loja: " + map.getKey());
-            System.out.println("Nome da loja: " + map.getValue().getNome() + "  Localizaçao: " + map.getValue().getLocalizacao());
+            System.out.println("Código da loja: " + map.getKey());
+            System.out.println("Nome da loja: " + map.getValue().getNome() + "  Localização: " + map.getValue().getLocalizacao());
         }
     }
 
@@ -203,15 +210,16 @@ public class UI {
 
     public static void printDesejaTransVolTempo(){
         System.out.println("1 - Ver encomendas transportadas por transportadoras");
-        System.out.println("2 - Ver encomendas transportadas por voluntarios");
+        System.out.println("2 - Ver encomendas transportadas por voluntários");
         System.out.println("3 - Ver encomendas transportadas num intervalo de tempo");
+        System.out.println("4 - Ver todas as encomendas transportadas");
     }
     public static void printInsiraCod(){
-        System.out.println("Codigo: ");
+        System.out.println("Código: ");
     }
 
     public static void printTipoRegisto(){
-        System.out.println("Regista-se como Utilizador, Loja, LojaFilaEspera, Transportadora ou Voluntario?: ");
+        System.out.println("Regista-se como Utilizador, Loja, LojaFilaEspera, Transportadora ou Voluntário?: ");
     }
 
     public static void printInsiraNome(){
@@ -227,7 +235,7 @@ public class UI {
     }
 
     public static void printFormatoInvalido(){
-        System.out.println("Formato invalido!");
+        System.out.println("Formato inválido!");
     }
 
     public static void printDataInicial(){
@@ -243,7 +251,7 @@ public class UI {
     }
 
     public static void printNtemFilaEspera(){
-        System.out.println("Esta loja nao tem fila de espera.");
+        System.out.println("Esta loja não tem fila de espera.");
     }
 
     public static void printEncomendaInex(){
@@ -259,14 +267,15 @@ public class UI {
     }
 
     public static void printEncomendaEmTrans(){
-        System.out.println(" -> Encomenda em transporte.");
+        System.out.println(" Encomenda em transporte.");
     }
 
     public static void printInsiraCodEnc(){
-        System.out.println("Codigo da encomenda: ");
+        System.out.println("Código da encomenda: ");
     }
+
     public static void print0NEncomendas(){
-        System.out.println("Insira 0 caso nao existam encomendas.");
+        System.out.println("Pressione enter caso não existam encomendas.");
     }
 
     public static void printMudeDisp(){
@@ -274,18 +283,18 @@ public class UI {
     }
 
     public static void printDisponivel(){
-        System.out.println(" -> Disponivel");
+        System.out.println(" Disponível");
     }
 
     public static void printIndisponivel(){
-        System.out.println(" -> Indisponivel");
+        System.out.println(" -> Indisponível");
     }
     public static void printNoMedica(){
-        System.out.println("Nao pode transportar medicamentos!");
+        System.out.println("Não pode transportar medicamentos!");
     }
 
     public static void print0encParaAceitar(){
-        System.out.println("Nao existem encomendas para serem aceites.");
+        System.out.println("Não existem encomendas para serem aceites.");
     }
 
     public static void printInsiraClass(){
@@ -293,18 +302,18 @@ public class UI {
     }
 
     public static void printCodEncAceitar(){
-        System.out.println("Indique o codigo da encomenda cuja encomenda deseja aceitar:");
+        System.out.println("Indique o código da encomenda cuja encomenda deseja aceitar:");
     }
 
     public static void printInsiraCodLoja(){
-        System.out.println("Insira o codigo da loja: ");
+        System.out.println("Insira o código da loja: ");
     }
     public static void printInsiraPeso(){
         System.out.println("Indique o peso: ");
     }
 
     public static void printTransMedica(){
-        System.out.println("Transporta medicamentos(escreva true se sim, false se nao)");
+        System.out.println("Transporta medicamentos(escreva true se sim, false se não)");
     }
 }
 
