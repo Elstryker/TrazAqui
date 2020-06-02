@@ -110,7 +110,7 @@ public class UI {
 
 
     public static void printMenuVoluntario() {
-        System.out.println("----------------MENU-VOLUNTARIO----------------");
+        System.out.println("------------------MENU-VOLUNTARIO------------------");
         System.out.println("1 - Mudar disponibilidade");
         System.out.println("2 - Escolher encomenda para ir buscar");
         System.out.println("3 - Alterar o raio de ação");
@@ -141,7 +141,7 @@ public class UI {
 
 
     public static void printMenuLoja() {
-        System.out.println("----------------MENU-LOJA----------------");
+        System.out.println("---------------------MENU-LOJA---------------------");
         System.out.println("0) Sair");
         System.out.println("1) Encomendas disponiveis para serem entregues");
         System.out.println("2) Indicar tamanho da fila");
@@ -279,11 +279,11 @@ public class UI {
     }
 
     public static void printMudeDisp(){
-        System.out.println("Altere a sua disponibilidade.");
+        System.out.println(" -> Altere a sua disponibilidade.");
     }
 
     public static void printDisponivel(){
-        System.out.println(" Disponível");
+        System.out.println(" -> Disponível");
     }
 
     public static void printIndisponivel(){
