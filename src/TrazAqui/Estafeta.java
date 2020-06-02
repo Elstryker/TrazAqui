@@ -90,8 +90,12 @@ public abstract class Estafeta implements Entrada, Serializable {
         this.disponivel = disponivel;
     }
 
-    public void aceitaMedicamentos(boolean certificada){
-        this.certificada=certificada;
+    public boolean isCertificada() {
+        return certificada;
+    }
+
+    public void setCertificada(boolean certificada) {
+        this.certificada = certificada;
     }
 
     public boolean aceitoTransportesMedicamentos(){

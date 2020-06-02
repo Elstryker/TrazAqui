@@ -160,12 +160,14 @@ public class Menu {
         double longi = sc.nextDouble();
         sc.nextLine();
         if(tipo.equals("Transportadora")) {
-            System.out.print("NIF: ");
+            UI.printNif();
             String nif = sc.nextLine();
-            this.e.registar(email, password, cod, nome, new GPS(lat, longi), this.f, tipo,nif);
+            UI.printCertificado();
+            boolean cert = sc.nextBoolean();
+            this.e.registar(email, password, cod, nome, new GPS(lat, longi), this.f, tipo,nif,cert);
         }
         else
-            this.e.registar(email, password, cod, nome, new GPS(lat, longi), this.f, tipo,"");
+            this.e.registar(email, password, cod, nome, new GPS(lat, longi), this.f, tipo,"",false);
     }
 
     public void menuUtilizador() {

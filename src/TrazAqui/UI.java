@@ -65,6 +65,13 @@ public class UI {
         System.out.print("Indique o código do produto: ");
     }
 
+    public static void printCertificado() {
+        System.out.println("Tem certificado: ");
+    }
+    public static void printNif() {
+        System.out.println("Nif: ");
+    }
+
 
     public static void printDesejaMaisProd() {
         System.out.print("Deseja encomendar mais produtos? (escreva true se sim, false se não)");
