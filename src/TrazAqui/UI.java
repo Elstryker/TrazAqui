@@ -61,6 +61,13 @@ public class UI {
         System.out.print("Indique o código do produto: ");
     }
 
+    public static void printCertificado() {
+        System.out.println("Tem certificado: ");
+    }
+    public static void printNif() {
+        System.out.println("Nif: ");
+    }
+
 
     public static void printDesejaMaisProd() {
         System.out.print("Deseja encomendar mais produtos? (escreva true se sim, false se não)");
@@ -143,7 +150,7 @@ public class UI {
     }
 
     public static void printTop10(List<String> r) {
-        System.out.println("Top 10:");
+        System.out.println(" -> Top 10:");
         for(String nome: r)
             System.out.println(nome);
     }
@@ -163,7 +170,7 @@ public class UI {
 
     public static void printTotFat(double f) {
         StringBuilder sc = new StringBuilder();
-        sc.append("Total faturado: ").append(f);
+        sc.append(" -> Total faturado: ").append(f);
         System.out.println(sc.toString());
     }
 
@@ -172,7 +179,7 @@ public class UI {
     }
 
     public static void goodbye() {
-        System.out.println("A sair..\nObrigado por usar a nossa aplicação! :)");
+        System.out.println(" -> A sair...\nObrigado por usar a nossa aplicação! :)");
     }
 
 

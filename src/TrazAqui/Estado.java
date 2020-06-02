@@ -237,7 +237,7 @@ public class  Estado implements Serializable {
         return res;
     }
 
-    public void registar(String email, String pass, String cod, String nome, GPS loc, FileIO f, String tipo, String nif) throws IOException, ExistingCodeException {
+    public void registar(String email, String pass, String cod, String nome, GPS loc, FileIO f, String tipo, String nif,boolean cert) throws IOException, ExistingCodeException {
         Entrada a = new Utilizador();
         a = a.newEntrada(tipo);
         a.setCod(cod);
@@ -247,6 +247,7 @@ public class  Estado implements Serializable {
             ((Transportadora) a).setRaio(ThreadLocalRandom.current().nextDouble(60, 151));
             ((Transportadora) a).setPrecoKM(ThreadLocalRandom.current().nextDouble(1,6));
             ((Transportadora) a).setNIF(nif);
+            ((Transportadora) a).setCertificada(cert);
         }
         f.registaConta(email,pass,a,this);
     }
