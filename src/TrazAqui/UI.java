@@ -300,6 +300,10 @@ public class UI {
     public static void printTransMedica(){
         System.out.println("Transporta medicamentos(escreva true se sim, false se não)");
     }
+
+    public static void printCodEncJaExiste(){
+        System.out.println("Código da encomenda já existente");
+    }
 }
 
 
