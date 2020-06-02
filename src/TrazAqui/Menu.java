@@ -141,9 +141,9 @@ public class Menu {
         UI.printInsiraEmail();
         String email = sc.nextLine();
         if (verificaEmail(email)) {
-            throw new InvalidInputException("Email invalido!");
+            throw new InvalidInputException("Email inválido!");
         }
-        UI.printInsiraEmail();
+        UI.printInsiraPassword();
         String password = sc.nextLine();
         UI.printInsiraCod();
         String cod = sc.nextLine();

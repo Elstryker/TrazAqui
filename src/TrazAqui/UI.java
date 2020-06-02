@@ -1,6 +1,5 @@
 package TrazAqui;
 
-import org.w3c.dom.ls.LSOutput;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -30,10 +29,6 @@ public class UI {
 
     public static void printInsiraPassword(){
         System.out.print("Password: ");
-    }
-
-    public static void printDetalhesConta(){
-        System.out.print("Informações da conta: ");
     }
 
     public static void printMenuUtilizador() {
@@ -118,10 +113,6 @@ public class UI {
         System.out.print("Opcao: ");
     }
 
-    public static void printTrabalhadores(HashMap<String, Estafeta> trab) {
-        System.out.println("Trabalhadores");
-        System.out.println(trab.toString());
-    }
     
     public static void printMenuTransportadora() {
         System.out.println("1 - Mudar disponibilidade");
@@ -165,13 +156,6 @@ public class UI {
         else System.out.println("Sem encomendas a apresentar!");
     }
 
-    public static void printUtilizadores(List<Utilizador> l) {
-        l.forEach(t -> System.out.println(t.toString()));
-    }
-
-    public static void printTransportadoras(List<Transportadora> l) {
-        l.forEach(t -> System.out.println(t.toString()));
-    }
 
     public static void printTotFat(double f) {
         StringBuilder sc = new StringBuilder();
