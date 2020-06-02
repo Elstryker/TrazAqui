@@ -69,7 +69,15 @@ public class Loja implements Entrada, Serializable {
     }
 
     public void addPedido(Encomenda a) {
-        this.pedidos.add(a.clone());
+        int i=0;
+        for(Encomenda enc: this.getPedidos()){
+            if(enc.getCod().equals(a.getCod())) {
+                UI.printCodEncJaExiste();
+                i=1;
+            }
+
+        }
+        if(i==0) this.pedidos.add(a.clone());
     }
 
     public void removePedido(String cod) {

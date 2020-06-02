@@ -141,9 +141,9 @@ public class Menu {
         UI.printInsiraEmail();
         String email = sc.nextLine();
         if (verificaEmail(email)) {
-            throw new InvalidInputException("Email invalido!");
+            throw new InvalidInputException("Email inválido!");
         }
-        UI.printInsiraEmail();
+        UI.printInsiraPassword();
         String password = sc.nextLine();
         UI.printInsiraCod();
         String cod = sc.nextLine();
@@ -160,12 +160,14 @@ public class Menu {
         double longi = sc.nextDouble();
         sc.nextLine();
         if(tipo.equals("Transportadora")) {
-            System.out.print("NIF: ");
+            UI.printNif();
             String nif = sc.nextLine();
-            this.e.registar(email, password, cod, nome, new GPS(lat, longi), this.f, tipo,nif);
+            UI.printCertificado();
+            boolean cert = sc.nextBoolean();
+            this.e.registar(email, password, cod, nome, new GPS(lat, longi), this.f, tipo,nif,cert);
         }
         else
-            this.e.registar(email, password, cod, nome, new GPS(lat, longi), this.f, tipo,"");
+            this.e.registar(email, password, cod, nome, new GPS(lat, longi), this.f, tipo,"",false);
     }
 
     public void menuUtilizador() {
@@ -413,7 +415,11 @@ public class Menu {
                 }
                 for (Loja l : this.e.getLojas().values()) {
                     if (l.getPedidos().size()>0) {
-                        UI.printEncomendas(l.getPedidos());
+                        if (this.e.getTrabalhadores().get(cod).isCertificada()) {
+                            UI.printEncomendas(l.getPedidos());
+                        } else {
+                            UI.printEncomendasNormais(l.getPedidos());
+                        }
                     }
                 }
                 UI.print0NEncomendas();

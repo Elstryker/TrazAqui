@@ -2,7 +2,6 @@ package TrazAqui;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.HashMap;
 import java.util.Map;
 
 public class UI {
@@ -29,10 +28,6 @@ public class UI {
 
     public static void printInsiraPassword(){
         System.out.print("Password: ");
-    }
-
-    public static void printDetalhesConta(){
-        System.out.print("Informações da conta: ");
     }
 
     public static void printMenuUtilizador() {
@@ -64,6 +59,13 @@ public class UI {
 
     public static void printIndiqueCodProd() {
         System.out.print("Indique o código do produto: ");
+    }
+
+    public static void printCertificado() {
+        System.out.println("Tem certificado: ");
+    }
+    public static void printNif() {
+        System.out.println("Nif: ");
     }
 
 
@@ -120,10 +122,6 @@ public class UI {
         System.out.print("Opcao: ");
     }
 
-    public static void printTrabalhadores(HashMap<String, Estafeta> trab) {
-        System.out.println("Trabalhadores");
-        System.out.println(trab.toString());
-    }
     
     public static void printMenuTransportadora() {
         System.out.println("----------------MENU-TRANSPORTADORA----------------");
@@ -152,10 +150,25 @@ public class UI {
     }
 
     public static void printTop10(List<String> r) {
-        System.out.println("Top 10:");
+        System.out.println(" -> Top 10:");
         for(String nome: r)
             System.out.println(nome);
     }
+
+    public static void printEncomendasNormais(List<Encomenda> enc) {
+        StringBuilder sb;
+        if(enc.size() != 0) {
+            for (Encomenda e : enc) {
+                if (!e.getMedicamentos()) {
+                    sb = new StringBuilder();
+                    sb.append("Código: ").append(e.getCod()).append(" Conteúdo: ").append(e.getProdutos());
+                    System.out.println(sb.toString());
+                }
+            }
+        }
+        else System.out.println("Sem encomendas a apresentar!");
+    }
+
 
     public static void printEncomendas(List<Encomenda> enc) {
         StringBuilder sb;
@@ -169,17 +182,10 @@ public class UI {
         else System.out.println("Sem encomendas a apresentar!");
     }
 
-    public static void printUtilizadores(List<Utilizador> l) {
-        l.forEach(t -> System.out.println(t.toString()));
-    }
-
-    public static void printTransportadoras(List<Transportadora> l) {
-        l.forEach(t -> System.out.println(t.toString()));
-    }
 
     public static void printTotFat(double f) {
         StringBuilder sc = new StringBuilder();
-        sc.append("Total faturado: ").append(f);
+        sc.append(" -> Total faturado: ").append(f);
         System.out.println(sc.toString());
     }
 
@@ -188,7 +194,7 @@ public class UI {
     }
 
     public static void goodbye() {
-        System.out.println("A sair..\nObrigado por usar a nossa aplicação! :)");
+        System.out.println(" -> A sair...\nObrigado por usar a nossa aplicação! :)");
     }
 
 
@@ -315,6 +321,10 @@ public class UI {
 
     public static void printTransMedica(){
         System.out.println("Transporta medicamentos(escreva true se sim, false se não)");
+    }
+
+    public static void printCodEncJaExiste(){
+        System.out.println("Código da encomenda já existente");
     }
 }
 
