@@ -61,9 +61,6 @@ public class LinhaEncomenda implements Serializable {
         return fragil;
     }
 
-    public void setFragil(boolean fragil) {
-        this.fragil = fragil;
-    }
 
     public String getCod() {
         return codigo;
@@ -100,9 +97,5 @@ public class LinhaEncomenda implements Serializable {
         return sb.toString();
     }
 
-    //Metodos
-    public double calculaValorLinhaEnc() {
-        return this.quantidade * this.preco;
-    }
 
 }

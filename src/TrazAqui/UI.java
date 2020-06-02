@@ -2,7 +2,6 @@ package TrazAqui;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.HashMap;
 import java.util.Map;
 
 public class UI {
@@ -31,17 +30,14 @@ public class UI {
         System.out.print("Password: ");
     }
 
-    public static void printDetalhesConta(){
-        System.out.print("Informações da conta: ");
-    }
-
     public static void printMenuUtilizador() {
         System.out.println("----------------MENU-UTILIZADOR----------------");
         System.out.println("1 - Efetuar uma encomenda ");
         System.out.println("2 - Ver histórico de encomendas ");
         System.out.println("3 - Aceitar pedidos ");
         System.out.println("4 - Top 10 utilizadores");
-        System.out.println("5 - Terminar sessão");
+        System.out.println("5 - Top 10 transportadoras");
+        System.out.println("6 - Terminar sessao");
         System.out.println("0 - Sair");
     }
 
@@ -126,10 +122,6 @@ public class UI {
         System.out.print("Opcao: ");
     }
 
-    public static void printTrabalhadores(HashMap<String, Estafeta> trab) {
-        System.out.println("Trabalhadores");
-        System.out.println(trab.toString());
-    }
     
     public static void printMenuTransportadora() {
         System.out.println("----------------MENU-TRANSPORTADORA----------------");
@@ -175,13 +167,6 @@ public class UI {
         else System.out.println("Sem encomendas a apresentar!");
     }
 
-    public static void printUtilizadores(List<Utilizador> l) {
-        l.forEach(t -> System.out.println(t.toString()));
-    }
-
-    public static void printTransportadoras(List<Transportadora> l) {
-        l.forEach(t -> System.out.println(t.toString()));
-    }
 
     public static void printTotFat(double f) {
         StringBuilder sc = new StringBuilder();
