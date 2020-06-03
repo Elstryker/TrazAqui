@@ -7,7 +7,7 @@ import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
- * Classe que aglomera todas as informações do sistema ( utilizadores, estafetas, lojas e quem é o utilizador que está a usar o programa)
+ * Classe que aglomera todas as informações do sistema ( utilizadores, estafetas, lojas e quem é o utilizador que está a usar o programa).
  */
 public class  Estado implements Serializable {
     private HashMap<String,Utilizador> utilizadores;
@@ -16,7 +16,7 @@ public class  Estado implements Serializable {
     private Entrada login;
 
     /**
-     * Construtor vazio de Estado
+     * Construtor vazio de Estado.
      */
     public Estado() {
         this.utilizadores = new HashMap<>();
@@ -26,11 +26,11 @@ public class  Estado implements Serializable {
     }
 
     /**
-     * Construtor parametrizado do Estado
-     * @param u Map de todos os utilizadores
-     * @param t Map de todos os estafetas
-     * @param l Map de todas as lojas
-     * @param a Informação do utilizador que está a usar o programa
+     * Construtor parametrizado do Estado.
+     * @param u Map de todos os utilizadores.
+     * @param t Map de todos os estafetas.
+     * @param l Map de todas as lojas.
+     * @param a Informação do utilizador que está a usar o programa.
      */
     public Estado(HashMap<String,Utilizador> u,HashMap<String,Estafeta> t,HashMap<String,Loja> l, Entrada a) {
         this.setLojas(l);
@@ -40,8 +40,8 @@ public class  Estado implements Serializable {
     }
 
     /**
-     * Construtor por cópia do Estado
-     * @param e Estado que pretendemos copiar
+     * Construtor por cópia do Estado.
+     * @param e Estado que pretendemos copiar.
      */
     public Estado(Estado e) {
         this.setLojas(e.getLojas());
@@ -51,17 +51,17 @@ public class  Estado implements Serializable {
     }
 
     /**
-     * Método que clona um estado
-     * @return estado clonado
+     * Método que clona um estado.
+     * @return Estado clonado.
      */
     public Estado clone() {
         return new Estado(this);
     }
 
     /**
-     * Método que compara 2 estados
-     * @param o Estado a comparar
-     * @return booleano que indica se os elementos comparados são iguais ou não
+     * Método que compara 2 estados.
+     * @param o Estado a comparar.
+     * @return Booleano que indica se os elementos comparados são iguais ou não.
      */
     public boolean equals(Object o) {
         if (this==o) return true;
@@ -75,8 +75,8 @@ public class  Estado implements Serializable {
     }
 
     /**
-     * Converte um Estado para um string
-     * @return estado convertido numa string
+     * Converte um Estado para um string.
+     * @return Estado convertido numa string.
      */
     @Override
     public String toString() {
@@ -89,24 +89,24 @@ public class  Estado implements Serializable {
     }
 
     /**
-     * Getter do utilizador que está a usar o sistema
-     * @return utilizador que está a usar o sistema
+     * Getter do utilizador que está a usar o sistema.
+     * @return Utilizador que está a usar o sistema.
      */
     public Entrada getLogin() {
         return this.login == null ? null : this.login.clone();
     }
 
     /**
-     * Setter do utilizador que está a usar o sistema
-     * @param login utilizador
+     * Setter do utilizador que está a usar o sistema.
+     * @param login Utilizador.
      */
     public void setLogin(Entrada login) {
         this.login = login.clone();
     }
 
     /**
-     * Getter dos estafetas do sistema
-     * @return estafetas do sistema
+     * Getter dos estafetas do sistema.
+     * @return Estafetas do sistema.
      */
     public HashMap<String, Estafeta> getTrabalhadores() {
         HashMap<String,Estafeta> res = new HashMap<>();
@@ -118,8 +118,8 @@ public class  Estado implements Serializable {
     }
 
     /**
-     * Setter dos estafetas do sistema
-     * @param trabalhadores estafetas que pretendemos adicionar ao sistema
+     * Setter dos estafetas do sistema.
+     * @param trabalhadores Estafetas que pretendemos adicionar ao sistema.
      */
     public void setTrabalhadores(HashMap<String, Estafeta> trabalhadores) {
         this.trabalhadores = new HashMap<>();
@@ -130,9 +130,9 @@ public class  Estado implements Serializable {
     }
 
     /**
-     * Adiciona um estafeta ao sistema
-     * @param e estafeta que vamos adicionar
-     * @throws ExistingCodeException Caso já exista o estafeta no sistema, temos uma exception
+     * Adiciona um estafeta ao sistema.
+     * @param e Estafeta que vamos adicionar.
+     * @throws ExistingCodeException Caso já exista o estafeta no sistema, temos uma exception.
      */
     public void addTrabalhador(Estafeta e) throws ExistingCodeException {
         if(this.trabalhadores.putIfAbsent(e.getCod(),e.clone()) != null)
@@ -140,9 +140,9 @@ public class  Estado implements Serializable {
     }
 
     /**
-     * Adiciona um utilizador ao sistema
-     * @param u utilizador que vamos adicionar
-     * @throws ExistingCodeException Caso já exista o utilizador no sistema, temos uma exception
+     * Adiciona um utilizador ao sistema.
+     * @param u Utilizador que vamos adicionar.
+     * @throws ExistingCodeException Caso já exista o utilizador no sistema, temos uma exception.
      */
     public void addUtilizador(Utilizador u) throws ExistingCodeException {
         if(this.utilizadores.putIfAbsent(u.getCod(),u.clone())!=null)
@@ -150,9 +150,9 @@ public class  Estado implements Serializable {
     }
 
     /**
-     * Adiciona uma loja ao sistema
-     * @param l Loja que vamos adicionar ao sistema
-     * @throws ExistingCodeException Caso já exista a loja no sistema, temos uma exception
+     * Adiciona uma loja ao sistema.
+     * @param l Loja que vamos adicionar ao sistema.
+     * @throws ExistingCodeException Caso já exista a loja no sistema, temos uma exception.
      */
     public void addLoja(Loja l) throws ExistingCodeException {
         if(this.lojas.putIfAbsent(l.getCod(),l.clone()) != null)
@@ -160,8 +160,8 @@ public class  Estado implements Serializable {
     }
 
     /**
-     * Getter dos utilizadores dos sistemas
-     * @return Utilizadores do sistema
+     * Getter dos utilizadores dos sistemas.
+     * @return Utilizadores do sistema.
      */
     public HashMap<String, Utilizador> getUtilizadores() {
         HashMap<String,Utilizador> res = new HashMap<>();
@@ -172,8 +172,8 @@ public class  Estado implements Serializable {
     }
 
     /**
-     * Setter dos utilizadores do sistema
-     * @param utilizadores utilizadores do sistema
+     * Setter dos utilizadores do sistema.
+     * @param utilizadores Utilizadores do sistema.
      */
     public void setUtilizadores(HashMap<String, Utilizador> utilizadores) {
         this.utilizadores = new HashMap<>();
@@ -183,8 +183,8 @@ public class  Estado implements Serializable {
     }
 
     /**
-     * Getter de lojas do sistema
-     * @return lojas do sistema
+     * Getter de lojas do sistema.
+     * @return Lojas do sistema.
      */
     public HashMap<String, Loja> getLojas() {
         HashMap<String,Loja> res = new HashMap<>();
@@ -195,8 +195,8 @@ public class  Estado implements Serializable {
     }
 
     /**
-     * Setter de lojas no sistema
-     * @param lojas lojas que vamos adicionar ao sistema
+     * Setter de lojas no sistema.
+     * @param lojas Lojas que vamos adicionar ao sistema.
      */
     public void setLojas(HashMap<String, Loja> lojas) {
         this.lojas = new HashMap<>();
@@ -206,19 +206,19 @@ public class  Estado implements Serializable {
     }
 
     /**
-     * Getter de posição geográfica de um utilizador, estafeta ou loja
-     * @param user Código do utilizador, estafeta ou loja
-     * @return posição geográfica
+     * Getter de posição geográfica de um utilizador, estafeta ou loja.
+     * @param user Código do utilizador, estafeta ou loja.
+     * @return Posição geográfica.
      */
     public GPS getUserPos(String user) {
         return this.utilizadores.get(user).getLocalizacao();
     }
 
     /**
-     * Remove uma encomenda de uma loja
-     * @param codEnc código de uma encomenda
-     * @param cod código estafeta
-     * @return retorna null caso haja um erro, uma encomenda caso não haja erro
+     * Remove uma encomenda de uma loja.
+     * @param codEnc Código de uma encomenda.
+     * @param cod Código estafeta.
+     * @return Retorna null caso haja um erro, uma encomenda caso não haja erro.
      */
     public Encomenda removeEncomendaLoja(String codEnc,String cod) {
         boolean medicamentos = false;
@@ -242,29 +242,29 @@ public class  Estado implements Serializable {
     }
 
     /**
-     * Adiciona um pedido de transporte
-     * @param cod código do estafeta
-     * @param e Encomenda que vamos adicionar aos pedidos
+     * Adiciona um pedido de transporte.
+     * @param cod Código do estafeta.
+     * @param e Encomenda que vamos adicionar aos pedidos.
      */
     public void addPedidoDeTransporte(String cod,Encomenda e) {
         this.trabalhadores.get(cod).addPedidosEncomenda(e);
     }
 
     /**
-     * Adiciona uma encomenda à lista de encomendas entregues
-     * @param cod código do estafeta
-     * @param e Encomenda que vamos adicionar
+     * Adiciona uma encomenda à lista de encomendas entregues.
+     * @param cod Código do estafeta.
+     * @param e Encomenda que vamos adicionar.
      */
     public void addEncomendaEntregue(String cod, Encomenda e) {
         this.trabalhadores.get(cod).addEncomendaEntregue(e);
     }
 
     /**
-     * Calculador do preço de uma encomenda
-     * @param enc Encomenda que vamos calcular o peso
-     * @param trans Código do transportador
-     * @param loja Loja onde a encomenda foi pedida
-     * @return preço final da encomenda
+     * Calculador do preço de uma encomenda.
+     * @param enc Encomenda que vamos calcular o peso.
+     * @param trans Código do transportador.
+     * @param loja Loja onde a encomenda foi pedida.
+     * @return Preço final da encomenda.
      */
     public double calculaPreco(Encomenda enc,String trans,String loja) {
         Loja l = this.lojas.get(loja);
@@ -282,11 +282,11 @@ public class  Estado implements Serializable {
     }
 
     /**
-     * Calculador do faturado num intervalo de tempo
-     * @param cod código do estafeta
-     * @param min Data inicial do intervalo de tempo
-     * @param max Data final do intervalo de tempo
-     * @return total faturado
+     * Calculador do faturado num intervalo de tempo.
+     * @param cod Código do estafeta.
+     * @param min Data inicial do intervalo de tempo.
+     * @param max Data final do intervalo de tempo.
+     * @return Total faturado.
      */
     public double totalFaturado(String cod, LocalDateTime min, LocalDateTime max) {
         double total=0;
@@ -299,8 +299,8 @@ public class  Estado implements Serializable {
     }
 
     /**
-     * Função que nos dá o top10 utilizadores com base no número de pedidos
-     * @return os 10 maiores utilizadores no sistema
+     * Função que nos dá o top10 utilizadores com base no número de pedidos.
+     * @return Os 10 maiores utilizadores no sistema.
      */
     public List<Utilizador> getTop10Util() {
         Comparator<Integer> comp = Integer::compareTo;
@@ -324,8 +324,8 @@ public class  Estado implements Serializable {
     }
 
     /**
-     * Método dos top 10 transportadores com base no número de kilometros percorridos por cada transportador
-     * @return Top 10 transportadoras com base no número de kilometros percorridos
+     * Método dos top 10 transportadores com base no número de kilometros percorridos por cada transportador.
+     * @return Top 10 transportadoras com base no número de kilometros percorridos.
      */
     public List<Transportadora> getTop10Trans() {
         Comparator<Double> comp = Double::compareTo;
@@ -354,18 +354,18 @@ public class  Estado implements Serializable {
     }
 
     /**
-     * Registo de uma nova conta no sistema
-     * @param email email do novo utilizador
-     * @param pass password do novo utilizador
-     * @param cod código do novo utilizador
-     * @param nome nome do novo utilizador
-     * @param loc localização do novo utilizador
-     * @param f File onde vamos armazenar a informação do novo utilizador
-     * @param tipo Tipo do novo utilizador
-     * @param nif NIF do novo utilizador (só caso seja um transportador)
-     * @param cert Boolean que diz se um transportador é certificado para transportar medicamentos
-     * @throws IOException exception caso hajam erros de input
-     * @throws ExistingCodeException exception caso já exista aquele utilizador
+     * Registo de uma nova conta no sistema.
+     * @param email Email do novo utilizador.
+     * @param pass Password do novo utilizador.
+     * @param cod Código do novo utilizador.
+     * @param nome Nome do novo utilizador.
+     * @param loc Localização do novo utilizador.
+     * @param f File onde vamos armazenar a informação do novo utilizador.
+     * @param tipo Tipo do novo utilizador.
+     * @param nif NIF do novo utilizador (só caso seja um transportador).
+     * @param cert Boolean que diz se um transportador é certificado para transportar medicamentos.
+     * @throws IOException Exception caso hajam erros de input.
+     * @throws ExistingCodeException Exception caso já exista aquele utilizador.
      */
     public void registar(String email, String pass, String cod, String nome, GPS loc, FileIO f, String tipo, String nif,boolean cert) throws IOException, ExistingCodeException {
         Entrada a = new Utilizador();
@@ -383,28 +383,28 @@ public class  Estado implements Serializable {
     }
 
     /**
-     * Login de um utilizador
-     * @param email email do utilizador que vai dar login
-     * @param pass password do utilizador que vai dar login
-     * @param f File onde estão armazenadas as informações de login
-     * @throws IOException exception caso hajam erros de input
-     * @throws InvalidInputException exception caso o input que damos não seja o correto
+     * Login de um utilizador.
+     * @param email Email do utilizador que vai dar login.
+     * @param pass Password do utilizador que vai dar login.
+     * @param f File onde estão armazenadas as informações de login.
+     * @throws IOException Exception caso hajam erros de input.
+     * @throws InvalidInputException Exception caso o input que damos não seja o correto.
      */
     public void login(String email, String pass, FileIO f) throws IOException, InvalidInputException {
         f.validaLogin(email,pass, this);
     }
 
     /**
-     * Método que termina a sessão
+     * Método que termina a sessão.
      */
     public void logoff() {
         this.login = null;
     }
 
     /**
-     * Adiciona uma nova conta
-     * @param a Conta que vamos adicionar
-     * @throws ExistingCodeException exception caso já exista essa conta
+     * Adiciona uma nova conta.
+     * @param a Conta que vamos adicionar.
+     * @throws ExistingCodeException Exception caso já exista essa conta.
      */
     public void add(Entrada a) throws ExistingCodeException {
         if(a instanceof Utilizador) addUtilizador((Utilizador) a);
@@ -415,19 +415,19 @@ public class  Estado implements Serializable {
     }
 
     /**
-     * Adiciona uma encomenda a um utilizador
-     * @param cod código do utilizador
-     * @param e Encomenda que vamos adicionar
+     * Adiciona uma encomenda a um utilizador.
+     * @param cod Código do utilizador.
+     * @param e Encomenda que vamos adicionar.
      */
     public void addEncomendaUtilizador(String cod,Encomenda e) {
         this.utilizadores.get(cod).addEncomenda(e);
     }
 
     /**
-     * Adiciona uma encomenda a uma loja
-     * @param cod Código da loja
-     * @param e Encomenda que vamos adicionar
-     * @throws LojaInexistenteException Exception caso essa loja não exista
+     * Adiciona uma encomenda a uma loja.
+     * @param cod Código da loja.
+     * @param e Encomenda que vamos adicionar.
+     * @throws LojaInexistenteException Exception caso essa loja não exista.
      */
     public void addEncomendaLoja(String cod,Encomenda e) throws LojaInexistenteException {
         if(this.getLojas().get(cod) != null) this.lojas.get(cod).addPedido(e);
@@ -435,45 +435,45 @@ public class  Estado implements Serializable {
     }
 
     /**
-     * Getter de um utilizador do sistema
-     * @param cod código do utilizador
-     * @return Utilizador
+     * Getter de um utilizador do sistema.
+     * @param cod Código do utilizador.
+     * @return Utilizador.
      */
     public Utilizador getUtilizador(String cod) {
         return this.utilizadores.get(cod).clone();
     }
 
     /**
-     * Getter de uma loja do sistema
-     * @param cod código da loja
-     * @return loja
+     * Getter de uma loja do sistema.
+     * @param cod Código da loja.
+     * @return Loja.
      */
     public Loja getLoja(String cod) {
         return this.lojas.get(cod).clone();
     }
 
     /**
-     * Getter de uma estafeta que esteja no sistema
-     * @param cod código de um estafeta
-     * @return Estafeta
+     * Getter de uma estafeta que esteja no sistema.
+     * @param cod Código de um estafeta.
+     * @return Estafeta.
      */
     public Estafeta getEstafeta(String cod) {
         return this.trabalhadores.get(cod).clone();
     }
 
     /**
-     * Setter do raio de um estafeta
-     * @param cod código de um estafeta
-     * @param raio raio que pretendemos dar a um estafeta
+     * Setter do raio de um estafeta.
+     * @param cod Código de um estafeta.
+     * @param raio Raio que pretendemos dar a um estafeta.
      */
     public void setRaio(String cod, double raio) {
         this.trabalhadores.get(cod).setRaio(raio);
     }
 
     /**
-     * Setter do preço por kilometro de um transportador
-     * @param cod código do transportador
-     * @param preco preço que pretendemos dar a um tranportador
+     * Setter do preço por kilometro de um transportador.
+     * @param cod Código do transportador.
+     * @param preco Preço que pretendemos dar a um tranportador.
      */
     public void setPrecokms(String cod, double preco) {
         Transportadora a = (Transportadora) this.trabalhadores.get(cod);
@@ -481,27 +481,27 @@ public class  Estado implements Serializable {
     }
 
     /**
-     * Método que muda a disponibilidade de um transportador
-     * @param cod código de um estafeta
-     * @return booleano com a nova disponibilidade do estafeta
+     * Método que muda a disponibilidade de um transportador.
+     * @param cod Código de um estafeta.
+     * @return Booleano com a nova disponibilidade do estafeta.
      */
     public boolean mudaDisponibilidade(String cod) {
         return this.trabalhadores.get(cod).mudaDisponibilidade();
     }
 
     /**
-     * Método que indica a disponibilidade de um estafeta
-     * @param cod código do estafeta
-     * @return disponibilidade do estafeta
+     * Método que indica a disponibilidade de um estafeta.
+     * @param cod Código do estafeta.
+     * @return Disponibilidade do estafeta.
      */
     public boolean disponivel(String cod) {
         return this.trabalhadores.get(cod).isDisponivel();
     }
 
     /**
-     * Lista das encomendas que um estafeta pode ir buscar, tendo em conta o raio de ação de um estafeta e a sua distância às lojas
-     * @param cod código de um estafeta
-     * @return lista de encomendas que um estafeta que pode ir buscar
+     * Lista das encomendas que um estafeta pode ir buscar, tendo em conta o raio de ação de um estafeta e a sua distância às lojas.
+     * @param cod Código de um estafeta.
+     * @return Lista de encomendas que um estafeta que pode ir buscar.
      */
     public List<Encomenda> encomendasDisponiveis(String cod) {
         Estafeta u = this.trabalhadores.get(cod);
@@ -576,9 +576,9 @@ public class  Estado implements Serializable {
     }
 
     /**
-     * Método que adiciona kilometros percorridos numa encomenda ao total de kilometros percorridos por uma transportadora
-     * @param cod código da transportadora
-     * @param loja loja aonde a transportadora foi buscar a encomenda
+     * Método que adiciona kilometros percorridos numa encomenda ao total de kilometros percorridos por uma transportadora.
+     * @param cod Código da transportadora.
+     * @param loja Loja aonde a transportadora foi buscar a encomenda.
      */
     public void aumentaKms(String cod,String loja) {
         Transportadora t = (Transportadora) this.trabalhadores.get(cod);
@@ -586,9 +586,9 @@ public class  Estado implements Serializable {
     }
 
     /**
-     * Método que permite classificar um estafeta
-     * @param codEsta código de um estafeta
-     * @param value Classificação que vamos dar
+     * Método que permite classificar um estafeta.
+     * @param codEsta Código de um estafeta.
+     * @param value Classificação que vamos dar.
      */
     public void classifica(String codEsta, int value) {
         this.trabalhadores.get(codEsta).classifica(value);

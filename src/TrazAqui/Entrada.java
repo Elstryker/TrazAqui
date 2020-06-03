@@ -1,17 +1,20 @@
 package TrazAqui;
 
+/**
+ * Classe que armazena a informação do utilizador que está a usar o sistema
+ */
 public interface Entrada {
-    public String getCod();
-    public void setCod(String  n);
-    public String getNome();
-    public void setNome(String n);
-    public GPS getLocalizacao();
-    public void setLocalizacao(GPS a);
-    public Entrada clone();
-    public String toString();
-    public boolean equals(Object o);
-    public String toStringNome();
-    public default Entrada newEntrada(String tipo) {
+    String getCod();
+    void setCod(String  n);
+    String getNome();
+    void setNome(String n);
+    GPS getLocalizacao();
+    void setLocalizacao(GPS a);
+    Entrada clone();
+    String toString();
+    boolean equals(Object o);
+    String toStringNome();
+    default Entrada newEntrada(String tipo) {
         Entrada a = null;
         switch (tipo) {
             case "Utilizador":

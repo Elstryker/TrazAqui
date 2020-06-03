@@ -4,53 +4,99 @@ import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Classe responsável pelo controlo sobre os ficheiros necessários para o programa.
+ */
 public class FileIO {
     private String readLogPath;
     private String savedPath;
     private String accPath;
 
+    /**
+     * Construtor vazio de FileIO.
+     */
     public FileIO() {
         this.readLogPath = "";
         this.accPath = "";
         this.savedPath = "";
     }
 
+    /**
+     * Construtor parametrizado de FileIO.
+     * @param p Path do ficheiro de logs.
+     * @param p2 Path do ficheiro do estado.
+     * @param p3 Path do ficheiro de credenciais.
+     */
     public FileIO(String p, String p2, String p3) {
         this.readLogPath = p;
         this.savedPath = p2;
         this.accPath = p3;
     }
 
+    /**
+     * Construtor por cópia de FileIO.
+     * @param f FileIO que pretendemos copiar.
+     */
     public FileIO(FileIO f) {
         this.readLogPath = f.getReadLogPath();
         this.savedPath = f.getSavedPath();
         this.accPath = f.getAccPath();
     }
 
+    /**
+     * Getter do path do ficheiro de estado.
+     * @return Path do ficheiro do estado.
+     */
     public String getSavedPath() {
         return savedPath;
     }
 
+    /**
+     * Setter do path do ficheiro de estado.
+     * @param savedPath Path do ficheiro de estado.
+     */
     public void setSavedPath(String savedPath) {
         this.savedPath = savedPath;
     }
 
+    /**
+     * Getter do path do ficheiro de credenciais.
+     * @return Path do ficheiro de credenciais.
+     */
     public String getAccPath() {
         return accPath;
     }
 
+    /**
+     * Setter do path do ficheiro de credenciais.
+     * @param accPath Path do ficheiro de credenciais.
+     */
     public void setAccPath(String accPath) {
         this.accPath = accPath;
     }
 
+    /**
+     * Getter do path do ficheiro de logs.
+     * @return Path do ficheiro de logs.
+     */
     public String getReadLogPath() {
         return readLogPath;
     }
 
+    /**
+     * Setter do path do ficheiro de logs.
+     * @param readLogPath Path do ficheiro de logs.
+     */
     public void setReadLogPath(String readLogPath) {
         this.readLogPath = readLogPath;
     }
 
+    /**
+     * Método que lê de um ficheiro.
+     * @param e Estado.
+     * @throws IOException Caso hajam erros de IO, dá excecão.
+     * @throws LojaInexistenteException Caso a loja não exista no sistema, dá exceção.
+     */
     public void loadFromFile(Estado e) throws IOException, LojaInexistenteException {
         BufferedReader file;
         GPS gps;
@@ -151,6 +197,11 @@ public class FileIO {
         file.close();
     }
 
+    /**
+     * Método que guarda em ficheiro.
+     * @param e Estado de onde pretendemos obter informação para guardar em ficheiro.
+     * @throws IOException Caso hajam erros de IO, dá exceção.
+     */
     public void saveToFile(Estado e) throws IOException {
         BufferedWriter file = new BufferedWriter(new FileWriter(this.savedPath));
         for(Utilizador u: e.getUtilizadores().values())
@@ -198,6 +249,12 @@ public class FileIO {
         file.close();
     }
 
+    /**
+     * Escreve em ficheiro.
+     * @param file Ficheiro para onde vamos escrever.
+     * @param enc Encomenda.
+     * @throws IOException Caso hajam erros de IO, dá exceção.
+     */
     private void write(BufferedWriter file, Encomenda enc) throws IOException {
         file.write("Encomenda:"+enc.getCod()+","+enc.getUtilizador()+","+enc.getLoja()+","+enc.getPeso());
         for(LinhaEncomenda linha: enc.getProdutos())
@@ -205,6 +262,15 @@ public class FileIO {
         file.newLine();
     }
 
+    /**
+     * Regista uma conta em ficheiro.
+     * @param email Email do utilizador.
+     * @param password Password do utilizador.
+     * @param ent Dados do login do utilizador.
+     * @param e Estado.
+     * @throws IOException Caso hajam erros de IO, dá exceção.
+     * @throws ExistingCodeException Caso já exista um utilizador com o mesmo código, dá exceção.
+     */
     public void registaConta(String email, String password, Entrada ent, Estado e) throws IOException, ExistingCodeException {
         FileWriter fw = new FileWriter(this.accPath,true);
         BufferedWriter writer = new BufferedWriter(fw);
@@ -215,6 +281,14 @@ public class FileIO {
         e.add(ent);
     }
 
+    /**
+     * Método que compara os dados inseridos para login com os dados existentes em ficheiro.
+     * @param email Email inserido pelo utilizador.
+     * @param pass Password inserida pelo utilizador.
+     * @param e Estado do sistema.
+     * @throws IOException Caso hajam erros de IO, dá exceção.
+     * @throws InvalidInputException Caso o input dado não seja válido, dá exceção.
+     */
     public void validaLogin(String email, String pass, Estado e) throws IOException, InvalidInputException {
         boolean found = false;
         String cod = "";
@@ -251,6 +325,11 @@ public class FileIO {
         reader.close();
     }
 
+    /**
+     * Guarda um Estado em modo binário.
+     * @param e Estado que pretendemos guardar.
+     * @throws IOException Caso hajam erros de IO, dá exceção.
+     */
     public void saveObjectStream(Estado e) throws IOException {
         FileOutputStream fos = new FileOutputStream(this.savedPath);
         ObjectOutputStream oos = new ObjectOutputStream(fos);
@@ -260,6 +339,12 @@ public class FileIO {
         fos.close();
     }
 
+    /**
+     * Lê um estado guardado em modo binário.
+     * @return Estado lido do modo binário.
+     * @throws IOException Caso hajam erros de IO, dá exceção.
+     * @throws ClassNotFoundException Caso a classe não seja encontrada, dá exceção.
+     */
     public Estado readObjectStream() throws IOException, ClassNotFoundException {
         FileInputStream fis = new FileInputStream(this.savedPath);
         ObjectInputStream ois = new ObjectInputStream(fis);
