@@ -575,11 +575,21 @@ public class  Estado implements Serializable {
         return (preco + preco * taxa);
     }
 
+    /**
+     * Método que adiciona kilometros percorridos numa encomenda ao total de kilometros percorridos por uma transportadora
+     * @param cod código da transportadora
+     * @param loja loja aonde a transportadora foi buscar a encomenda
+     */
     public void aumentaKms(String cod,String loja) {
         Transportadora t = (Transportadora) this.trabalhadores.get(cod);
         t.aumentaKms(this.lojas.get(loja).getLocalizacao());
     }
 
+    /**
+     * Método que permite classificar um estafeta
+     * @param codEsta código de um estafeta
+     * @param value Classificação que vamos dar
+     */
     public void classifica(String codEsta, int value) {
         this.trabalhadores.get(codEsta).classifica(value);
     }
