@@ -28,10 +28,10 @@ public class Utilizador implements Entrada, Serializable {
 
     /**
      * Construtor parametrizado
-     * @param n String
-     * @param c String
-     * @param pos GPS
-     * @param l Map<String,Encomenda>
+     * @param n String nome 
+     * @param c String codigo
+     * @param pos GPS localizacao
+     * @param l Map<String,Encomenda> map de codigos de encomenda para encomenda
      */
     public Utilizador(String n, String c, GPS pos, Map<String,Encomenda> l) {
         this.nome = n;
@@ -42,7 +42,7 @@ public class Utilizador implements Entrada, Serializable {
 
     /**
      * Construtor por copia
-     * @param u Utilizador
+     * @param u Utilizador 
      */
     public Utilizador(Utilizador u) {
         this.nome = u.getNome();
@@ -53,7 +53,7 @@ public class Utilizador implements Entrada, Serializable {
 
     /**
      * Retorna uma copia da class que a chama
-     * @return Utilizador
+     * @return Utilizador 
      */
     public Utilizador clone() {
         return new Utilizador(this);
@@ -91,7 +91,7 @@ public class Utilizador implements Entrada, Serializable {
 
     /**
      * Retorna as encomendas concluidas
-     * @return Map<String, Encomenda>
+     * @return Map<String, Encomenda> map de codigo de encomenda para encomenda
      */
     public Map<String, Encomenda> getEncomendasConcluidas() {
         Map<String,Encomenda> ret = new HashMap<>();
@@ -102,7 +102,7 @@ public class Utilizador implements Entrada, Serializable {
 
     /**
      * Define as encomendas concluidas
-     * @param encomendasConcluidas Map<String, Encomenda>
+     * @param encomendasConcluidas Map<String, Encomenda> map de codigo de encomenda para encomenda 
      */
     public void setEncomendasConcluidas(Map<String, Encomenda> encomendasConcluidas) {
         this.encomendasConcluidas = new HashMap<>();
@@ -128,7 +128,7 @@ public class Utilizador implements Entrada, Serializable {
 
     /**
      * Retorna o seu codigo
-     * @return String
+     * @return String 
      */
     public String getCod() {
         return cod;
@@ -176,9 +176,9 @@ public class Utilizador implements Entrada, Serializable {
 
     /**
      * Procura pela lista de encomendas feitas em determinado intervalo de tempo 
-     * @param inicio LocalDateTime
-     * @param fim LocalDateTime
-     * @return List<Encomenda>
+     * @param inicio LocalDateTime data inicial 
+     * @param fim LocalDateTime data final 
+     * @return List<Encomenda> lista de encomendas 
      */
     public List<Encomenda> procuraPor(LocalDateTime inicio, LocalDateTime fim) {
         List<Encomenda> aux=new ArrayList<>();
