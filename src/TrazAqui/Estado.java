@@ -558,7 +558,29 @@ public class  Estado implements Serializable {
         return (preco+preco*taxa);
     }
 
-    public Estafeta daEstafeta(String codEsta){
-        return this.trabalhadores.get(codEsta);
+    public double precoDaEncomendaMenu(Encomenda enc, String transp) {
+        boolean temFila = false;
+        double taxa = 0;
+        Loja l;
+        if ((l = this.getLoja(enc.getLoja())) instanceof LojaFilaEspera)
+            temFila = true;
+        if (temFila) {
+            LojaFilaEspera a;
+            a = (LojaFilaEspera) this.getLoja((enc.getLoja()));
+            taxa = a.getTempoEspera() * a.getListaEspera() * 1.30;
+        }
+        Transportadora t = (Transportadora) this.trabalhadores.get(transp);
+        double dist = l.getLocalizacao().distancia(t.getLocalizacao());
+        double preco = t.precoEncomenda(enc.getPeso(), dist);
+        return (preco + preco * taxa);
+    }
+
+    public void aumentaKms(String cod,String loja) {
+        Transportadora t = (Transportadora) this.trabalhadores.get(cod);
+        t.aumentaKms(this.lojas.get(loja).getLocalizacao());
+    }
+
+    public void classifica(String codEsta, int value) {
+        this.trabalhadores.get(codEsta).classifica(value);
     }
 }
