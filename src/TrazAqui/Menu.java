@@ -11,17 +11,27 @@ import java.util.Scanner;
 import java.util.stream.Collectors;
 
 public class Menu {
+    /**
+     * Variaveis de instancia
+     */
     private boolean exec;
     private FileIO f;
     private Estado e;
 
+    /**
+     * Construtor vazio
+     */
     public Menu() {
         this.exec = true;
         this.f = new FileIO("teste.txt", "Estado", "Credentials.txt");
         this.e = new Estado();
     }
 
-
+    /**
+     * Metodo que inicia o funcionamento da aplicacao
+     * @throws IOException Casos de erro em IO
+     * @throws LojaInexistenteException casos de erro em Lojas
+     */
     public void run() throws IOException, LojaInexistenteException {
         Scanner inp = new Scanner(System.in);
         int opcao = -1;
@@ -106,11 +116,19 @@ public class Menu {
         UI.goodbye();
     }
 
+    /**
+     * Para a execucao
+     */
     public void stopExec() {
         this.exec = false;
         e.logoff();
     }
 
+    /**
+     * Metodo que faz login de um utilizador
+     * @throws IOException Casos de erro em IO
+     * @throws InvalidInputException Casos de erro no input
+     */
     public void loginUtilizador() throws IOException , InvalidInputException {
         Scanner sc = new Scanner(System.in);
         UI.printInsiraEmail();
@@ -121,6 +139,11 @@ public class Menu {
         this.e.login(email, password, this.f);
     }
 
+    /**
+     * Metodo que verifica se um email esta corretamente inserido
+     * @param mail String
+     * @return boolean
+     */
     private boolean verificaEmail(String mail) {
         String[] tokens;
         String temp;
@@ -131,6 +154,13 @@ public class Menu {
         return (tokens.length != 2 || tokens[0].equals(""));
     }
 
+    /**
+     * Metodo que cria um novo registo
+     * @throws IOException Caso de erro de IO
+     * @throws InvalidInputException Caso de erro de input
+     * @throws InputMismatchException Caso de erro de na insercao de dados
+     * @throws ExistingCodeException Caso de erro na insercao de codigo
+     */
     public void novoRegisto() throws IOException, InvalidInputException, InputMismatchException, ExistingCodeException {
         Scanner sc = new Scanner(System.in);
 
@@ -170,10 +200,20 @@ public class Menu {
             this.e.registar(email, password, cod, nome, new GPS(lat, longi), this.f, tipo,"",false);
     }
 
+    /**
+     * Retorna o preco de uma encomenda
+     * @param enc Encomenda
+     * @param transp String
+     * @return double
+     */
     public double getPreco(Encomenda enc, String transp) {
         return e.precoDaEncomendaMenu(enc,transp);
     }
 
+    /**
+     * Menu do utilizador 
+     * @throws LojaInexistenteException Caso de loja inexistente 
+     */
     public void menuUtilizador() throws LojaInexistenteException {
         int opcao =-1;
         Scanner sc = new Scanner(System.in);
@@ -324,7 +364,10 @@ public class Menu {
             }
     }
 
-       public void menuVoluntario() {
+    /**
+     * Menu do voluntario 
+     */
+    public void menuVoluntario() {
         int opcao;
         Scanner sc = new Scanner(System.in);
         UI.printMenuVoluntario();
@@ -389,6 +432,9 @@ public class Menu {
         }
     }
 
+    /**
+     * Menu da transportadora
+     */
     public void menuTransportadora() {
         int opcao;
         Scanner sc = new Scanner(System.in);
@@ -498,6 +544,9 @@ public class Menu {
         }
     }
 
+    /**
+     * Menu da loja
+     */
     public void menuLoja() {
         int opcao;
         Scanner sc = new Scanner(System.in);
