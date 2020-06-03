@@ -6,7 +6,7 @@ import java.util.List;
 
 public class Loja implements Entrada, Serializable {
     /**
-     * Variaveis de instacia
+     * Variaveis de instancia
      */
     private String cod;
     private String nome;

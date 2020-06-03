@@ -313,6 +313,7 @@ public class Menu {
                         String codEsta = "";
                         Encomenda encomenda = null;
                         for(Map.Entry<String,Estafeta> a : e.getTrabalhadores().entrySet()) {
+                            if(a.getValue() instanceof Transportadora)
                             for(Encomenda x : a.getValue().getPedidosEncomenda()) {
                                 if(x.getUtilizador().equals(e.getLogin().getCod()) && x.getCod().equals(codEncomenda)) {
                                     codEsta = a.getKey();
@@ -324,9 +325,7 @@ public class Menu {
                         if(opc == 1) {
                             assert encomenda != null;
                             e.addEncomendaEntregue(codEsta,encomenda);
-                            if (e.getEstafeta(codEsta) instanceof Transportadora) {
-                                this.e.aumentaKms(codEsta,encomenda.getLoja());
-                            }
+                            this.e.aumentaKms(codEsta,encomenda.getLoja());
                             e.removeEncomendaTransportadora(encomenda.getCod(),codEsta);
                             e.addEncomendaUtilizador(e.getLogin().getCod(), encomenda);
                             UI.printInsiraClass();
@@ -350,12 +349,42 @@ public class Menu {
                     }
                     break;
                 case 4:
-                    UI.printTop10(e.getTop10Util().stream().map(Utilizador::getNome).collect(Collectors.toList()));
+                    int j=0;
+                    for(Map.Entry<String,Estafeta> a : e.getTrabalhadores().entrySet()){
+                        if(a.getValue().getPedidosEncomenda().size()>0) {
+                            UI.printPedidosEncomenda(a.getValue().getPedidosEncomenda(),this, a.getValue().getCod());
+                            j++;
+                        }
+                    }
+                    if(j > 0) {
+                        UI.printCodEncomendaClass();
+                        String codEncomenda = sc.nextLine();
+                        String codEsta = "";
+                        Encomenda encomenda = null;
+                        for(Map.Entry<String,Estafeta> a : e.getTrabalhadores().entrySet()) {
+                            for(Encomenda x : a.getValue().getPedidosEncomenda()) {
+                                if(x.getUtilizador().equals(e.getLogin().getCod()) && x.getCod().equals(codEncomenda)) {
+                                    codEsta = a.getKey();
+                                    encomenda = x;
+                                    break;
+                                }
+                            }
+                        }
+                        e.addEncomendaEntregue(codEsta,encomenda);
+                        assert encomenda != null;
+                        e.removeEncomendaTransportadora(encomenda.getCod(),codEsta);
+                        UI.printInsiraClass();
+                        e.classifica(codEsta,sc.nextInt());
+                    }
+                    else UI.print0ClassVol();
                     break;
                 case 5:
-                    UI.printTop10(e.getTop10Trans().stream().map(Transportadora::getNome).collect(Collectors.toList()));
+                    UI.printTop10(e.getTop10Util().stream().map(Utilizador::getNome).collect(Collectors.toList()));
                     break;
                 case 6:
+                    UI.printTop10(e.getTop10Trans().stream().map(Transportadora::getNome).collect(Collectors.toList()));
+                    break;
+                case 7:
                     e.logoff();
                     break;
                 default:
@@ -410,7 +439,7 @@ public class Menu {
                         }
                         e.setEstafeta(cod);
                         this.e.addEncomendaUtilizador(e.getUtilizador(),e);
-                        this.e.addEncomendaEntregue(cod, e);
+                        this.e.addPedidoDeTransporte(cod,e);
                         UI.printEncomendaEmTrans();
                     } catch (Exception e) {
                         UI.printEncomendaInex();

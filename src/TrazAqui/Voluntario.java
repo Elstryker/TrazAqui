@@ -12,13 +12,13 @@ public class Voluntario extends Estafeta {
 
     /**
      * Construtor parametrizado
-     * @param cod String
-     * @param nome String
-     * @param localizacao GPS
-     * @param raio double
-     * @param encomendasEntregues List<Encomenda>
-     * @param pedidosEncomenda List<Encomenda>
-     * @param classificacao int[]
+     * @param cod String codigo
+     * @param nome String nome
+     * @param localizacao GPS localizacao
+     * @param raio double raio
+     * @param encomendasEntregues List<Encomenda> lista de encomendas entregues
+     * @param pedidosEncomenda List<Encomenda> lista de encomendas pedidas
+     * @param classificacao int[] array com classificacoes
      * @param disponivel boolean
      * @param certificada boolean
      */
@@ -28,7 +28,7 @@ public class Voluntario extends Estafeta {
 
     /**
      * Construtor por copia 
-     * @param a
+     * @param a Estafeta
      */
     public Voluntario(Estafeta a) {
         super(a);
