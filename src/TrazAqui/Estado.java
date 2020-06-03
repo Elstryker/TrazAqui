@@ -222,9 +222,7 @@ public class  Estado implements Serializable {
      */
     public Encomenda removeEncomendaLoja(String codEnc,String cod) {
         boolean medicamentos = false;
-        if (this.trabalhadores.get(cod) instanceof Transportadora) {
-            medicamentos = this.trabalhadores.get(cod).aceitoTransportesMedicamentos();
-        }
+        medicamentos = this.trabalhadores.get(cod).aceitoTransportesMedicamentos();
         for (Loja l : this.lojas.values()) {
             for (Encomenda e : l.getPedidos()) {
                 if (e.getCod().equals(codEnc)) {
@@ -239,6 +237,15 @@ public class  Estado implements Serializable {
             }
         }
         return null;
+    }
+
+    /**
+     * Remove uma encomenda de uma transportadora
+     * @param codEnc Código de encomendas
+     * @param cod Código da transportadora
+     */
+    public void removeEncomendaTransportadora(String codEnc, String cod) {
+        this.trabalhadores.get(cod).removerEncomenda(codEnc);
     }
 
     /**

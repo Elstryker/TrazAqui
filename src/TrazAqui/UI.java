@@ -53,9 +53,10 @@ public class UI {
         System.out.println("1 - Efetuar uma encomenda ");
         System.out.println("2 - Ver histórico de encomendas ");
         System.out.println("3 - Aceitar pedidos ");
-        System.out.println("4 - Top 10 utilizadores");
-        System.out.println("5 - Top 10 transportadoras");
-        System.out.println("6 - Terminar sessao");
+        System.out.println("4 - Classificar voluntário");
+        System.out.println("5 - Top 10 utilizadores");
+        System.out.println("6 - Top 10 transportadoras");
+        System.out.println("7 - Terminar sessao");
         System.out.println("0 - Sair");
     }
 
@@ -522,6 +523,20 @@ public class UI {
      */
     public static void printClassMedia(Double clas){
         System.out.println("O estafeta tem a classificação de " +clas);
+    }
+
+    /**
+     * Imprime a mensagem que não há voluntários para classificar
+     */
+    public static void print0ClassVol() {
+        System.out.println("Sem voluntários para classificar!");
+    }
+
+    /**
+     * Imprime opção para selecionar o código de encomenda para classificar
+     */
+    public static void printCodEncomendaClass() {
+        System.out.println("Indique o código de encomenda a classificar!");
     }
 }
 
