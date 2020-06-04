@@ -171,7 +171,9 @@ public class UI {
         System.out.println("2 - Escolher encomenda para ir buscar");
         System.out.println("3 - Alterar o raio de ação");
         System.out.println("4 - Ver classificação do estafeta");
-        System.out.println("5 - Terminar sessao");
+        System.out.println("5 - Top 10 utilizadores");
+        System.out.println("6 - Top 10 Transportadoras");
+        System.out.println("7 - Terminar sessao");
         System.out.println("0 - Sair");
         System.out.print("Opcao: ");
     }
@@ -536,7 +538,7 @@ public class UI {
      * Imprime opção para selecionar o código de encomenda para classificar
      */
     public static void printCodEncomendaClass() {
-        System.out.println("Indique o código de encomenda a classificar!");
+        System.out.print("Indique o código de encomenda a classificar: ");
     }
 }
 

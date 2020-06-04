@@ -352,7 +352,7 @@ public class Menu {
                     int j=0;
                     for(Map.Entry<String,Estafeta> a : e.getTrabalhadores().entrySet()){
                         if(a.getValue().getPedidosEncomenda().size()>0) {
-                            UI.printPedidosEncomenda(a.getValue().getPedidosEncomenda(),this, a.getValue().getCod());
+                            //UI.printPedidosEncomenda(a.getValue().getPedidosEncomenda(),this, a.getValue().getCod());
                             j++;
                         }
                     }
@@ -454,6 +454,12 @@ public class Menu {
                 UI.printClassMedia(e.getTrabalhadores().get(cod).getClassMedia());
                 break;
             case 5:
+                UI.printTop10(e.getTop10Util().stream().map(Utilizador::getNome).collect(Collectors.toList()));
+                break;
+            case 6:
+                UI.printTop10(e.getTop10Trans().stream().map(Estafeta::getNome).collect(Collectors.toList()));
+                break;
+            case 7:
                 this.e.logoff();
                 break;
             default:
