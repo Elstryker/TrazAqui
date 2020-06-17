@@ -296,10 +296,10 @@ public class UI {
      * @param m Menu
      * @param trans String
      */
-    public static void printPedidosEncomenda(List<Encomenda> e,Menu m, String trans){
+    public static void printPedidosEncomenda(List<Encomenda> e,Menu m, String trans,String tipo){
         int i=0;
         for(Encomenda enc: e){
-            if(enc.getEstafeta().contains("t") ) {
+            if(enc.getEstafeta().contains(tipo)) {
                 System.out.println("Preço: " + String.format("%.2f", m.getPreco(enc, trans)) + ", Código: " + enc.getCod() + " -> " + enc);
                 i++;
             }

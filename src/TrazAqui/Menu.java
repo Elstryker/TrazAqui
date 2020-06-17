@@ -309,7 +309,7 @@ public class Menu {
                         if(a.getValue().getPedidosEncomenda().size()>0 ) {
                             for(Encomenda x : a.getValue().getPedidosEncomenda())
                                 if(x.getUtilizador().equals(e.getLogin().getCod())) {
-                                    UI.printPedidosEncomenda(a.getValue().getPedidosEncomenda(), this, a.getValue().getCod());
+                                    UI.printPedidosEncomenda(a.getValue().getPedidosEncomenda(), this, a.getValue().getCod(),a.getValue().getCod());
                                     i++;
                                 }
                         }
@@ -361,7 +361,7 @@ public class Menu {
                     int j=0;
                     for(Map.Entry<String,Estafeta> a : e.getTrabalhadores().entrySet()){
                         if(a.getValue().getPedidosEncomenda().size()>0) {
-                            //UI.printPedidosEncomenda(a.getValue().getPedidosEncomenda(),this, a.getValue().getCod());
+                            UI.printPedidosEncomenda(a.getValue().getPedidosEncomenda(),this, a.getValue().getCod(),a.getValue().getCod());
                             j++;
                         }
                     }

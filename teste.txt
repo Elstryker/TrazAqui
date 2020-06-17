@@ -322,7 +322,7 @@ Loja:l37,FarmÃ¡cia Martins,49.214172,90.45734
 Loja:l16,FarmÃ¡cia Santos da Cunha,92.10632,-18.706581
 Loja:l80,Tous,12.3450775,-56.758236
 Loja:l35,FarmÃ¡cia SÃ£o JoÃ£o,-13.9637375,-75.4444
-Loja:l67,Sintety: Loja das Malas,71.69145,93.158585
+Loja:l67,Sintety Loja das Malas,71.69145,93.158585
 Loja:l39,Globe,44.954086,9.552528
 Loja:l75,Tiffosi,32.54355,-58.619
 Loja:l44,Tezenis,-13.268341,-33.756805
@@ -338,7 +338,7 @@ Loja:l6,MÃ©lodie,-45.655144,40.940826
 Loja:l9,Tezenis,-63.952435,34.70375
 Loja:l68,Continente,-45.54347,6.935631
 Loja:l64,Tabacaria Pais,11.680862,80.31056
-Loja:l98,Sintety: Loja das Malas,10.59346,77.85625
+Loja:l98,Sintety Loja das Malas,10.59346,77.85625
 Loja:l90,Triumph,-86.08019,-66.670906
 Loja:l82,FarmÃ¡cia Alvim,99.76712,70.9709
 Loja:l36,Centroxogo,-3.719307,-93.639206
