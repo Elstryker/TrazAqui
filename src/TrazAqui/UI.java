@@ -297,8 +297,12 @@ public class UI {
      * @param trans String
      */
     public static void printPedidosEncomenda(List<Encomenda> e,Menu m, String trans){
+        int i=0;
         for(Encomenda enc: e){
-            System.out.println("Preço: " + String.format("%.2f",m.getPreco(enc,trans)) + ", Código: " + enc.getCod() + " -> " + enc);
+            if(enc.getEstafeta().contains("t") ) {
+                System.out.println("Preço: " + String.format("%.2f", m.getPreco(enc, trans)) + ", Código: " + enc.getCod() + " -> " + enc);
+                i++;
+            }
         }
     }
 

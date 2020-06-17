@@ -104,7 +104,7 @@ public class FileIO {
         String line = file.readLine(), temp;
         String[] tokens;
         Map<String,Encomenda> buffer = new HashMap<>();
-        int start = 42;
+        int start = -1;
         int i = 0;
         while(line!=null) {
             if(i > start) {

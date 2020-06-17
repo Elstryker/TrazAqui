@@ -207,7 +207,13 @@ public class Menu {
      * @return double
      */
     public double getPreco(Encomenda enc, String transp) {
-        return e.precoDaEncomendaMenu(enc,transp);
+        if(e.getTrabalhadores().get(transp) instanceof Transportadora ){
+            return e.precoDaEncomendaMenu(enc,transp);
+        }
+        else{
+            return 0.0;
+        }
+
     }
 
     /**
@@ -300,9 +306,12 @@ public class Menu {
                 case 3:
                     int i=0;
                     for(Map.Entry<String,Estafeta> a : e.getTrabalhadores().entrySet()){
-                        if(a.getValue().getPedidosEncomenda().size()>0) {
-                            UI.printPedidosEncomenda(a.getValue().getPedidosEncomenda(),this, a.getValue().getCod());
-                            i++;
+                        if(a.getValue().getPedidosEncomenda().size()>0 ) {
+                            for(Encomenda x : a.getValue().getPedidosEncomenda())
+                                if(x.getUtilizador().equals(e.getLogin().getCod())) {
+                                    UI.printPedidosEncomenda(a.getValue().getPedidosEncomenda(), this, a.getValue().getCod());
+                                    i++;
+                                }
                         }
                     }
                     if(i>0) {
