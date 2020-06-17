@@ -297,11 +297,14 @@ public class UI {
      * @param trans String
      */
     public static void printPedidosEncomenda(List<Encomenda> e,Menu m, String trans,String tipo){
-        int i=0;
         for(Encomenda enc: e){
             if(enc.getEstafeta().contains(tipo)) {
-                System.out.println("Preço: " + String.format("%.2f", m.getPreco(enc, trans)) + ", Código: " + enc.getCod() + " -> " + enc);
-                i++;
+                if(tipo.contains("t")) {
+                    System.out.println("Preço: " + String.format("%.2f", m.getPreco(enc, trans)) + ", Código: " + enc.getCod() + " -> " + enc);
+                }
+                else if(tipo.contains("v")){
+                    System.out.println("Código: " + enc.getCod() + " -> " + enc);
+                }
             }
         }
     }
